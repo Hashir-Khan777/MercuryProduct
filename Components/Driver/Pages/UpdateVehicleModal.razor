@@ -1,0 +1,121 @@
+﻿@page "/driver/updatevehicle/{id:int}"
+
+@inject Radzen.DialogService dialogService
+
+<RadzenTemplateForm TItem="CarModel" Data=@car Submit="@UpdateCar">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenFormField Text="Year" Variant="Variant.Flat" Style="width: 100%;">
+                <RadzenNumeric Name="Year" @bind-Value="car.car_year" Style="width: 100%;" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="Year" Text="Year is required" />
+            <RadzenRegexValidator Component="Year" Text="It should be a valid year" Pattern="^[12][0-9]{3}$" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenFormField Text="Make" Variant="Variant.Flat" Style="width: 100%;">
+                <RadzenTextBox Name="Make" @bind-Value="car.car_make" Style="width: 100%;" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="Make" Text="Make is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenFormField Text="Model" Variant="Variant.Flat" Style="width: 100%;">
+                <RadzenTextBox @bind-Value="car.car_model" Name="Model" Style="width: 100%;" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="Model" Text="Model is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Title Status" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenDropDown @bind-Value="@car.title_status" Data="@title_status" Style="width: 100%; max-width: 400px;" Name="DropDownBindValue" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Tires/Wheels Front" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenDropDown @bind-Value="@car.tires_wheel_front" Data="@tires_condition" Style="width: 100%; max-width: 400px;" Name="WheelsFront" />
+            <RadzenRequiredValidator Component="WheelsFront" Text="Tires/Wheels Front is required is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Tires/Wheels Rear" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenDropDown @bind-Value="@car.tires_wheel_rear" Data="@tires_condition" Style="width: 100%; max-width: 400px;" Name="WheelsRear" />
+            <RadzenRequiredValidator Component="WheelsRear" Text="Tires/Wheels Rear is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Motor Condition" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenDropDown @bind-Value="@car.motor_condition" Data="@motor_condition" Style="width: 100%; max-width: 400px;" Name="MotorCondition" />
+            <RadzenRequiredValidator Component="MotorCondition" Text="Motor condition is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Color" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenDropDown @bind-Value="@car.car_color" Data="@colors" Style="width: 100%; max-width: 400px;" Name="Color" />
+            <RadzenRequiredValidator Component="Color" Text="Color is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenFormField Text="Offer Amount" Variant="Variant.Flat" Style="width: 100%;">
+                <RadzenNumeric Disabled @bind-Value="car.offered_ammount" Name="Amount" Style="width: 100%;" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="Amount" Text="Offered amount is required" />
+            <RadzenRegexValidator Component="Amount" Text="Amount must be greater than 0" Pattern="^[1-9][0-9]*$" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Status" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenDropDown @bind-Value="@car.status" Data="@statuses" Style="width: 100%; max-width: 400px;" Name="Status" />
+            <RadzenRequiredValidator Component="Status" Text="Status is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenFormField Text="Vin Number" Variant="Variant.Flat" Style="width: 100%;">
+                <RadzenTextBox @bind-Value="car.vin_no" Name="VinNo" Style="width: 100%;" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="VinNo" Text="Vin number is required" />
+            <RadzenRegexValidator Component="VinNo" Text="Vin number must be 17 alphanumeric characters" Pattern="^[a-zA-Z0-9]{17}$" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenFormField Text="Purchase Amount" Variant="Variant.Flat" Style="width: 100%;">
+                <RadzenNumeric @bind-Value="car.purchase_amount" Name="PurchaseAmount" Style="width: 100%;" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="PurchaseAmount" Text="Purchase amount is required" />
+            <RadzenRegexValidator Component="PurchaseAmount" Text="Purchase amount must be greater than 0" Pattern="^[1-9][0-9]*$" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenFormField Text="Check Number" Variant="Variant.Flat" Style="width: 100%;">
+                <RadzenNumeric @bind-Value="car.checkNo" Name="CheckNo" Style="width: 100%;" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="CheckNo" Text="Check number is required" />
+            <RadzenRegexValidator Component="CheckNo" Text="Check number must be valid" Pattern="^[1-9][0-9]*$" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenFormField Text="Seller Driver License" Variant="Variant.Flat" Style="width: 100%;">
+                <RadzenTextBox @bind-Value="car.DL" Name="DL" Style="width: 100%;" />
+            </RadzenFormField>
+            <RadzenRequiredValidator Component="DL" Text="Driver license is required" />
+            <RadzenRegexValidator Component="DL" Text="Driver license must be 16 alphanumeric characters" Pattern="^[a-zA-Z0-9]{16}$" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Pull Type" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenDropDown @bind-Value="@car.pull_type" Data="@pull_type" Style="width: 100%; max-width: 400px;" Name="PullType" />
+            <RadzenRequiredValidator Component="PullType" Text="Pull type is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel>Vin Picture</RadzenLabel>
+            <RadzenFileInput @bind-Value=@car.vin_picture TValue="string" class="w-100" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel>Vehicle Picture</RadzenLabel>
+            <RadzenFileInput @bind-Value=@car.picture TValue="string" class="w-100" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit">Update Vehicle</RadzenButton>
+</RadzenTemplateForm>

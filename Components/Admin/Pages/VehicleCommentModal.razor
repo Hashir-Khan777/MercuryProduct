@@ -1,0 +1,30 @@
+﻿@page "/admin/comment/dialog/{VehId}"
+
+@inject Radzen.DialogService dialogService
+
+<RadzenStack Gap="1rem" Orientation="Orientation.Vertical" JustifyContent="JustifyContent.SpaceBetween" Style="height: 100%;">
+    <RadzenTemplateForm TItem="NoteModel" Data=@note Submit="@AddNote">
+        <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+            <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+                <RadzenFormField Text="Note" Variant="Variant.Flat" Style="width: 100%;">
+                    <RadzenTextArea Name="Note" @bind-Value="note.note" Style="width: 100%;" />
+                </RadzenFormField>
+                <RadzenRequiredValidator Component="Note" Text="Note is required" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenButton ButtonType="ButtonType.Submit">Add Note</RadzenButton>
+    </RadzenTemplateForm>
+
+    <RadzenDataGrid Data="@notes" AllowVirtualization="true" Style="height:400px"
+                    AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                    AllowSorting="true">
+        <Columns>
+            <RadzenDataGridColumn Property="note" Title="Note" />
+            <RadzenDataGridColumn Title="Created By">
+                <Template Context="item">
+                    @item.created_by?.UserName
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+</RadzenStack>

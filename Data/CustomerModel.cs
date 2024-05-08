@@ -1,0 +1,61 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MecuryProduct.Data
+{
+    public class CustomerModel
+    {
+        public int Id { get; set; }
+
+        [Required]
+        public string cfname { get; set; } = string.Empty;
+
+        [Required]
+        public string clname { get; set; } = string.Empty;
+
+        [Required]
+        public string caddress { get; set; } = string.Empty;
+
+        [Required]
+        public string czip_code { get; set; } = string.Empty;
+
+        [Required]
+        public string ccity { get; set; } = string.Empty;
+
+        [Required]
+        public string ccountry { get; set; } = string.Empty;
+
+        [Required]
+        public string cstate { get; set; } = string.Empty;
+
+        [Required]
+        public string cphone_number { get; set; } = string.Empty;
+
+        public string number_type { get; set; } = string.Empty;
+
+        public string? created_by_id { get; set; } = string.Empty;
+
+        [Required]
+        public DateTime created_at { get; set; }
+
+        [Required]
+        public DateTime updated_at { get; set; }
+
+        public List<string> contact_prefrence { get; set; } = new List<string>();
+
+        [Required]
+        public string email { get; set; } = string.Empty;
+
+        public string customer_type { get; set; } = string.Empty;
+
+        [Required]
+        public string company_name { get; set; } = string.Empty;
+
+        public string customer_notes { get; set; } = string.Empty;
+
+        public ApplicationUser? created_by { get; set; }
+
+        public List<CarModel>? cars {  get; set; }
+
+        public List<NoteModel>? notes { get; set; }
+    }
+}

@@ -1,0 +1,9 @@
+﻿@using MecuryProduct.Components.Driver.Shared
+@using Radzen
+@using Radzen.Blazor
+@using Microsoft.AspNetCore.Authorization
+@using MecuryProduct.Data
+
+@layout DriverLayout
+
+@attribute [Authorize(Policy = "Driver")]

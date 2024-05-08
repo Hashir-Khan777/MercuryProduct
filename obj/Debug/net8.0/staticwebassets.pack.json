@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\MecuryProduct.bundle.scp.css",
+      "PackagePath": "staticwebassets\\MecuryProduct.bundle.scp.css"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.MecuryProduct.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.MecuryProduct.props",
+      "PackagePath": "build\\MecuryProduct.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.MecuryProduct.props",
+      "PackagePath": "buildMultiTargeting\\MecuryProduct.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.MecuryProduct.props",
+      "PackagePath": "buildTransitive\\MecuryProduct.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

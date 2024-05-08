@@ -1,0 +1,39 @@
+﻿@page "/admin/drivers"
+
+<PageTitle>Drivers</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenText TextStyle="TextStyle.H4">Drivers</RadzenText>
+    <RadzenLink Path="/admin/adddriver">
+        <RadzenButton>Add</RadzenButton>
+    </RadzenLink>
+</RadzenStack>
+
+<RadzenDataGrid TItem="ApplicationUser" Data="@drivers" AllowVirtualization="true" Style="height:400px"
+                AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Property="Name" Title="User Name" />
+        <RadzenDataGridColumn Title="Vehicles">
+            <Template Context="item">
+                @if (item?.driver_cars is not null)
+                {
+                    @foreach (var car in item.driver_cars)
+                    {
+                        <p>@car.car_model</p>
+                    }
+                }
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Action">
+            <Template Context="item">
+                <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateDriverModal(item.Id)">
+                    <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                </RadzenButton>
+                <RadzenButton Variant="Variant.Text" Click="() => DeleteUser(item)">
+                    <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                </RadzenButton>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
