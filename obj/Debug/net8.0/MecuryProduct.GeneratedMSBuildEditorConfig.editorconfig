@@ -186,6 +186,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xBZGRWZWhpY2xlTW9kYWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Calendar.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xDYWxlbmRhci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Customer.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xDdXN0b21lci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

@@ -30,6 +30,15 @@ namespace MecuryProduct.Components.Admin.Pages
                 new Dictionary<string, object>() { { "DriverId", id } },
                 new DialogOptions() { Width = "600px", Height = "60%", Resizable = true, Draggable = true }
             );
+            StateHasChanged();
+        }
+
+        public async Task OpenShowVehiclesModal(string Id)
+        {
+            await DialogService.OpenAsync<ShowCustomerVehiclesModal>("Vehicles",
+                new Dictionary<string, object>() { { "Id", Id }, { "Role", "driver" } },
+                new DialogOptions() { Width = "90%", Height = "70%", Resizable = true, Draggable = true }
+            );
         }
 
         public async void DeleteUser(ApplicationUser user)

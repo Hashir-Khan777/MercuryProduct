@@ -15,6 +15,7 @@
 @inject IdentityUserAccessor UserAccessor
 @inject NavigationManager NavigationManager
 @inject Radzen.DialogService dialogService
+@inject UserService UserService
 
 <div class="row">
     <div class="col-12">
@@ -28,19 +29,9 @@
                 <ValidationMessage For="() => Input.NewEmail" class="text-danger" />
             </div>
             <div class="form-floating mb-3">
-                <InputText type="password" @bind-Value="Input.OldPassword" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Please enter your old password." />
-                <label for="old-password" class="form-label">Old password</label>
-                <ValidationMessage For="() => Input.OldPassword" class="text-danger" />
-            </div>
-            <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="Input.NewPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Please enter your new password." />
                 <label for="new-password" class="form-label">New password</label>
                 <ValidationMessage For="() => Input.NewPassword" class="text-danger" />
-            </div>
-            <div class="form-floating mb-3">
-                <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Please confirm your new password." />
-                <label for="confirm-password" class="form-label">Confirm password</label>
-                <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
             </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Update</button>
         </EditForm>
@@ -73,14 +64,16 @@
         isEmailConfirmed = await UserManager.IsEmailConfirmedAsync(user);
 
         Input.NewEmail ??= email;
+        Input.OldPassword = user.password;
+        Input.NewPassword = user.password;
     }
 
     private async Task OnValidSubmitAsync()
     {
         var userId = await UserManager.GetUserIdAsync(user);
-        var code = await UserManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
-        var changePasswordResult = await UserManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
-        await UserManager.ConfirmEmailAsync(user, code);
+        UserService.SetUserPassword(userId, Input.NewPassword);
+        UserService.SetUserEmail(userId, Input.NewEmail);
+        await UserManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
 
         dialogService.Close();
     }
@@ -121,10 +114,5 @@
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; } = "";
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; } = "";
     }
 }

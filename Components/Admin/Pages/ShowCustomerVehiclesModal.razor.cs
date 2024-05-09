@@ -7,9 +7,11 @@ namespace MecuryProduct.Components.Admin.Pages
 {
     public partial class ShowCustomerVehiclesModal
     {
-        [Parameter] public int cusId {  get; set; }
+        [Parameter] public Object Id {  get; set; }
+        [Parameter] public string Role { get; set; }
 
         public CustomerModel customer = new CustomerModel();
+        public ApplicationUser driver = new ApplicationUser();
 
         [Inject]
         public CustomerService CustomerService {  get; set; }
@@ -17,6 +19,8 @@ namespace MecuryProduct.Components.Admin.Pages
         private DialogService DialogService { get; set; }
         [Inject]
         private CarService CarService { get; set; }
+        [Inject]
+        private UserService DriverService { get; set; }
 
         protected override void OnInitialized()
         {
@@ -25,11 +29,40 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public void GetCustomerById()
         {
-            var result = CustomerService.GetCustomerById(cusId);
-            if (result != null)
+            if (Role.ToLower() == "customer")
             {
-                customer = result;
+                var result = CustomerService.GetCustomerById((int)Id);
+                if (result != null)
+                {
+                    customer = result;
+                }
             }
+            else
+            {
+                var result = DriverService.GetUserById((string)Id);
+                if (result != null)
+                {
+                    driver = result;
+                }
+            }
+        }
+
+        public async void OpenUpdateCustomerModal(int id)
+        {
+            await DialogService.OpenAsync<UpdateCustomerModal>("Update Customer",
+                new Dictionary<string, object>() { { "CusId", id } },
+                new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }
+            );
+            StateHasChanged();
+        }
+
+        public async void OpenUpdateDriverModal(string id)
+        {
+            await DialogService.OpenAsync<UpdateDriverModal>("Update Driver",
+                new Dictionary<string, object>() { { "DriverId", id } },
+                new DialogOptions() { Width = "600px", Height = "60%", Resizable = true, Draggable = true }
+            );
+            StateHasChanged();
         }
 
         public async void DeleteVehicle(CarModel car)

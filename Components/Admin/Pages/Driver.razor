@@ -16,13 +16,7 @@
         <RadzenDataGridColumn Property="Name" Title="User Name" />
         <RadzenDataGridColumn Title="Vehicles">
             <Template Context="item">
-                @if (item?.driver_cars is not null)
-                {
-                    @foreach (var car in item.driver_cars)
-                    {
-                        <p>@car.car_model</p>
-                    }
-                }
+                <span style="cursor: pointer; color: #4340D2;" @onclick="() => OpenShowVehiclesModal(item.Id)">@item?.driver_cars?.Count()</span>
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Action">

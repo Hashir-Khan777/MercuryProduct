@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MecuryProduct.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240508073501_Init")]
+    [Migration("20240509062702_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -76,6 +76,10 @@ namespace MecuryProduct.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

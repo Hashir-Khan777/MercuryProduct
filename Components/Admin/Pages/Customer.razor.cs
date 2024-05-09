@@ -36,7 +36,7 @@ namespace MecuryProduct.Components.Admin.Pages
         public async Task OpenShowVehiclesModal(int CusId)
         {
             await DialogService.OpenAsync<ShowCustomerVehiclesModal>("Vehicles",
-                new Dictionary<string, object>() { { "CusId", CusId } },
+                new Dictionary<string, object>() { { "Id", CusId }, { "Role", "customer" } },
                 new DialogOptions() { Width = "90%", Height = "70%", Resizable = true, Draggable = true }
             );
         }

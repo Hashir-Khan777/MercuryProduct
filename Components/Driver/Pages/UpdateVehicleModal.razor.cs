@@ -11,9 +11,8 @@ namespace MecuryProduct.Components.Driver.Pages
         private CarModel car = new CarModel();
         private List<string> statuses = new List<string>()
         {
-            "Scheduled",
-            "Bought",
-            "Builder",
+            "Picked up",
+            "Delivered",
             "DnD"
         };
         private List<string> title_status = new List<string>()

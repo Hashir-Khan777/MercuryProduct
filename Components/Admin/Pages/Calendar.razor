@@ -1,0 +1,12 @@
+﻿@page "/admin/calendar"
+
+<PageTitle>Calendar</PageTitle>
+
+<RadzenScheduler AppointmentSelect=@OnAppointmentSelect style="height: 768px;" TItem="CarModel" Data=@cars StartProperty="scheduled_date" EndProperty="scheduled_date" TextProperty="car_model">
+    <Template Context="data">
+        Vehicle Id: veh-@data.Id
+    </Template>
+    <ChildContent>
+        <RadzenMonthView />
+    </ChildContent>
+</RadzenScheduler>

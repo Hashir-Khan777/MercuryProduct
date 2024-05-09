@@ -26,7 +26,7 @@
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Vehicles">
             <Template Context="item">
-                <span style="cursor: pointer" @onclick="() => OpenShowVehiclesModal(item.Id)">@item?.cars?.Count()</span>
+                <span style="cursor: pointer; color: #4340D2;" @onclick="() => OpenShowVehiclesModal(item.Id)">@item?.cars?.Count()</span>
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Actions" Width="300px">

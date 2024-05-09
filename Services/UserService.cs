@@ -30,9 +30,37 @@ namespace MecuryProduct.Services
             return allUsers;
         }
 
+        public ApplicationUser? GetUserById(string Id)
+        {
+            return db.Users.Include(u => u.driver_cars).ThenInclude(c => c.customer).FirstOrDefault(u => u.Id == Id);
+        }
+
         public void DeleteUser(ApplicationUser user)
         {
             db.Users.Remove(user);
+            db.SaveChanges();
+        }
+
+        public void SetUserPassword(string id, string password)
+        {
+            var user = db.Users.FirstOrDefault(u => u.Id == id);
+            if(user != null)
+            {
+                user.password = password;
+            }
+            db.SaveChanges();
+        }
+
+        public void SetUserEmail(string id, string email)
+        {
+            var user = db.Users.FirstOrDefault(u => u.Id == id);
+            if (user != null)
+            {
+                user.Email = email.ToLower();
+                user.NormalizedEmail = email.ToUpper();
+                user.UserName = email.ToLower();
+                user.NormalizedUserName = email.ToUpper();
+            }
             db.SaveChanges();
         }
     }

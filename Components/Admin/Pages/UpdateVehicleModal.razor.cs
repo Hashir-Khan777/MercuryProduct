@@ -1,6 +1,7 @@
 ﻿using MecuryProduct.Data;
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace MecuryProduct.Components.Admin.Pages
 {
@@ -88,6 +89,11 @@ namespace MecuryProduct.Components.Admin.Pages
         public void GetCustomers()
         {
             customers = CustomerService.GetCustomers();
+        }
+
+        void DateRender(DateRenderEventArgs args)
+        {
+            args.Disabled = args.Disabled || args.Date.DayOfWeek == DayOfWeek.Sunday || args.Date.DayOfWeek == DayOfWeek.Saturday || args.Date.Date < DateTime.Today;
         }
 
         private sealed class Instruction

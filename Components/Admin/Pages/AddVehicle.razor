@@ -83,11 +83,15 @@
         </RadzenColumn>
     </RadzenRow>
     <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
-        <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
             <RadzenLabel Text="Customer" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
-            <br />
-            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@car.cid" Data="@customers" TextProperty="cphone_number" ValueProperty="Id" Style="width: 100%; max-width: 770px;" Name="Customer" />
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@car.cid" Data="@customers" TextProperty="cphone_number" ValueProperty="Id" Style="width: 100%; max-width: 400px;" Name="Customer" />
             <RadzenRequiredValidator Component="Customer" Text="Customer is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Scheduled Date" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenDatePicker DateRender=@DateRender @bind-Value="@car.scheduled_date" Name="ScheduledAt" ShowTime="true" Style="width: 100%; max-width: 400px;" />
+            <RadzenRequiredValidator Component="ScheduledAt" Text="Scheduled date is required" />
         </RadzenColumn>
     </RadzenRow>
     <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">

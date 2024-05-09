@@ -30,8 +30,9 @@ namespace MecuryProduct.Components.Admin.Pages
             if (deleteVehicle != null  && deleteVehicle == true)
             {
                 CarService.DeleteCar(car);
-                StateHasChanged();
             }
+            GetCars();
+            StateHasChanged();
         }
 
         public async void OpenUpdateVehicleModal(int id)
@@ -48,6 +49,15 @@ namespace MecuryProduct.Components.Admin.Pages
             await DialogService.OpenAsync<UpdateCustomerModal>("Update Customer",
                 new Dictionary<string, object>() { { "CusId", id } },
                 new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }
+            );
+            StateHasChanged();
+        }
+
+        public async void OpenUpdateDriverModal(string id)
+        {
+            await DialogService.OpenAsync<UpdateDriverModal>("Update Driver",
+                new Dictionary<string, object>() { { "DriverId", id } },
+                new DialogOptions() { Width = "600px", Height = "60%", Resizable = true, Draggable = true }
             );
             StateHasChanged();
         }

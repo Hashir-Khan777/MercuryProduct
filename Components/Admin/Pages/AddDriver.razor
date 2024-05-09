@@ -13,6 +13,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject IEmailSender<ApplicationUser> EmailSender
 @inject NavigationManager NavigationManager
+@inject UserService UserService
 
 <PageTitle>Add Driver</PageTitle>
 
@@ -71,6 +72,8 @@
             return;
         }
 
+        var userId = await UserManager.GetUserIdAsync(user);
+        UserService.SetUserPassword(userId, Input.Password);
         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
         await UserManager.ConfirmEmailAsync(user, code);
         await UserManager.AddClaimAsync(user, new Claim("Role", "Driver"));

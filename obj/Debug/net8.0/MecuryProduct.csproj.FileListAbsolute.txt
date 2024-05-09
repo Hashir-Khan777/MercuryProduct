@@ -141,3 +141,4 @@ E:\Zini Tecnologies Projects\MecuryProduct\obj\Debug\net8.0\MecuryProduct.pdb
 E:\Zini Tecnologies Projects\MecuryProduct\obj\Debug\net8.0\MecuryProduct.genruntimeconfig.cache
 E:\Zini Tecnologies Projects\MecuryProduct\obj\Debug\net8.0\ref\MecuryProduct.dll
 E:\Zini Tecnologies Projects\MecuryProduct\obj\Debug\net8.0\scopedcss\Components\Layout\MainLayout.razor.rz.scp.css
+E:\Zini Tecnologies Projects\MecuryProduct\obj\Debug\net8.0\MecuryProduct.sourcelink.json

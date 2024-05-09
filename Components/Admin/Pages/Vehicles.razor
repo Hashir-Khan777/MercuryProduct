@@ -24,12 +24,12 @@
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Driver">
             <Template Context="item">
-                @item.driver?.UserName
+                <span style="cursor: pointer; color: #4340D2;" @onclick="(() => OpenUpdateDriverModal(item.driver.Id))">@item.driver?.UserName</span>
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Customer">
             <Template Context="item">
-                <span style="cursor: pointer" @onclick="(() => OpenUpdateCustomerModal(item.customer.Id))">@item.customer?.cfname @item.customer?.clname</span>
+                <span style="cursor: pointer; color: #4340D2;" @onclick="(() => OpenUpdateCustomerModal(item.customer.Id))">@item.customer?.cfname @item.customer?.clname</span>
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Actions">

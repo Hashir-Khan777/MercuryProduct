@@ -2,6 +2,7 @@
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Radzen;
 using System.Security.Claims;
 
 namespace MecuryProduct.Components.Admin.Pages
@@ -102,6 +103,11 @@ namespace MecuryProduct.Components.Admin.Pages
                     car.created_by_id = userId;
                 }
             }
+        }
+
+        void DateRender(DateRenderEventArgs args)
+        {
+            args.Disabled = args.Disabled || args.Date.DayOfWeek == DayOfWeek.Sunday || args.Date.DayOfWeek == DayOfWeek.Saturday || args.Date.Date < DateTime.Today;
         }
 
         private sealed class Instruction
