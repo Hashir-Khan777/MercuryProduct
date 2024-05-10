@@ -32,7 +32,7 @@ namespace MecuryProduct.Services
 
         public ApplicationUser? GetUserById(string Id)
         {
-            return db.Users.Include(u => u.driver_cars).ThenInclude(c => c.customer).FirstOrDefault(u => u.Id == Id);
+            return db.Users.Include(u => u.driver_cars).ThenInclude(c => c.customer).Include(u => u.driver_cars).ThenInclude(c => c.created_by).FirstOrDefault(u => u.Id == Id);
         }
 
         public void DeleteUser(ApplicationUser user)

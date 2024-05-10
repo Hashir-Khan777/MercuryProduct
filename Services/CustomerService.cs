@@ -25,7 +25,7 @@ namespace MecuryProduct.Services
 
         public CustomerModel? GetCustomerById(int CusId)
         {
-            return db.Customers.Include(c => c.created_by).Include(c => c.cars).ThenInclude(c => c.driver).FirstOrDefault(c => c.Id == CusId);
+            return db.Customers.Include(c => c.created_by).Include(c => c.cars).ThenInclude(c => c.driver).Include(u => u.cars).ThenInclude(c => c.created_by).FirstOrDefault(c => c.Id == CusId);
         }
 
         public void UpdateCustomer(CustomerModel customer)
