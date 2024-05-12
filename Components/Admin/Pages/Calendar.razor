@@ -1,12 +1,28 @@
 ﻿@page "/admin/calendar"
 
+<style>
+    .rz-event {
+        height: auto !important;
+    }
+
+    .rz-event-list-btn {
+        top: 7rem !important;
+    }
+</style>
+
 <PageTitle>Calendar</PageTitle>
 
-<RadzenScheduler AppointmentSelect=@OnAppointmentSelect style="height: 768px;" TItem="CarModel" Data=@cars StartProperty="scheduled_date" EndProperty="scheduled_date" TextProperty="car_model">
+<RadzenScheduler SelectedIndex="0" AppointmentSelect=@OnAppointmentSelect style="height: 768px;" TItem="CarModel" Data=@cars StartProperty="scheduled_date" EndProperty="scheduled_date" TextProperty="car_model">
     <Template Context="data">
-        Vehicle Id: veh-@data.Id
+        Vehicle: veh-@data.Id
+        <br />
+        Driver: @data.driver?.UserName
+        <br />
+        City: @data?.customer?.ccity
     </Template>
     <ChildContent>
-        <RadzenMonthView />
+        <RadzenDayView MinutesPerSlot="20" />
+        <RadzenWeekView MinutesPerSlot="20" />
+        <RadzenMonthView MaxAppointmentsInSlot="1" />
     </ChildContent>
 </RadzenScheduler>

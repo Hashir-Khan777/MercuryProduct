@@ -81,6 +81,13 @@
         </RadzenRow>
         <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
             <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+                <RadzenLabel Text="Scheduled Date" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
+                <RadzenDatePicker HourFormat="12" DateRender=@DateRender @bind-Value="@car.scheduled_date" Name="ScheduledAt" ShowTime="true" Style="width: 100%; max-width: 770px;" />
+                <RadzenRequiredValidator Component="ScheduledAt" Text="Scheduled date is required" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+            <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
                 <RadzenFormField Text="Vehicle Notes" Variant="Variant.Flat" Style="width: 100%; max-width: 770px">
                     <RadzenTextArea @bind-Value="veh_notes" Style="width: 100%" />
                 </RadzenFormField>

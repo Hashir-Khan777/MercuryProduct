@@ -1,88 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\Zini Tecnologies Projects\\MecuryProduct\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\services\\customerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:services\\customerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\components\\admin\\pages\\showcustomervehiclesmodal.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:components\\admin\\pages\\showcustomervehiclesmodal.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\components\\admin\\pages\\showcustomervehiclesmodal.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:components\\admin\\pages\\showcustomervehiclesmodal.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 2,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ShowCustomerVehiclesModal.razor",
-              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\ShowCustomerVehiclesModal.razor",
-              "RelativeDocumentMoniker": "Components\\Admin\\Pages\\ShowCustomerVehiclesModal.razor",
-              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\ShowCustomerVehiclesModal.razor",
-              "RelativeToolTip": "Components\\Admin\\Pages\\ShowCustomerVehiclesModal.razor",
-              "ViewState": "AQIAADQAAAAAMzMzMzMLwDwAAABYAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-10T02:29:44.077Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ShowCustomerVehiclesModal.razor.cs",
-              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\ShowCustomerVehiclesModal.razor.cs",
-              "RelativeDocumentMoniker": "Components\\Admin\\Pages\\ShowCustomerVehiclesModal.razor.cs",
-              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\ShowCustomerVehiclesModal.razor.cs",
-              "RelativeToolTip": "Components\\Admin\\Pages\\ShowCustomerVehiclesModal.razor.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-10T02:29:35.096Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CustomerService.cs",
-              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Services\\CustomerService.cs",
-              "RelativeDocumentMoniker": "Services\\CustomerService.cs",
-              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Services\\CustomerService.cs",
-              "RelativeToolTip": "Services\\CustomerService.cs",
-              "ViewState": "AQIAAAgAAACAZmZmZmYswBsAAACQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-10T02:23:39.304Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "Services\\UserService.cs",
-              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Services\\UserService.cs",
-              "RelativeToolTip": "Services\\UserService.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAAAACIAAACPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-10T02:21:24.203Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

@@ -90,7 +90,7 @@
         </RadzenColumn>
         <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
             <RadzenLabel Text="Scheduled Date" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
-            <RadzenDatePicker DateRender=@DateRender @bind-Value="@car.scheduled_date" Name="ScheduledAt" ShowTime="true" Style="width: 100%; max-width: 400px;" />
+            <RadzenDatePicker HourFormat="12" DateRender=@DateRender @bind-Value="@car.scheduled_date" Name="ScheduledAt" ShowTime="true" Style="width: 100%; max-width: 400px;" />
             <RadzenRequiredValidator Component="ScheduledAt" Text="Scheduled date is required" />
         </RadzenColumn>
     </RadzenRow>

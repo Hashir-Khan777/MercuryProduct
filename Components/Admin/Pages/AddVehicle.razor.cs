@@ -107,7 +107,7 @@ namespace MecuryProduct.Components.Admin.Pages
 
         void DateRender(DateRenderEventArgs args)
         {
-            args.Disabled = args.Disabled || args.Date.DayOfWeek == DayOfWeek.Sunday || args.Date.DayOfWeek == DayOfWeek.Saturday || args.Date.Date < DateTime.Today;
+            args.Disabled = args.Disabled || args.Date.DayOfWeek == DayOfWeek.Sunday || args.Date.Date < DateTime.Today;
         }
 
         private sealed class Instruction

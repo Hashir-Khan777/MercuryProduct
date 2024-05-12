@@ -3,6 +3,7 @@ using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Security.Claims;
+using Radzen;
 
 namespace MecuryProduct.Components.Admin.Pages
 {
@@ -78,6 +79,11 @@ namespace MecuryProduct.Components.Admin.Pages
         public void GetDrivers()
         {
             drivers = DriverService.GetUsersByClaim("Role", "Driver");
+        }
+
+        void DateRender(DateRenderEventArgs args)
+        {
+            args.Disabled = args.Disabled || args.Date.DayOfWeek == DayOfWeek.Sunday || args.Date.Date < DateTime.Today;
         }
 
         public async void SetUserId()

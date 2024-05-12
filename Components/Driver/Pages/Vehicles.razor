@@ -14,7 +14,8 @@
         <RadzenDataGridColumn Property="car_make" Title="Make" />
         <RadzenDataGridColumn Property="car_model" Title="Model" />
         <RadzenDataGridColumn Property="status" Title="Status" />
-        <RadzenDataGridColumn Title="Created By">
+        <RadzenDataGridColumn Property="scheduled_date" Title="Pickup Date" Width="200px" />
+        <RadzenDataGridColumn Title="Created By" Width="200px">
             <Template Context="item">
                 @item.created_by?.UserName
             </Template>

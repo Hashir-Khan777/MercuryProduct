@@ -1,5 +1,6 @@
 ﻿using MecuryProduct.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 
 namespace MecuryProduct.Services
 {
@@ -41,7 +42,7 @@ namespace MecuryProduct.Services
 
         public List<CarModel> GetCarsByDriverId(string driver_id)
         {
-            return db.Cars.OrderByDescending(c => c.created_at).Where(c => c.driver_id == driver_id && c.scheduled_date == DateTime.Today).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).ToList();
+            return db.Cars.OrderBy(c => c.scheduled_date).Where(c => c.driver_id == driver_id && c.scheduled_date.Date == DateTime.Today.Date).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).ToList();
         }
 
         public void DeleteCar(CarModel car)
