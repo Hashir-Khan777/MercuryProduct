@@ -73,7 +73,8 @@
         var userId = await UserManager.GetUserIdAsync(user);
         UserService.SetUserPassword(userId, Input.NewPassword);
         UserService.SetUserEmail(userId, Input.NewEmail);
-        await UserManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
+        var code = await UserManager.GeneratePasswordResetTokenAsync(user);
+        var result = await UserManager.ResetPasswordAsync(user, code, Input.NewPassword);
 
         dialogService.Close();
     }

@@ -74,6 +74,13 @@ namespace MecuryProduct.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int?>("driverId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("oldThreePasswords")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

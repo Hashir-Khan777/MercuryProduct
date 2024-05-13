@@ -77,6 +77,8 @@
         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
         await UserManager.ConfirmEmailAsync(user, code);
         await UserManager.AddClaimAsync(user, new Claim("Role", "Driver"));
+        UserService.SetDriverId(userId);
+        UserService.SetOldThreePasswords(userId, Input.Password);
 
         NavigationManager.NavigateTo("/admin/drivers");
     }

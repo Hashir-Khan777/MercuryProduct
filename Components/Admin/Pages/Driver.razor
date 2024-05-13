@@ -13,6 +13,11 @@
                 AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
                 AllowSorting="true">
     <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                m-drv-@item.driverId
+            </Template>
+        </RadzenDataGridColumn>
         <RadzenDataGridColumn Property="Name" Title="User Name" />
         <RadzenDataGridColumn Title="Vehicles">
             <Template Context="item">

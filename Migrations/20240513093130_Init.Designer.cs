@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MecuryProduct.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240509062702_Init")]
+    [Migration("20240513093130_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -76,6 +76,13 @@ namespace MecuryProduct.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<int?>("driverId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("oldThreePasswords")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("password")
                         .IsRequired()

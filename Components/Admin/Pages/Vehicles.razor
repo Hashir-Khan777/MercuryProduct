@@ -13,6 +13,11 @@
                 AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
                 AllowSorting="true">
     <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                m-veh-@item.Id
+            </Template>
+        </RadzenDataGridColumn>
         <RadzenDataGridColumn Property="car_year" Title="Year" />
         <RadzenDataGridColumn Property="car_make" Title="Make" />
         <RadzenDataGridColumn Property="car_model" Title="Model" />

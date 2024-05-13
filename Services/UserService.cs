@@ -1,4 +1,5 @@
-﻿using MecuryProduct.Data;
+﻿using MecuryProduct.Components.Admin.Pages;
+using MecuryProduct.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace MecuryProduct.Services
@@ -39,6 +40,55 @@ namespace MecuryProduct.Services
         {
             db.Users.Remove(user);
             db.SaveChanges();
+        }
+
+        public void SetDriverId(string driverId)
+        {
+            int? maxId = db.Users.Max(u => u.driverId);
+            var user = db.Users.FirstOrDefault(u => u.Id == driverId);
+            if (maxId != null)
+            {
+                if (user != null)
+                {
+                    user.driverId = maxId.Value + 1;
+                    db.SaveChanges();
+                }
+            } else
+            {
+                if (user != null)
+                {
+                    user.driverId = 1;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public bool? SetOldThreePasswords(string Id, string password)
+        {
+            var user = db.Users.FirstOrDefault(u => u.Id == Id);
+            if (user != null)
+            {
+                if (user.oldThreePasswords.IndexOf(password) < 0)
+                {
+                    if (user.oldThreePasswords.Count() < 3)
+                    {
+                        user.oldThreePasswords.Add(password);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        user.oldThreePasswords.RemoveAt(0);
+                        user.oldThreePasswords.Add(password);
+                        db.SaveChanges();
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return null;
         }
 
         public void SetUserPassword(string id, string password)

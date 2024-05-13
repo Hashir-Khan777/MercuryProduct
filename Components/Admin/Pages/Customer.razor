@@ -15,6 +15,11 @@
                 AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
                 AllowSorting="true">
     <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                m-cus-@item.Id
+            </Template>
+        </RadzenDataGridColumn>
         <RadzenDataGridColumn Property="cfname" Title="First Name" />
         <RadzenDataGridColumn Property="clname" Title="Last Name" />
         <RadzenDataGridColumn Property="email" Title="Email" />
