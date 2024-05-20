@@ -16,6 +16,7 @@ namespace MecuryProduct.Components.Admin.Pages
             "Scheduled",
             "Picked Up",
             "Follow Up",
+            "Bought",
             "Delivered",
             "DnD"
         };

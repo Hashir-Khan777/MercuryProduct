@@ -34,7 +34,7 @@ namespace MecuryProduct.Components.Driver.Pages
 
         public async Task OpenVehicleCommentModal(int VehId)
         {
-            await DialogService.OpenAsync<VehicleCommentModal>("Notes",
+            await DialogService.OpenAsync<VehicleCommentModal>($"Notes for m-veh-{VehId}",
                 new Dictionary<string, object>() { { "VehId", VehId } },
                 new DialogOptions() { Width = "700px", Height = "60%", Resizable = true, Draggable = true }
             );

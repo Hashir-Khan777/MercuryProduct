@@ -8,6 +8,7 @@ namespace MecuryProduct.Data
         public DbSet<CustomerModel> Customers { get; set; }
         public DbSet<CarModel> Cars { get; set; }
         public DbSet<NoteModel> Notes { get; set; }
+        public DbSet<ImageModel> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -47,6 +48,12 @@ namespace MecuryProduct.Data
                 .HasOne(c => c.created_by)
                 .WithMany(m => m.customers)
                 .HasForeignKey(m => m.created_by_id)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<ImageModel>()
+                .HasOne(c => c.car)
+                .WithMany(m => m.images)
+                .HasForeignKey(m => m.veh_id)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }

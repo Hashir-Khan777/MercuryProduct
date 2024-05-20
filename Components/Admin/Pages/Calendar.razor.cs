@@ -8,6 +8,9 @@ namespace MecuryProduct.Components.Admin.Pages
     public partial class Calendar
     {
         public List<CarModel> cars = new List<CarModel>();
+        public bool mapView = false;
+        public DateTime start_date = DateTime.Today.Date;
+        public DateTime end_date = DateTime.Today.Date;
 
         [Inject]
         private CarService CarService { get; set; }
@@ -17,6 +20,11 @@ namespace MecuryProduct.Components.Admin.Pages
         protected override void OnInitialized()
         {
             GetCars();
+        }
+
+        public async void changeView(bool isMapView)
+        {
+            mapView = isMapView;
         }
 
         public async void OnAppointmentSelect(SchedulerAppointmentSelectEventArgs<CarModel> args)

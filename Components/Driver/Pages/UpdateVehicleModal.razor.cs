@@ -1,6 +1,9 @@
 ﻿using MecuryProduct.Data;
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Hosting.Server;
+using Radzen.Blazor;
+using System.Text;
 
 namespace MecuryProduct.Components.Driver.Pages
 {
@@ -11,7 +14,7 @@ namespace MecuryProduct.Components.Driver.Pages
         private CarModel car = new CarModel();
         private List<string> statuses = new List<string>()
         {
-            "Picked up",
+            "Bought",
             "Delivered",
             "DnD"
         };
@@ -55,9 +58,12 @@ namespace MecuryProduct.Components.Driver.Pages
             "Short",
             "Long"
         };
+        private string file_name = string.Empty;
 
         [Inject]
         private CarService CarService { get; set; }
+        [Inject]
+        private ImageService ImageService { get; set; }
 
         protected override void OnInitialized()
         {
@@ -73,6 +79,48 @@ namespace MecuryProduct.Components.Driver.Pages
             car.updated_at = DateTime.UtcNow;
             CarService.UpdateCar(car);
             dialogService.Close();
+        }
+
+        public void changeVinImage(string base64)
+        {
+            string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + file_name;
+            ImageModel image = new ImageModel()
+            {
+                file_name = file_name,
+                file_path = filePath,
+                type = "vin",
+                server_name = "localhost",
+                veh_id = car.Id
+            };
+            int startingIndex = base64.IndexOf(";base64,") + 8;
+            string fileBase64 = base64.Substring(startingIndex);
+            byte[] file = Convert.FromBase64String(fileBase64);
+            System.IO.File.WriteAllBytes(filePath, file);
+            ImageService.AddImage(image);
+        }
+
+        public async void changeVehicleImages(Radzen.UploadChangeEventArgs e)
+        {
+            foreach (var file in e.Files)
+            {
+                string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + file.Name;
+                ImageModel image = new ImageModel()
+                {
+                    file_name = file.Name,
+                    file_path = filePath,
+                    type = "vehicle",
+                    server_name = "localhost",
+                    veh_id = car.Id
+                };
+                await using (var stream = file.OpenReadStream(long.MaxValue))
+                {
+                    await using (var fs = new FileStream(filePath, FileMode.Create))
+                    {
+                        await stream.CopyToAsync(fs);
+                    }
+                }
+                ImageService.AddImage(image);
+            }
         }
     }
 }

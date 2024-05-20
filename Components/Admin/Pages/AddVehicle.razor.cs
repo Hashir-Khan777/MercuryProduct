@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Radzen;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace MecuryProduct.Components.Admin.Pages
 {
@@ -17,6 +18,7 @@ namespace MecuryProduct.Components.Admin.Pages
             "Scheduled",
             "Picked Up",
             "Follow Up",
+            "Bought",
             "Delivered",
             "DnD"
         };
@@ -63,12 +65,21 @@ namespace MecuryProduct.Components.Admin.Pages
         private NavigationManager NavigationManager { get; set; }
         [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [Inject]
+        private SessionService SessionService { get; set; }
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
             GetDrivers();
             GetCustomers();
             SetUserId();
+
+            var result = await SessionService.Get<CarModel>("car_form");
+
+            if (result != null)
+            {
+                car = result;
+            }
         }
 
         public void CreateCar()
@@ -77,6 +88,11 @@ namespace MecuryProduct.Components.Admin.Pages
             car.updated_at = DateTime.UtcNow;
             CarService.AddCar(car, veh_notes);
             NavigationManager.NavigateTo("/admin/vehicles");
+        }
+
+        public async void SetInSession()
+        {
+            await SessionService.Set("car_form", JsonSerializer.Serialize(car));
         }
 
         public void GetDrivers()

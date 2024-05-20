@@ -16,6 +16,12 @@ namespace MecuryProduct.Data
         public string caddress { get; set; } = string.Empty;
 
         [Required]
+        public double clat { get; set; }
+
+        [Required]
+        public double clon { get; set; }
+
+        [Required]
         public string czip_code { get; set; } = string.Empty;
 
         [Required]

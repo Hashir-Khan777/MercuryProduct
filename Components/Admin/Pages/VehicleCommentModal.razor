@@ -2,7 +2,10 @@
 
 @inject Radzen.DialogService dialogService
 
+
 <RadzenStack Gap="1rem" Orientation="Orientation.Vertical" JustifyContent="JustifyContent.SpaceBetween" Style="height: 100%;">
+    <RadzenText>@car.car_year @car.car_make @car.car_model</RadzenText>
+
     <RadzenTemplateForm TItem="NoteModel" Data=@note Submit="@AddNote">
         <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
             <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
@@ -25,6 +28,7 @@
                     @item.created_by?.UserName
                 </Template>
             </RadzenDataGridColumn>
+            <RadzenDataGridColumn Property="created_at" Title="Created At" />
         </Columns>
     </RadzenDataGrid>
 </RadzenStack>

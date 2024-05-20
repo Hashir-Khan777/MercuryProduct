@@ -168,10 +168,6 @@ namespace MecuryProduct.Migrations
                     b.Property<DateTime>("pickup_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("picture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("pull_type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -223,10 +219,6 @@ namespace MecuryProduct.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("vin_picture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("cid");
@@ -262,9 +254,15 @@ namespace MecuryProduct.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("clat")
+                        .HasColumnType("float");
+
                     b.Property<string>("clname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("clon")
+                        .HasColumnType("float");
 
                     b.Property<string>("company_name")
                         .IsRequired()
@@ -316,6 +314,40 @@ namespace MecuryProduct.Migrations
                     b.HasIndex("created_by_id");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.ImageModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("file_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("file_path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("server_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("veh_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("veh_id");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.NoteModel", b =>
@@ -538,6 +570,15 @@ namespace MecuryProduct.Migrations
                     b.Navigation("created_by");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.ImageModel", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.CarModel", "car")
+                        .WithMany("images")
+                        .HasForeignKey("veh_id");
+
+                    b.Navigation("car");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.NoteModel", b =>
                 {
                     b.HasOne("MecuryProduct.Data.CustomerModel", null)
@@ -627,6 +668,8 @@ namespace MecuryProduct.Migrations
 
             modelBuilder.Entity("MecuryProduct.Data.CarModel", b =>
                 {
+                    b.Navigation("images");
+
                     b.Navigation("notes");
                 });
 

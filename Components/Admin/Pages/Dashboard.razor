@@ -4,4 +4,10 @@
 
 <RadzenText TextStyle="TextStyle.H3">Dashboard</RadzenText>
 
-<RadzenText>I am an Admin</RadzenText>
+<RadzenText TextStyle="TextStyle.DisplayH5">Average amount according to vehicle type</RadzenText>
+<RadzenChart Style="width: 400px;">
+    <RadzenPieSeries Data="@data" Title="Average Amount" CategoryProperty="title" ValueProperty="avgAmount">
+        <RadzenSeriesDataLabels Visible />
+    </RadzenPieSeries>
+</RadzenChart>
+ 

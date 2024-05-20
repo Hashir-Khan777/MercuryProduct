@@ -168,6 +168,8 @@ namespace MecuryProduct.Migrations
                     cfname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     clname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     caddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    clat = table.Column<double>(type: "float", nullable: false),
+                    clon = table.Column<double>(type: "float", nullable: false),
                     czip_code = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ccity = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ccountry = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -204,14 +206,12 @@ namespace MecuryProduct.Migrations
                     car_make = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     car_model = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     vin_no = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    vin_picture = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     car_run = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     car_color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updated_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     submitted_by = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     offered_ammount = table.Column<int>(type: "int", nullable: false),
-                    picture = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     tires_wheel_front = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     tires_wheel_rear = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -250,6 +250,28 @@ namespace MecuryProduct.Migrations
                         name: "FK_Cars_Customers_cid",
                         column: x => x.cid,
                         principalTable: "Customers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    veh_id = table.Column<int>(type: "int", nullable: true),
+                    type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    file_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    file_path = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    server_name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_Cars_veh_id",
+                        column: x => x.veh_id,
+                        principalTable: "Cars",
                         principalColumn: "Id");
                 });
 
@@ -356,6 +378,11 @@ namespace MecuryProduct.Migrations
                 column: "created_by_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Images_veh_id",
+                table: "Images",
+                column: "veh_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Notes_corrected_byId",
                 table: "Notes",
                 column: "corrected_byId");
@@ -393,6 +420,9 @@ namespace MecuryProduct.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Notes");

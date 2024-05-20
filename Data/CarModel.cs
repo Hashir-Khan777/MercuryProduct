@@ -19,8 +19,6 @@ namespace MecuryProduct.Data
 
         public string vin_no { get; set; } = string.Empty;
 
-        public string vin_picture { get; set; } = string.Empty;
-
         public string car_run { get; set; } = string.Empty;
 
         public string car_color { get; set; } = string.Empty;
@@ -35,8 +33,6 @@ namespace MecuryProduct.Data
 
         [Required]
         public int? offered_ammount { get; set; }
-
-        public string picture { get; set; } = string.Empty;
 
         [Required]
         public string status { get; set; } = string.Empty;
@@ -86,5 +82,7 @@ namespace MecuryProduct.Data
         public ApplicationUser? created_by { get; set; }
 
         public List<NoteModel>? notes { get; set; }
+
+        public List<ImageModel>? images { get; set; }
     }
 }

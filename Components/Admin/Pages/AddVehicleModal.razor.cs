@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Security.Claims;
 using Radzen;
+using System.Text.Json;
 
 namespace MecuryProduct.Components.Admin.Pages
 {
@@ -58,22 +59,52 @@ namespace MecuryProduct.Components.Admin.Pages
         [Inject]
         private UserService DriverService { get; set; }
         [Inject]
-        private CustomerService CustomerService { get; set; }
-        [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [Inject]
+        private DialogService DialogService { get; set; }
+        [Inject]
+        private SessionService SessionService { get; set; }
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
             GetDrivers();
             SetUserId();
+
+            var result = await SessionService.Get<CarModel>("car_form");
+
+            if (result != null)
+            {
+                car = result;
+            }
         }
 
-        public void CreateCar()
+        public async Task OpenAddVehicleModal(int CusId)
+        {
+            await DialogService.OpenAsync<AddVehicleModal>("Add Vehicle",
+                new Dictionary<string, object>() { { "CusId", CusId } },
+                new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }
+            );
+        }
+
+        public async void SetInSession()
+        {
+            await SessionService.Set("car_form", JsonSerializer.Serialize(car));
+        }
+
+        public async void CreateCar()
         {
             car.created_at = DateTime.UtcNow;
             car.updated_at = DateTime.UtcNow;
             CarService.AddCar(car, veh_notes);
-            dialogService.Close(true);
+            bool? addAnotherVehicle = await DialogService.Confirm("Are you sure?", "Do you want to add another vehicle?", new ConfirmOptions() { OkButtonText = "Add Another Vehicle", CancelButtonText = "Done" });
+            if (addAnotherVehicle != null && addAnotherVehicle == true)
+            {
+                await OpenAddVehicleModal(CusID);
+            }
+            else
+            {
+                dialogService.Close(true);
+            }
         }
 
         public void GetDrivers()

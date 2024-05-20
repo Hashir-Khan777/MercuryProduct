@@ -1,37 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\Zini Tecnologies Projects\\MecuryProduct\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\components\\account\\pages\\resetpassword.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:components\\account\\pages\\resetpassword.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ResetPassword.razor",
-              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Account\\Pages\\ResetPassword.razor",
-              "RelativeDocumentMoniker": "Components\\Account\\Pages\\ResetPassword.razor",
-              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Account\\Pages\\ResetPassword.razor",
-              "RelativeToolTip": "Components\\Account\\Pages\\ResetPassword.razor",
-              "ViewState": "AQIAAEsAAAAAZ2ZmZmYkwGIAAAB4AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-14T03:57:47.252Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

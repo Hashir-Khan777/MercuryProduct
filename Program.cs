@@ -17,6 +17,14 @@ builder.Services.AddServerSideBlazor().AddHubOptions(o =>
     o.MaximumReceiveMessageSize = 10 * 1024 * 1024;
 });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set the session timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
@@ -25,7 +33,10 @@ builder.Services.AddScoped<CustomerService>();
 builder.Services.AddScoped<CarService>();
 builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NoteService>();
+builder.Services.AddScoped<SessionService>();
+builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
+builder.Services.AddHttpClient<ApiService>();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -51,7 +62,7 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
-builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddSingleton<IEmailSender<ApplicationUser>, EmailSender>();
 
 var app = builder.Build();
 
@@ -71,6 +82,7 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+app.UseSession();
 
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 

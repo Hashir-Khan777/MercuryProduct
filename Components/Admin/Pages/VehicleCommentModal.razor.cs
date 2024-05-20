@@ -11,21 +11,30 @@ namespace MecuryProduct.Components.Admin.Pages
         [Parameter] public int VehId { get; set; }
         public List<NoteModel> notes = new List<NoteModel>();
         public NoteModel note = new NoteModel();
+        public CarModel car = new CarModel();
 
         [Inject]
         private NoteService NoteService { get; set; }
         [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [Inject]
+        private CarService CarService { get; set; }
 
         protected override void OnInitialized()
         {
             SetUserId();
             GetNotes();
+            GetCar();
         }
 
         public void GetNotes()
         {
             notes = NoteService.GetNotesByVehicleId(VehId).ToList();
+        }
+
+        public void GetCar()
+        {
+            car = CarService.GetCarById(VehId);
         }
 
         public async void SetUserId()

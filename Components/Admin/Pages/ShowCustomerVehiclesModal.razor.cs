@@ -9,6 +9,8 @@ namespace MecuryProduct.Components.Admin.Pages
     {
         [Parameter] public Object Id {  get; set; }
         [Parameter] public string Role { get; set; }
+        [Parameter] public DateTime? start_date { get; set; } = null;
+        [Parameter] public DateTime? end_date { get; set; } = null;
 
         public CustomerModel customer = new CustomerModel();
         public ApplicationUser driver = new ApplicationUser();
@@ -34,7 +36,14 @@ namespace MecuryProduct.Components.Admin.Pages
                 var result = CustomerService.GetCustomerById((int)Id);
                 if (result != null)
                 {
-                    customer = result;
+                    if (start_date?.Date != null && end_date?.Date != null)
+                    {
+                        customer = result;
+                        customer.cars = result.cars?.FindAll(c => start_date?.Date <= c.scheduled_date.Date && end_date?.Date >= c.scheduled_date.Date);
+                    } else
+                    {
+                        customer = result;
+                    }
                 }
             }
             else
@@ -86,7 +95,7 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public async Task OpenVehicleCommentModal(int VehId)
         {
-            await DialogService.OpenAsync<VehicleCommentModal>("Notes",
+            await DialogService.OpenAsync<VehicleCommentModal>($"Notes for m-veh-{VehId}",
                 new Dictionary<string, object>() { { "VehId", VehId } },
                 new DialogOptions() { Width = "700px", Height = "60%", Resizable = true, Draggable = true }
             );
