@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "E:\\Zini Tecnologies Projects\\MecuryProduct\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\components\\driver\\pages\\vehicles.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:components\\driver\\pages\\vehicles.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\components\\driver\\pages\\updatevehiclemodal.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:components\\driver\\pages\\updatevehiclemodal.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Vehicles.razor.cs",
-              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Driver\\Pages\\Vehicles.razor.cs",
-              "RelativeDocumentMoniker": "Components\\Driver\\Pages\\Vehicles.razor.cs",
-              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Driver\\Pages\\Vehicles.razor.cs",
-              "RelativeToolTip": "Components\\Driver\\Pages\\Vehicles.razor.cs",
-              "ViewState": "AQIAACMAAAAAAAAAAAAkwCwAAAAsAAAA",
+              "Title": "UpdateVehicleModal.razor.cs",
+              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Driver\\Pages\\UpdateVehicleModal.razor.cs",
+              "RelativeDocumentMoniker": "Components\\Driver\\Pages\\UpdateVehicleModal.razor.cs",
+              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Driver\\Pages\\UpdateVehicleModal.razor.cs",
+              "RelativeToolTip": "Components\\Driver\\Pages\\UpdateVehicleModal.razor.cs",
+              "ViewState": "AQIAAEEAAAAAzczMzMwywFAAAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T07:19:37.364Z",
+              "WhenOpened": "2024-05-21T09:33:14.623Z",
               "EditorCaption": ""
             }
           ]

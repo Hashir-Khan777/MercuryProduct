@@ -66,10 +66,10 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public async void AddMarkers()
         {
-            foreach (var customer in customers.FindAll(c => c.cars?.Count() > 0))
+            foreach (var customer in customers)
             {
-                var cars = customer.cars?.FindAll(c => start_date.Date <= c.scheduled_date.Date && end_date.Date >= c.scheduled_date.Date);
-                if (customer.cars?.FindAll(c => start_date.Date <= c.scheduled_date.Date && end_date.Date >= c.scheduled_date.Date).Count() > 0)
+                List<CarModel> cars = customer.cars.FindAll(c => c.scheduled_date.Date >= start_date.Date && c.scheduled_date.Date <= end_date.Date);
+                if (cars?.Count() > 0)
                 {
                     string color = customer.cars?.Find(c => c.status == "Scheduled") != null ? "red" : customer.cars?.Find(c => c.status == "Bought") != null ? "green" : customer.cars?.Find(c => c.status == "DnD") != null ? "black" : "red";
                     string? assemblyName = Assembly.GetExecutingAssembly().GetName().Name;

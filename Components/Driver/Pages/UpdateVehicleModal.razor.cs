@@ -76,6 +76,10 @@ namespace MecuryProduct.Components.Driver.Pages
 
         public void UpdateCar()
         {
+            if (car.status.ToLower() == "bought")
+            {
+                car.pickup_date = DateTime.Now;
+            }
             car.updated_at = DateTime.UtcNow;
             car.vin_no = car.vin_no.ToUpper();
             car.DL = car.DL.ToUpper();

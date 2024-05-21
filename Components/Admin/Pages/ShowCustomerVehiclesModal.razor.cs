@@ -36,10 +36,10 @@ namespace MecuryProduct.Components.Admin.Pages
                 var result = CustomerService.GetCustomerById((int)Id);
                 if (result != null)
                 {
-                    if (start_date?.Date != null && end_date?.Date != null)
+                    if (start_date != null && end_date != null)
                     {
                         customer = result;
-                        customer.cars = result.cars?.FindAll(c => start_date?.Date <= c.scheduled_date.Date && end_date?.Date >= c.scheduled_date.Date);
+                        customer.cars = result.cars?.FindAll(c => c.scheduled_date.Date >= start_date?.Date && c.scheduled_date.Date <= end_date?.Date);
                     } else
                     {
                         customer = result;
