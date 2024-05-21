@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MecuryProduct")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e636ab50be63da84e9f02082c39bf24caffe25e9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37be4ec4ae30c25d210eb334058688b317bae80c")]
 [assembly: System.Reflection.AssemblyProductAttribute("MecuryProduct")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MecuryProduct")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

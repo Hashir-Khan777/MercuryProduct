@@ -40,6 +40,11 @@ namespace MecuryProduct.Components.Driver.Pages
             );
         }
 
+        public string SendMessage(string phoneNumber)
+        {
+            return $"sms:{phoneNumber}/?body=Hello! I am a rider of Zini Technologies, I am comming to pick your vehicle in 20 to 30 minutes.";
+        }
+
         public async void GetCars()
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -54,6 +59,11 @@ namespace MecuryProduct.Components.Driver.Pages
                     cars = CarService.GetCarsByDriverId(userId).ToList();
                 }
             }
+        }
+
+        public string GetPath(string address)
+        {
+            return $"http://maps.google.com/?q={address}";
         }
     }
 }

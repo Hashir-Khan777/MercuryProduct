@@ -25,24 +25,16 @@
       "PackagePath": "staticwebassets\\js\\map.js"
     },
     {
-      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\banner1.jpg",
-      "PackagePath": "staticwebassets\\uploads\\banner1.jpg"
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1 vehicle contact.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-1 vehicle contact.jpg"
     },
     {
-      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\blog1.jpg",
-      "PackagePath": "staticwebassets\\uploads\\blog1.jpg"
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1 vehicle portfolio6.png",
+      "PackagePath": "staticwebassets\\uploads\\stk-1 vehicle portfolio6.png"
     },
     {
-      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\digitalmarketing.jpg",
-      "PackagePath": "staticwebassets\\uploads\\digitalmarketing.jpg"
-    },
-    {
-      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\digitalservice.jpg",
-      "PackagePath": "staticwebassets\\uploads\\digitalservice.jpg"
-    },
-    {
-      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\graphicDesigning.jpg",
-      "PackagePath": "staticwebassets\\uploads\\graphicDesigning.jpg"
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1 vin portfolio1.png",
+      "PackagePath": "staticwebassets\\uploads\\stk-1 vin portfolio1.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.MecuryProduct.Microsoft.AspNetCore.StaticWebAssets.props",

@@ -77,13 +77,15 @@ namespace MecuryProduct.Components.Driver.Pages
         public void UpdateCar()
         {
             car.updated_at = DateTime.UtcNow;
+            car.vin_no = car.vin_no.ToUpper();
+            car.DL = car.DL.ToUpper();
             CarService.UpdateCar(car);
             dialogService.Close();
         }
 
         public void changeVinImage(string base64)
         {
-            string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + file_name;
+            string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id} vin {file_name}";
             ImageModel image = new ImageModel()
             {
                 file_name = file_name,
@@ -103,7 +105,7 @@ namespace MecuryProduct.Components.Driver.Pages
         {
             foreach (var file in e.Files)
             {
-                string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + file.Name;
+                string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id} vehicle {file.Name}";
                 ImageModel image = new ImageModel()
                 {
                     file_name = file.Name,

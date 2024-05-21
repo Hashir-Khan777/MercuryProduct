@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "NO851+UoLgOna+xu+kDQB3D8VyvMN9ThWEl/7B7v18M=",
+  "Hash": "hVWtgD9tyHItbQcNgapm0KHSSAmup7DXmfjDjsJ7iaA=",
   "Source": "MecuryProduct",
   "BasePath": "_content/MecuryProduct",
   "Mode": "Default",
@@ -1081,12 +1081,12 @@
       "OriginalItemSpec": "wwwroot\\js\\map.js"
     },
     {
-      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\banner1.jpg",
+      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1 vehicle contact.jpg",
       "SourceId": "MecuryProduct",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\",
       "BasePath": "_content/MecuryProduct",
-      "RelativePath": "uploads/banner1.jpg",
+      "RelativePath": "uploads/stk-1 vehicle contact.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1097,15 +1097,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\banner1.jpg"
+      "OriginalItemSpec": "wwwroot\\uploads\\stk-1 vehicle contact.jpg"
     },
     {
-      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\blog1.jpg",
+      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1 vehicle portfolio6.png",
       "SourceId": "MecuryProduct",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\",
       "BasePath": "_content/MecuryProduct",
-      "RelativePath": "uploads/blog1.jpg",
+      "RelativePath": "uploads/stk-1 vehicle portfolio6.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1116,15 +1116,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\blog1.jpg"
+      "OriginalItemSpec": "wwwroot\\uploads\\stk-1 vehicle portfolio6.png"
     },
     {
-      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\digitalmarketing.jpg",
+      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1 vin portfolio1.png",
       "SourceId": "MecuryProduct",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\",
       "BasePath": "_content/MecuryProduct",
-      "RelativePath": "uploads/digitalmarketing.jpg",
+      "RelativePath": "uploads/stk-1 vin portfolio1.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1135,45 +1135,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\digitalmarketing.jpg"
-    },
-    {
-      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\digitalservice.jpg",
-      "SourceId": "MecuryProduct",
-      "SourceType": "Discovered",
-      "ContentRoot": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\",
-      "BasePath": "_content/MecuryProduct",
-      "RelativePath": "uploads/digitalservice.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\digitalservice.jpg"
-    },
-    {
-      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\graphicDesigning.jpg",
-      "SourceId": "MecuryProduct",
-      "SourceType": "Discovered",
-      "ContentRoot": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\",
-      "BasePath": "_content/MecuryProduct",
-      "RelativePath": "uploads/graphicDesigning.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\graphicDesigning.jpg"
+      "OriginalItemSpec": "wwwroot\\uploads\\stk-1 vin portfolio1.png"
     }
   ]
 }

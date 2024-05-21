@@ -66,10 +66,13 @@
     </RadzenRow>
     <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
         <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
-            <RadzenLabel Text="Vin Number" Component="VinNo" /> <span style="color: red;">*</span>
+            <RadzenLabel Text="VIN" Component="VinNo" /> <span style="color: red;">*</span>
             <RadzenTextBox @bind-Value="car.vin_no" Name="VinNo" Style="width: 100%;" />
             <RadzenRequiredValidator Component="VinNo" Text="Vin number is required" />
-            <RadzenRegexValidator Component="VinNo" Text="Vin number must be 17 alphanumeric characters" Pattern="^[a-zA-Z0-9]{17}$" />
+            @if (car.car_year > 1990)
+            {
+                <RadzenRegexValidator Component="VinNo" Text="Vin number must be 17 alphanumeric characters" Pattern="^[a-zA-Z0-9]{17}$" />
+            }
         </RadzenColumn>
         <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
             <RadzenLabel Text="Purchase Ammount" Component="PurchaseAmount" /> <span style="color: red;">*</span>
