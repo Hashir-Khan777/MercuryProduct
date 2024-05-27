@@ -53,6 +53,9 @@ namespace MecuryProduct.Components.Admin.Pages
             new Instruction { label = "No", value = false },
         };
         private string veh_notes = "";
+        private List<string> makes = new List<string>();
+        private List<string> models = new List<string>();
+        private List<int?> years = new List<int?>();
 
         [Inject]
         private CarService CarService { get; set; }
@@ -69,12 +72,15 @@ namespace MecuryProduct.Components.Admin.Pages
         {
             GetDrivers();
             SetUserId();
+            GetMakes();
+            GetYears();
 
             var result = await SessionService.Get<CarModel>("car_form");
 
             if (result != null)
             {
                 car = result;
+                models = CarService.GetModelsByMake(car.car_make);
             }
         }
 
@@ -84,6 +90,23 @@ namespace MecuryProduct.Components.Admin.Pages
                 new Dictionary<string, object>() { { "CusId", CusId } },
                 new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }
             );
+        }
+
+        public void GetMakes()
+        {
+            makes = CarService.GetMakes();
+        }
+
+        public void GetYears()
+        {
+            years = CarService.GetYear();
+        }
+
+        public void ChangeMake(string? make)
+        {
+            SetInSession();
+
+            models = CarService.GetModelsByMake(make);
         }
 
         public async void SetInSession()

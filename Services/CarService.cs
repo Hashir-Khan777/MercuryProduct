@@ -32,12 +32,27 @@ namespace MecuryProduct.Services
 
         public CarModel? GetCarById(int id)
         {
-            return db.Cars.FirstOrDefault(c => c.Id == id);
+            return db.Cars.Include(c => c.docs).FirstOrDefault(c => c.Id == id);
         }
 
         public List<CarModel> GetCars()
         {
-            return db.Cars.OrderByDescending(c => c.created_at).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).ToList();
+            return db.Cars.OrderByDescending(c => c.created_at).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.docs).ToList();
+        }
+
+        public List<string> GetMakes()
+        {
+            return db.MasterVehicleTable.Select(v => v.make).Distinct().ToList();
+        }
+
+        public List<string> GetModelsByMake(string? make)
+        {
+            return db.MasterVehicleTable.Where(v => v.make == make).Select(v => v.model).Distinct().ToList();
+        }
+
+        public List<int?> GetYear()
+        {
+            return db.MasterYearTable.Select(y => y.Year).ToList();
         }
 
         public List<CarModel> GetCarsByDriverId(string driver_id)

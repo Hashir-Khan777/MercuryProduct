@@ -1,34 +1,97 @@
-﻿@page "/admin/comment/dialog/{VehId}"
+﻿@page "/admin/comment/dialog/{VehId}/{SfId}"
 
 @inject Radzen.DialogService dialogService
 
+<style>
+    .multi-upload .rz-fileupload-content {
+        display: none !important;
+    }
+</style>
+
 
 <RadzenStack Gap="1rem" Orientation="Orientation.Vertical" JustifyContent="JustifyContent.SpaceBetween" Style="height: 100%;">
-    <RadzenText>@car.car_year @car.car_make @car.car_model</RadzenText>
+    @if (SfId == null && Docs == false)
+    {
+        <RadzenText>@car.car_year @car.car_make @car.car_model</RadzenText>
+    }
 
     <RadzenTemplateForm TItem="NoteModel" Data=@note Submit="@AddNote">
-        <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
-            <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
-                <RadzenFormField Text="Note" Variant="Variant.Flat" Style="width: 100%;">
-                    <RadzenTextArea Name="Note" @bind-Value="note.note" Style="width: 100%;" />
-                </RadzenFormField>
-                <RadzenRequiredValidator Component="Note" Text="Note is required" />
-            </RadzenColumn>
-        </RadzenRow>
+        @if (Docs)
+        {
+            <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="multi-upload rz-py-sm-4">
+                <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+                    <RadzenLabel>Doc</RadzenLabel> <span style="color: red;">*</span>
+                    <RadzenUpload Change="changeDocs" @bind-value="car.docs" Style="width: 100%;" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
+                    <RadzenRequiredValidator Text="Doc is required" />
+                    @foreach (var file in docs)
+                    {
+                        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+                            <RadzenText>@file.file_name</RadzenText>
+                            <RadzenButton Click="@(() => DeleteDoc(file))" Variant="Variant.Flat"><RadzenIcon Icon="close" /></RadzenButton>
+                        </RadzenStack>
+                    }
+                </RadzenColumn>
+            </RadzenRow>
+        }
+        @if (Docs)
+        {
+            <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+                <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+                    <RadzenFormField Text="Note" Variant="Variant.Flat" Style="width: 100%;">
+                        <RadzenTextArea @bind-Value="note.note" Style="width: 100%;" />
+                    </RadzenFormField>
+                </RadzenColumn>
+            </RadzenRow>
+        }
+        else
+        {
+            <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+                <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+                    <RadzenFormField Text="Note" Variant="Variant.Flat" Style="width: 100%;">
+                        <RadzenTextArea Name="Note" @bind-Value="note.note" Style="width: 100%;" />
+                    </RadzenFormField>
+                    <RadzenRequiredValidator Component="Note" Text="Note is required" />
+                </RadzenColumn>
+            </RadzenRow>
+        }
         <RadzenButton ButtonType="ButtonType.Submit">Add Note</RadzenButton>
     </RadzenTemplateForm>
 
-    <RadzenDataGrid Data="@notes" AllowVirtualization="true" Style="height:400px"
-                    AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
-                    AllowSorting="true">
-        <Columns>
-            <RadzenDataGridColumn Property="note" Title="Note" />
-            <RadzenDataGridColumn Title="Created By">
-                <Template Context="item">
-                    @item.created_by?.UserName
-                </Template>
-            </RadzenDataGridColumn>
-            <RadzenDataGridColumn Property="created_at" Title="Created At" />
-        </Columns>
-    </RadzenDataGrid>
+    @if (Docs)
+    {
+        <RadzenDataGrid Data="@docs" AllowVirtualization="true" Style="height:400px"
+                        AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                        AllowSorting="true">
+            <Columns>
+                <RadzenDataGridColumn Property="note.note.note" Title="Note" />
+                <RadzenDataGridColumn Title="Doc">
+                    <Template Context="item">
+                        <RadzenLink Path="@item.short_path" Target="_doc">@item.file_name</RadzenLink>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="Created By">
+                    <Template Context="item">
+                        @item.note?.created_at
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Property="created_at" Title="Created At" />
+            </Columns>
+        </RadzenDataGrid>
+    }
+    else
+    {
+        <RadzenDataGrid Data="@notes" AllowVirtualization="true" Style="height:400px"
+                        AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                        AllowSorting="true">
+            <Columns>
+                <RadzenDataGridColumn Property="note" Title="Note" />
+                <RadzenDataGridColumn Title="Created By">
+                    <Template Context="item">
+                        @item.created_by?.UserName
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Property="created_at" Title="Created At" />
+            </Columns>
+        </RadzenDataGrid>
+    }
 </RadzenStack>

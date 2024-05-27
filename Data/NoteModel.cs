@@ -8,6 +8,10 @@ namespace MecuryProduct.Data
 
         public int? veh_id { get; set; }
 
+        public int? sf_id { get; set; }
+
+        public int? doc_id { get; set; }
+
         [Required]
         public string note { get; set; } = string.Empty;
 
@@ -32,5 +36,9 @@ namespace MecuryProduct.Data
         public ApplicationUser? created_by { get; set; }
 
         public ApplicationUser? corrected_by { get; set; }
+
+        public StateFormModel? state_form { get; set; }
+
+        public DocModel? doc { get; set; }
     }
 }

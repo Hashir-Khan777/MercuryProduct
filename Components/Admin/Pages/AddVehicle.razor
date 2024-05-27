@@ -9,22 +9,21 @@
 <RadzenTemplateForm TItem="CarModel" Data=@car Submit="@CreateCar">
     <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
         <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
-            <RadzenLabel Text="Year" Component="Year" /> <span style="color: red;">*</span>
-            <RadzenNumeric Name="Year" @bind-Value="car.car_year" Style="width: 100%;" />
+            <RadzenLabel Text="Year" Component="Year" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown Change="SetInSession" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@car.car_year" Data="@years" Style="width: 100%; max-width: 400px;" Name="Year" />
             <RadzenRequiredValidator Component="Year" Text="Year is required" />
-            <RadzenRegexValidator Component="Year" Text="It should be a valid year" Pattern="^[12][0-9]{3}$" />
         </RadzenColumn>
         <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
-            <RadzenLabel Text="Make" Component="Make" /> <span style="color: red;">*</span>
-            <RadzenTextBox Change="SetInSession" Name="Make" @bind-Value="car.car_make" Style="width: 100%;" />
+            <RadzenLabel Text="Make" Component="Make" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown Change="(args => ChangeMake(args.ToString()))" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@car.car_make" Data="@makes" Style="width: 100%; max-width: 400px;" Name="Make" />
             <RadzenRequiredValidator Component="Make" Text="Make is required" />
         </RadzenColumn>
     </RadzenRow>
     <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
         <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
-            <RadzenLabel Text="Model" Component="Model" /> <span style="color: red;">*</span>
-            <RadzenTextBox Change="SetInSession" @bind-Value="car.car_model" Name="Model" Style="width: 100%;" />
-            <RadzenRequiredValidator Component="Model" Text="Model is required" />
+            <RadzenLabel Text="Model" Component="Model" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown Change="SetInSession" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@car.car_model" Data="@models" Style="width: 100%; max-width: 400px;" Name="Model" />
+            <RadzenRequiredValidator Component="Model" Text="Make is required" />
         </RadzenColumn>
         <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
             <RadzenLabel Text="Title Status" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />

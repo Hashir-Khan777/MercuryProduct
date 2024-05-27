@@ -34,7 +34,9 @@ builder.Services.AddScoped<CarService>();
 builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NoteService>();
 builder.Services.AddScoped<SessionService>();
-builder.Services.AddScoped<ImageService>();
+builder.Services.AddScoped<DocService>();
+builder.Services.AddScoped<StateFormService>();
+builder.Services.AddScoped<ProductionService>();
 builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 builder.Services.AddHttpClient<ApiService>();
 

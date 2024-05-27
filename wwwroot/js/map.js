@@ -1,5 +1,6 @@
 var map;
-function initMap() {
+function initMap(centerLat, centerLng) {
+    console.log({ lat: centerLat, lng: centerLng })
     window.tt.setProductInfo("Mercury Product", "1.0.0")
     map = window.tt.map({
         key: "FAywZGZYK8dXtjREG8KFziDuedaBFSjb",
@@ -8,8 +9,8 @@ function initMap() {
             trafficIncidents: true,
             trafficFlow: true,
         },
-        center: { lat: 38.4727678, lng: -108.8698325 },
-        zoom: 3
+        center: { lat: centerLat, lng: centerLng },
+        zoom: 12
     })
     var nav = new window.tt.NavigationControl();
     map.addControl(nav);

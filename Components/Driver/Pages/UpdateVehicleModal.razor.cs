@@ -1,9 +1,7 @@
 ﻿using MecuryProduct.Data;
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Hosting.Server;
-using Radzen.Blazor;
-using System.Text;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace MecuryProduct.Components.Driver.Pages
 {
@@ -59,64 +57,150 @@ namespace MecuryProduct.Components.Driver.Pages
             "Long"
         };
         private string file_name = string.Empty;
+        private List<string> makes = new List<string>();
+        private List<string> models = new List<string>();
+        private List<int?> years = new List<int?>();
+        public string vinImage;
+        public List<DocModel> vehicleImages = new List<DocModel>();
 
         [Inject]
         private CarService CarService { get; set; }
         [Inject]
-        private ImageService ImageService { get; set; }
+        private DocService DocService { get; set; }
 
         protected override void OnInitialized()
         {
+            GetMakes();
+            GetYears();
             var getCarById = CarService.GetCarById(id);
             if (getCarById != null)
             {
                 car = getCarById;
+                models = CarService.GetModelsByMake(car.car_make);
+                var vin = car.docs?.Find(d => d.type.ToLower() == "vin");
+                var vehicles = car.docs?.FindAll(d => d.type.ToLower() == "vehicle");
+                if (vehicles is not null)
+                {
+                    vehicleImages = vehicles;
+                }
+                if (vin is not null)
+                {
+                    var provider = new FileExtensionContentTypeProvider();
+                    if (!provider.TryGetContentType(vin.file_path, out string contentType))
+                    {
+                        contentType = "application/octet-stream";
+                    }
+                    file_name = vin.file_name;
+                    byte[] imageArray = File.ReadAllBytes(vin.file_path);
+                    vinImage = $"data:{contentType};base64,{Convert.ToBase64String(imageArray)}";
+                }
             }
+        }
+
+        public void GetMakes()
+        {
+            makes = CarService.GetMakes();
+        }
+
+        public void GetYears()
+        {
+            years = CarService.GetYear();
+        }
+
+        public void ChangeMake(string? make)
+        {
+            models = CarService.GetModelsByMake(make);
         }
 
         public void UpdateCar()
         {
             if (car.status.ToLower() == "bought")
             {
-                car.pickup_date = DateTime.Now;
+                car.pickup_date = DateTime.UtcNow;
             }
             car.updated_at = DateTime.UtcNow;
             car.vin_no = car.vin_no.ToUpper();
             car.DL = car.DL.ToUpper();
-            CarService.UpdateCar(car);
-            dialogService.Close();
+            if (vehicleImages.Count() > 0)
+            {
+                CarService.UpdateCar(car);
+                dialogService.Close();
+            }
         }
 
-        public void changeVinImage(string base64)
+        public void changeVinImage(string? base64)
         {
-            string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id} vin {file_name}";
-            ImageModel image = new ImageModel()
+            if (base64 is not null)
             {
-                file_name = file_name,
-                file_path = filePath,
-                type = "vin",
-                server_name = "localhost",
-                veh_id = car.Id
-            };
-            int startingIndex = base64.IndexOf(";base64,") + 8;
-            string fileBase64 = base64.Substring(startingIndex);
-            byte[] file = Convert.FromBase64String(fileBase64);
-            System.IO.File.WriteAllBytes(filePath, file);
-            ImageService.AddImage(image);
+                var vin = car.docs?.Find(d => d.type.ToLower() == "vin");
+                if (vin is not null)
+                {
+                    var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+                    string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
+                    DocModel doc = new DocModel()
+                    {
+                        Id = vin.Id,
+                        file_name = file_name,
+                        file_path = filePath,
+                        type = "vin",
+                        server_name = "localhost",
+                        veh_id = car.Id,
+                        short_path = "uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}",
+                        updated_at = DateTime.UtcNow,
+                        created_at = vin.created_at,
+                    };
+                    int startingIndex = base64.IndexOf(";base64,") + 8;
+                    string fileBase64 = base64.Substring(startingIndex);
+                    byte[] file = Convert.FromBase64String(fileBase64);
+                    System.IO.File.WriteAllBytes(filePath, file);
+                    DocService.UpdateDoc(doc);
+                } else
+                {
+                    var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+                    string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
+                    DocModel doc = new DocModel()
+                    {
+                        file_name = file_name,
+                        file_path = filePath,
+                        type = "vin",
+                        server_name = "localhost",
+                        veh_id = car.Id,
+                        short_path = "uploads/" + $"stk-{ car.Id }-vin-{datetime}-{ file_name }",
+                        created_at = DateTime.UtcNow,
+                        updated_at = DateTime.UtcNow
+                    };
+                    int startingIndex = base64.IndexOf(";base64,") + 8;
+                    string fileBase64 = base64.Substring(startingIndex);
+                    byte[] file = Convert.FromBase64String(fileBase64);
+                    System.IO.File.WriteAllBytes(filePath, file);
+                    DocService.AddDoc(doc);
+                }
+            }
+        }
+
+        public void DeleteDoc(DocModel doc)
+        {
+            DocService.DeleteDoc(doc);
+            vehicleImages.Remove(doc);
+            StateHasChanged();
         }
 
         public async void changeVehicleImages(Radzen.UploadChangeEventArgs e)
         {
             foreach (var file in e.Files)
             {
-                string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id} vehicle {file.Name}";
-                ImageModel image = new ImageModel()
+                var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+                string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id}-vehicle-{datetime}-{file.Name}";
+                DocModel doc = new DocModel()
                 {
                     file_name = file.Name,
                     file_path = filePath,
                     type = "vehicle",
                     server_name = "localhost",
-                    veh_id = car.Id
+                    veh_id = car.Id,
+                    short_path = "uploads/" + $"stk-{car.Id}-vehicle-{datetime}-{file.Name}",
+                    created_at = DateTime.UtcNow,
+                    updated_at = DateTime.UtcNow
                 };
                 await using (var stream = file.OpenReadStream(long.MaxValue))
                 {
@@ -125,7 +209,9 @@ namespace MecuryProduct.Components.Driver.Pages
                         await stream.CopyToAsync(fs);
                     }
                 }
-                ImageService.AddImage(image);
+                vehicleImages.Add(doc);
+                DocService.AddDoc(doc);
+                StateHasChanged();
             }
         }
     }

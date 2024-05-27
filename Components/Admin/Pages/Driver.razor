@@ -9,8 +9,7 @@
     </RadzenLink>
 </RadzenStack>
 
-<RadzenDataGrid TItem="ApplicationUser" Data="@drivers" AllowVirtualization="true" Style="height:400px"
-                AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+<RadzenDataGrid TItem="ApplicationUser" Data="@drivers" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
                 AllowSorting="true">
     <Columns>
         <RadzenDataGridColumn Title="Id">

@@ -17,6 +17,11 @@ namespace MecuryProduct.Services
             return db.Notes.Where(n => n.veh_id == VehId).Include(n => n.created_by).ToList();
         }
 
+        public List<NoteModel> GetNotesByStateFormId(int? sf_id)
+        {
+            return db.Notes.Where(n => n.sf_id == sf_id).Include(n => n.created_by).ToList();
+        }
+
         public void AddNote(NoteModel note)
         {
             db.Notes.Add(note);

@@ -25,16 +25,56 @@
       "PackagePath": "staticwebassets\\js\\map.js"
     },
     {
-      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1 vehicle contact.jpg",
-      "PackagePath": "staticwebassets\\uploads\\stk-1 vehicle contact.jpg"
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\env-28-env-20240527203325600-blogs.jpg",
+      "PackagePath": "staticwebassets\\uploads\\env-28-env-20240527203325600-blogs.jpg"
     },
     {
-      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1 vehicle portfolio6.png",
-      "PackagePath": "staticwebassets\\uploads\\stk-1 vehicle portfolio6.png"
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-doc-20240527205007162-Python Crash Course.pdf",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-doc-20240527205007162-Python Crash Course.pdf"
     },
     {
-      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1 vin portfolio1.png",
-      "PackagePath": "staticwebassets\\uploads\\stk-1 vin portfolio1.png"
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-doc-20240527205625965-NumPy-3rd-Edition.pdf",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-doc-20240527205625965-NumPy-3rd-Edition.pdf"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-doc-20240527214346778-SCIKIT-LEARN-.pdf",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-doc-20240527214346778-SCIKIT-LEARN-.pdf"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-doc-20240527215052222-Machine_Learning_with_TensorFlow_v10_MEAP.pdf",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-doc-20240527215052222-Machine_Learning_with_TensorFlow_v10_MEAP.pdf"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-doc-20240527215355327-Learning pandas.pdf",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-doc-20240527215355327-Learning pandas.pdf"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-doc-20240527215600265-Numpy _ Pandas.pdf",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-doc-20240527215600265-Numpy _ Pandas.pdf"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-doc-20240527215653638-Learning pandas.pdf",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-doc-20240527215653638-Learning pandas.pdf"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-doc-20240527215719017-Python Crash Course.pdf",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-doc-20240527215719017-Python Crash Course.pdf"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-doc-20240527215813434-NumPy-3rd-Edition.pdf",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-doc-20240527215813434-NumPy-3rd-Edition.pdf"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-vehicle-20240527203243715-banner2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-vehicle-20240527203243715-banner2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-vehicle-20240527203243873-banner3.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-vehicle-20240527203243873-banner3.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-vin-20240527203235945-banner1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-vin-20240527203235945-banner1.jpg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.MecuryProduct.Microsoft.AspNetCore.StaticWebAssets.props",

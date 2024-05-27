@@ -6,8 +6,7 @@
     <RadzenText TextStyle="TextStyle.H4">Vehicles</RadzenText>
 </RadzenStack>
 
-<RadzenDataGrid Data="@cars" AllowVirtualization="true" Style="height:400px"
-                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+<RadzenDataGrid Data="@cars" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
                 AllowSorting="true">
     <Columns>
         <RadzenDataGridColumn Property="car_year" Title="Year" />

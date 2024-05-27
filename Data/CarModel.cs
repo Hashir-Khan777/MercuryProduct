@@ -43,11 +43,13 @@ namespace MecuryProduct.Data
 
         public string car_not_running_notes { get; set; } = string.Empty;
 
-        public string vin { get; set; } = string.Empty;
-
         public DateTime pickup_date { get; set; }
 
         public DateTime scheduled_date { get; set; }
+
+        public DateTime? set_date { get; set; } = null;
+
+        public DateTime? pulled_date { get; set; } = null;
 
         public string? driver_id { get; set; } = string.Empty;
 
@@ -58,6 +60,12 @@ namespace MecuryProduct.Data
         public string dnd_notes { get; set; } = string.Empty;
 
         public string lead_type { get; set; } = string.Empty;
+
+        public string prod_status { get; set; } = "Hold";
+
+        public string section { get; set; } = string.Empty;
+
+        public string row { get; set; } = string.Empty;
 
         public string pull_type { get; set; } = string.Empty;
 
@@ -83,6 +91,6 @@ namespace MecuryProduct.Data
 
         public List<NoteModel>? notes { get; set; }
 
-        public List<ImageModel>? images { get; set; }
+        public List<DocModel>? docs { get; set; }
     }
 }

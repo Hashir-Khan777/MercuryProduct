@@ -38,7 +38,9 @@ namespace MecuryProduct.Components.Admin.Pages
                 StateHasChanged();
                 if (customers.Count() > 0)
                 {
-                    await JS.InvokeVoidAsync("initMap");
+                    var centerLat = (customers[0].clat + customers[customers.Count() - 1].clat) / 2;
+                    var centerLng = (customers[0].clon + customers[customers.Count() - 1].clon) / 2;
+                    await JS.InvokeVoidAsync("initMap", centerLat, centerLng);
                     AddMarkers();
                 }
                 first_render = false;
@@ -53,7 +55,9 @@ namespace MecuryProduct.Components.Admin.Pages
                 StateHasChanged();
                 if (customers.Count() > 0)
                 {
-                    await JS.InvokeVoidAsync("initMap");
+                    var centerLat = (customers[0].clat + customers[customers.Count() - 1].clat) / 2;
+                    var centerLng = (customers[0].clon + customers[customers.Count() - 1].clon) / 2;
+                    await JS.InvokeVoidAsync("initMap", centerLat, centerLng);
                     AddMarkers();
                 }
             }
