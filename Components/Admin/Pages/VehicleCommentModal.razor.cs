@@ -83,10 +83,11 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public async void changeDocs(Radzen.UploadChangeEventArgs e)
         {
+            string directory = Directory.GetCurrentDirectory();
             foreach (var file in e.Files)
             {
                 var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
-                string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id}-doc-{datetime}-{file.Name}";
+                string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-doc-{datetime}-{file.Name}";
                 doc = new DocModel()
                 {
                     file_name = file.Name,

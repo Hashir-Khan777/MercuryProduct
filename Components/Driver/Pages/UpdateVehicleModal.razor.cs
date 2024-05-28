@@ -16,10 +16,10 @@ namespace MecuryProduct.Components.Driver.Pages
             "Delivered",
             "DnD"
         };
-        private List<string> title_status = new List<string>()
+        private List<Instruction> title_status = new List<Instruction>()
         {
-            "Yes",
-            "No",
+            new Instruction { label = "Yes", value = true },
+            new Instruction { label = "No", value = false },
         };
         private List<string> tires_condition = new List<string>()
         {
@@ -133,10 +133,11 @@ namespace MecuryProduct.Components.Driver.Pages
             if (base64 is not null)
             {
                 var vin = car.docs?.Find(d => d.type.ToLower() == "vin");
+                string directory = Directory.GetCurrentDirectory();
                 if (vin is not null)
                 {
                     var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
-                    string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
+                    string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
                     DocModel doc = new DocModel()
                     {
                         Id = vin.Id,
@@ -154,10 +155,11 @@ namespace MecuryProduct.Components.Driver.Pages
                     byte[] file = Convert.FromBase64String(fileBase64);
                     System.IO.File.WriteAllBytes(filePath, file);
                     DocService.UpdateDoc(doc);
-                } else
+                }
+                else
                 {
                     var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
-                    string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
+                    string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
                     DocModel doc = new DocModel()
                     {
                         file_name = file_name,
@@ -187,10 +189,11 @@ namespace MecuryProduct.Components.Driver.Pages
 
         public async void changeVehicleImages(Radzen.UploadChangeEventArgs e)
         {
+            string directory = Directory.GetCurrentDirectory();
             foreach (var file in e.Files)
             {
                 var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
-                string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id}-vehicle-{datetime}-{file.Name}";
+                string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-vehicle-{datetime}-{file.Name}";
                 DocModel doc = new DocModel()
                 {
                     file_name = file.Name,
@@ -213,6 +216,12 @@ namespace MecuryProduct.Components.Driver.Pages
                 DocService.AddDoc(doc);
                 StateHasChanged();
             }
+        }
+
+        private sealed class Instruction
+        {
+            public string label { get; set; } = string.Empty;
+            public bool value { get; set; }
         }
     }
 }

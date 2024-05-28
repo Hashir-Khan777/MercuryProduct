@@ -23,10 +23,10 @@ namespace MecuryProduct.Components.Admin.Pages
             "Delivered",
             "DnD"
         };
-        private List<string> title_status = new List<string>()
+        private List<Instruction> title_status = new List<Instruction>()
         {
-            "Yes",
-            "No",
+            new Instruction { label = "Yes", value = true },
+            new Instruction { label = "No", value = false },
         };
         private List<string> tires_condition = new List<string>()
         {
@@ -175,10 +175,11 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public async void changeDocs(Radzen.UploadChangeEventArgs e)
         {
+            string directory = Directory.GetCurrentDirectory();
             foreach (var file in e.Files)
             {
                 var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
-                string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"stk-{car.Id}-doc-{datetime}-{file.Name}";
+                string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-doc-{datetime}-{file.Name}";
                 doc = new DocModel()
                 {
                     file_name = file.Name,

@@ -10,7 +10,7 @@ function initMap(centerLat, centerLng) {
             trafficFlow: true,
         },
         center: { lat: centerLat, lng: centerLng },
-        zoom: 12
+        zoom: 5
     })
     var nav = new window.tt.NavigationControl();
     map.addControl(nav);

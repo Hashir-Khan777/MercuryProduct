@@ -65,6 +65,10 @@
       "PackagePath": "staticwebassets\\uploads\\stk-1-doc-20240527215813434-NumPy-3rd-Edition.pdf"
     },
     {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-doc-20240527220143874-Web Scraping with Python, 2nd Edition.pdf",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-doc-20240527220143874-Web Scraping with Python, 2nd Edition.pdf"
+    },
+    {
       "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-vehicle-20240527203243715-banner2.jpg",
       "PackagePath": "staticwebassets\\uploads\\stk-1-vehicle-20240527203243715-banner2.jpg"
     },
@@ -75,6 +79,54 @@
     {
       "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-vin-20240527203235945-banner1.jpg",
       "PackagePath": "staticwebassets\\uploads\\stk-1-vin-20240527203235945-banner1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-2-doc-20240528071226568-mobileappservice.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-2-doc-20240528071226568-mobileappservice.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-2-vehicle-20240528054412709-questionFour.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-2-vehicle-20240528054412709-questionFour.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-2-vehicle-20240528054412833-questionOne.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-2-vehicle-20240528054412833-questionOne.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-2-vehicle-20240528054412893-questionThree.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-2-vehicle-20240528054412893-questionThree.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-2-vehicle-20240528054412982-questionTwo.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-2-vehicle-20240528054412982-questionTwo.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-2-vin-20240528054355910-process.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-2-vin-20240528054355910-process.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-3-vehicle-20240528083623783-banner1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-3-vehicle-20240528083623783-banner1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-3-vin-20240528083618544-client1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-3-vin-20240528083618544-client1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-4-vehicle-20240528083701581-brandservice.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-4-vehicle-20240528083701581-brandservice.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-4-vin-20240528083656699-digitalservice.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-4-vin-20240528083656699-digitalservice.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-5-vehicle-20240528083740192-aboutus.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-5-vehicle-20240528083740192-aboutus.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-5-vin-20240528083735415-aboutHeader.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-5-vin-20240528083735415-aboutHeader.jpg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.MecuryProduct.Microsoft.AspNetCore.StaticWebAssets.props",

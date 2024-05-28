@@ -44,12 +44,12 @@
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn Title="Picture">
                         <Template Context="item">
-                            <RadzenImage Style="width: 200px; cursor: pointer;" Path="@item?.docs?.FindAll(d => d.type == "vehicle")?[0].short_path" Click="@(() => OpenImageModal(item?.docs?.FindAll(d => d.type == "vehicle"), true))" />
+                            <RadzenImage Style="width: 200px; height: 200px; object-fit: cover; cursor: pointer;" Path="@item?.docs?.FindAll(d => d.type == "vehicle")?[0].short_path" Click="@(() => OpenImageModal(item?.docs?.FindAll(d => d.type == "vehicle"), true))" />
                         </Template>
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn Title="VIN Picture">
                         <Template Context="item">
-                            <RadzenImage Style="width: 200px; cursor: pointer;" Path="@item?.docs?.FindAll(d => d.type == "vin")?[0].short_path" Click="@(() => OpenImageModal(item?.docs?.FindAll(d => d.type == "vin"), false))" />
+                            <RadzenImage Style="width: 200px; height: 200px; object-fit: cover; cursor: pointer;" Path="@item?.docs?.FindAll(d => d.type == "vin")?[0].short_path" Click="@(() => OpenImageModal(item?.docs?.FindAll(d => d.type == "vin"), false))" />
                         </Template>
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn Title="Docs">
@@ -112,9 +112,18 @@
             </RadzenDataGrid>
         </RadzenTabsItem>
         <RadzenTabsItem Text="Production">
+            @if (selected_cars.Count() > 0)
+            {
+                <RadzenButton Click="OpenBulkEditModal" Variant="Variant.Text" Style="margin-bottom: 10px;">Bulk Edit</RadzenButton>
+            }
             <RadzenDataGrid Data="@cars" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
                             AllowSorting="true">
                 <Columns>
+                    <RadzenDataGridColumn Title="" Width="60px">
+                        <Template Context="item">
+                            <RadzenCheckBox TValue="bool" Value="GetValue(item)" @onkeydown="KeyPress" @onkeyup="KeyPress" Change=@(args => MultiSelect(args, item)) Name="CheckBox2" />
+                        </Template>
+                    </RadzenDataGridColumn>
                     <RadzenDataGridColumn Title="Id" Width="100px">
                         <Template Context="item">
                             m-stk-@item.Id

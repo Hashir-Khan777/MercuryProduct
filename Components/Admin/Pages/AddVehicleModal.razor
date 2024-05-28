@@ -24,7 +24,7 @@
             </RadzenColumn>
             <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
                 <RadzenLabel Text="Title Status" Component="DropDownBindValue" Style="margin-right: 8px; vertical-align: middle;" />
-                <RadzenDropDown Change="SetInSession" @bind-Value="@car.title_status" Data="@title_status" Style="width: 100%; max-width: 400px;" Name="DropDownBindValue" />
+                <RadzenDropDown Change="SetInSession" @bind-Value="@car.title_status" ValueProperty="value" TextProperty="label" Data="@title_status" Style="width: 100%; max-width: 400px;" Name="DropDownBindValue" />
             </RadzenColumn>
         </RadzenRow>
         <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">

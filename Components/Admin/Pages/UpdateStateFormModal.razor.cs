@@ -46,6 +46,7 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public async void changeDocs(Radzen.UploadChangeEventArgs e)
         {
+            string directory = Directory.GetCurrentDirectory();
             if (envImages.Count() > 0)
             {
                 DeleteDoc(envImages[0]);
@@ -53,7 +54,7 @@ namespace MecuryProduct.Components.Admin.Pages
             foreach (var file in e.Files)
             {
                 var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
-                string filePath = @"E:\Zini Tecnologies Projects\MecuryProduct\wwwroot\uploads\" + $"env-{state_form.Id}-env-{datetime}-{file.Name}";
+                string filePath = $"{directory}/wwwroot/uploads/" + $"env-{state_form.Id}-env-{datetime}-{file.Name}";
                 DocModel doc = new DocModel()
                 {
                     file_name = file.Name,

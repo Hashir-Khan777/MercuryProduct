@@ -21,10 +21,10 @@ namespace MecuryProduct.Components.Admin.Pages
             "Delivered",
             "DnD"
         };
-        private List<string> title_status = new List<string>()
+        private List<Instruction> title_status = new List<Instruction>()
         {
-            "Yes",
-            "No",
+            new Instruction { label = "Yes", value = true },
+            new Instruction { label = "No", value = false },
         };
         private List<string> tires_condition = new List<string>()
         {
