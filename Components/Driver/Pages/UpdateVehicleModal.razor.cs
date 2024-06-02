@@ -13,7 +13,6 @@ namespace MecuryProduct.Components.Driver.Pages
         private List<string> statuses = new List<string>()
         {
             "Bought",
-            "Delivered",
             "DnD"
         };
         private List<Instruction> title_status = new List<Instruction>()
@@ -138,23 +137,16 @@ namespace MecuryProduct.Components.Driver.Pages
                 {
                     var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
                     string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
-                    DocModel doc = new DocModel()
-                    {
-                        Id = vin.Id,
-                        file_name = file_name,
-                        file_path = filePath,
-                        type = "vin",
-                        server_name = "localhost",
-                        veh_id = car.Id,
-                        short_path = "uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}",
-                        updated_at = DateTime.UtcNow,
-                        created_at = vin.created_at,
-                    };
+                    vin.file_name = file_name;
+                    vin.file_path = filePath;
+                    vin.veh_id = car.Id;
+                    vin.short_path = "uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
+                    vin.updated_at = DateTime.UtcNow;
                     int startingIndex = base64.IndexOf(";base64,") + 8;
                     string fileBase64 = base64.Substring(startingIndex);
                     byte[] file = Convert.FromBase64String(fileBase64);
                     System.IO.File.WriteAllBytes(filePath, file);
-                    DocService.UpdateDoc(doc);
+                    DocService.UpdateDoc(vin);
                 }
                 else
                 {

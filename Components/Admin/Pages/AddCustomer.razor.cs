@@ -46,6 +46,8 @@ namespace MecuryProduct.Components.Admin.Pages
         private DialogService DialogService { get; set; }
         [Inject]
         private SessionService SessionService {  get; set; }
+        [Inject]
+        private NotificationService NotificationService { get; set; }
 
         protected override async void OnInitialized()
         {
@@ -73,12 +75,27 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public async void CreateCustomer()
         {
-            customer.created_at = DateTime.UtcNow;
-            customer.updated_at = DateTime.UtcNow;
-            customer.contact_prefrence = selected_contact_prefrence.ToList();
-            CustomerService.AddCustomer(customer);
-            await OpenAddVehicleModal(customer.Id);
-            NavigationManager.NavigateTo("/admin/customers");
+            var exists = CustomerService.GetCustomerByPhoneNumber(customer.cphone_number);
+            if (exists == null)
+            {
+                customer.created_at = DateTime.UtcNow;
+                customer.updated_at = DateTime.UtcNow;
+                customer.contact_prefrence = selected_contact_prefrence.ToList();
+                CustomerService.AddCustomer(customer);
+                await SessionService.Clear("customer_form");
+                await OpenAddVehicleModal(customer.Id);
+                NavigationManager.NavigateTo("/admin/customers");
+            }
+            else
+            {
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = "Customer with this phone number already exists", Duration = 4000 };
+                NotificationService.Notify(notificationMessage);
+                await DialogService.OpenAsync<UpdateCustomerModal>("Update Customer",
+                    new Dictionary<string, object>() { { "CusId", exists.Id } },
+                    new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }
+                );
+                StateHasChanged();
+            }
         }
 
         public async void searchAddress(LoadDataArgs args)
@@ -87,6 +104,7 @@ namespace MecuryProduct.Components.Admin.Pages
             var data = JsonSerializer.Deserialize<Root>(response);
             if (data is not null)
             {
+                data.Results = data.Results.FindAll(r => r.Address.PostalCode != null);
                 relatedAddresses = data;
                 StateHasChanged();
             }
@@ -94,7 +112,6 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public void OnChange(dynamic args)
         {
-            SetInSession();
             Result address = relatedAddresses.Results.Find(a => a.Address.FreeformAddress == args);
             if (address != null)
             {
@@ -105,6 +122,7 @@ namespace MecuryProduct.Components.Admin.Pages
                 customer.clat = address.Position.Lat;
                 customer.clon = address.Position.Lon;
             }
+            SetInSession();
         }
 
         public async void SetUserId()

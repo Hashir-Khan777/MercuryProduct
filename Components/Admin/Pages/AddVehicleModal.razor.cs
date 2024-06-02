@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using System.Security.Claims;
 using Radzen;
 using System.Text.Json;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace MecuryProduct.Components.Admin.Pages
 {
@@ -18,7 +19,7 @@ namespace MecuryProduct.Components.Admin.Pages
             "Scheduled",
             "Picked Up",
             "Follow Up",
-            "Delivered",
+            "Bought",
             "DnD"
         };
         private List<Instruction> title_status = new List<Instruction>()
@@ -26,6 +27,30 @@ namespace MecuryProduct.Components.Admin.Pages
             new Instruction { label = "Yes", value = true },
             new Instruction { label = "No", value = false },
         };
+        private List<string> colors = new List<string>()
+        {
+            "Black",
+            "Blue",
+            "Brown",
+            "Burgundy",
+            "Camo",
+            "Gold",
+            "Greay",
+            "Red",
+            "White",
+            "Green",
+            "Silver",
+            "Yellow",
+            "Other"
+        };
+        private List<string> pull_type = new List<string>()
+        {
+            "Short",
+            "Long"
+        };
+        private string file_name = string.Empty;
+        public string vinImage;
+        public List<DocModel> vehicleImages = new List<DocModel>();
         private List<string> tires_condition = new List<string>()
         {
             "Good",
@@ -56,6 +81,8 @@ namespace MecuryProduct.Components.Admin.Pages
         private List<string> makes = new List<string>();
         private List<string> models = new List<string>();
         private List<int?> years = new List<int?>();
+        private DocModel? doc;
+        private DocModel? update_doc;
 
         [Inject]
         private CarService CarService { get; set; }
@@ -67,6 +94,8 @@ namespace MecuryProduct.Components.Admin.Pages
         private DialogService DialogService { get; set; }
         [Inject]
         private SessionService SessionService { get; set; }
+        [Inject]
+        private DocService DocService { get; set; }
 
         protected override async void OnInitialized()
         {
@@ -76,7 +105,25 @@ namespace MecuryProduct.Components.Admin.Pages
             GetYears();
 
             var result = await SessionService.Get<CarModel>("car_form");
+            var session_doc = await SessionService.Get<DocModel>("doc");
+            update_doc = await SessionService.Get<DocModel>("update_doc");
+            var session_vehicleImages = await SessionService.Get<List<DocModel>>("vehicle_images");
 
+            if (session_vehicleImages is not null)
+            {
+                vehicleImages = session_vehicleImages;
+            }
+            if (session_doc is not null)
+            {
+                var provider = new FileExtensionContentTypeProvider();
+                if (!provider.TryGetContentType(session_doc.file_path, out string contentType))
+                {
+                    contentType = "application/octet-stream";
+                }
+                file_name = session_doc.file_name;
+                byte[] imageArray = File.ReadAllBytes(session_doc.file_path);
+                vinImage = $"data:{contentType};base64,{Convert.ToBase64String(imageArray)}";
+            }
             if (result != null)
             {
                 car = result;
@@ -106,6 +153,8 @@ namespace MecuryProduct.Components.Admin.Pages
         {
             SetInSession();
 
+            car.car_model = string.Empty;
+
             models = CarService.GetModelsByMake(make);
         }
 
@@ -119,9 +168,32 @@ namespace MecuryProduct.Components.Admin.Pages
             car.created_at = DateTime.UtcNow;
             car.updated_at = DateTime.UtcNow;
             CarService.AddCar(car, veh_notes);
+            if (doc is not null)
+            {
+                doc.veh_id = car.Id;
+                DocService.AddDoc(doc);
+                doc = null;
+            }
+            if (update_doc is not null)
+            {
+                update_doc.veh_id = car.Id;
+                DocService.AddDoc(update_doc);
+                update_doc = null;
+            }
+            if (vehicleImages.Count() > 0)
+            {
+                foreach (var item in vehicleImages)
+                {
+                    item.veh_id = car.Id;
+                    DocService.AddDoc(item);
+                }
+                vehicleImages = new List<DocModel>();
+            }
+            await SessionService.Clear("car_form");
             bool? addAnotherVehicle = await DialogService.Confirm("Are you sure?", "Do you want to add another vehicle?", new ConfirmOptions() { OkButtonText = "Add Another Vehicle", CancelButtonText = "Done" });
             if (addAnotherVehicle != null && addAnotherVehicle == true)
             {
+                dialogService.Close(true);
                 await OpenAddVehicleModal(CusID);
             }
             else
@@ -154,6 +226,87 @@ namespace MecuryProduct.Components.Admin.Pages
                     car.created_by_id = userId;
                     car.cid = CusID;
                 }
+            }
+        }
+
+        public async void changeVinImage(string? base64)
+        {
+            if (base64 is not null)
+            {
+                var vin = car.docs?.Find(d => d.type.ToLower() == "vin");
+                string directory = Directory.GetCurrentDirectory();
+                if (vin is not null)
+                {
+                    var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+                    string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
+                    vin.file_name = file_name;
+                    vin.file_path = filePath;
+                    vin.short_path = "uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
+                    vin.updated_at = DateTime.UtcNow;
+                    int startingIndex = base64.IndexOf(";base64,") + 8;
+                    string fileBase64 = base64.Substring(startingIndex);
+                    byte[] file = Convert.FromBase64String(fileBase64);
+                    System.IO.File.WriteAllBytes(filePath, file);
+                    update_doc = vin;
+                    await SessionService.Set("update_doc", JsonSerializer.Serialize(update_doc));
+                }
+                else
+                {
+                    var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+                    string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
+                    doc = new DocModel()
+                    {
+                        file_name = file_name,
+                        file_path = filePath,
+                        type = "vin",
+                        server_name = "localhost",
+                        veh_id = car.Id,
+                        short_path = "uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}",
+                        created_at = DateTime.UtcNow,
+                        updated_at = DateTime.UtcNow
+                    };
+                    int startingIndex = base64.IndexOf(";base64,") + 8;
+                    string fileBase64 = base64.Substring(startingIndex);
+                    byte[] file = Convert.FromBase64String(fileBase64);
+                    System.IO.File.WriteAllBytes(filePath, file);
+                    await SessionService.Set("doc", JsonSerializer.Serialize(doc));
+                }
+            }
+        }
+
+        public void DeleteDoc(DocModel doc)
+        {
+            vehicleImages.Remove(doc);
+            StateHasChanged();
+        }
+
+        public async void changeVehicleImages(Radzen.UploadChangeEventArgs e)
+        {
+            string directory = Directory.GetCurrentDirectory();
+            foreach (var file in e.Files)
+            {
+                var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+                string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-vehicle-{datetime}-{file.Name}";
+                DocModel doc = new DocModel()
+                {
+                    file_name = file.Name,
+                    file_path = filePath,
+                    type = "vehicle",
+                    server_name = "localhost",
+                    short_path = "uploads/" + $"stk-{car.Id}-vehicle-{datetime}-{file.Name}",
+                    created_at = DateTime.UtcNow,
+                    updated_at = DateTime.UtcNow
+                };
+                await using (var stream = file.OpenReadStream(long.MaxValue))
+                {
+                    await using (var fs = new FileStream(filePath, FileMode.Create))
+                    {
+                        await stream.CopyToAsync(fs);
+                    }
+                }
+                vehicleImages.Add(doc);
+                await SessionService.Set("vehicle_images", JsonSerializer.Serialize(vehicleImages));
+                StateHasChanged();
             }
         }
 

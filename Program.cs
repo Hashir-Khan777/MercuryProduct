@@ -37,6 +37,7 @@ builder.Services.AddScoped<SessionService>();
 builder.Services.AddScoped<DocService>();
 builder.Services.AddScoped<StateFormService>();
 builder.Services.AddScoped<ProductionService>();
+builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 builder.Services.AddHttpClient<ApiService>();
 
@@ -65,6 +66,14 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, EmailSender>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+});
 
 var app = builder.Build();
 

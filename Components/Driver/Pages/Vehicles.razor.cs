@@ -30,6 +30,7 @@ namespace MecuryProduct.Components.Driver.Pages
                 new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }
             );
             StateHasChanged();
+            GetCars();
         }
 
         public async Task OpenVehicleCommentModal(int VehId)
@@ -56,7 +57,7 @@ namespace MecuryProduct.Components.Driver.Pages
 
                 if (userId is not null)
                 {
-                    cars = CarService.GetCarsByDriverId(userId).ToList();
+                    cars = CarService.GetCarsByDriverId(userId).ToList().FindAll(c => c.status != "Bought");
                 }
             }
         }

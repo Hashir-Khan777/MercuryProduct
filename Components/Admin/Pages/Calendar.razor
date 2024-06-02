@@ -44,7 +44,7 @@ else
 {
     <RadzenScheduler SelectedIndex="0" AppointmentSelect=@OnAppointmentSelect style="height: 768px;" TItem="CarModel" Data=@cars StartProperty="scheduled_date" EndProperty="scheduled_date" TextProperty="car_model">
         <Template Context="data">
-            Vehicle: veh-@data.Id
+            Vehicle: M-VEH-@data.Id
             <br />
             Driver: @data.driver?.UserName
             <br />

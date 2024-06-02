@@ -1,6 +1,7 @@
 ﻿using MecuryProduct.Data;
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.StaticFiles;
 using Radzen;
 
 namespace MecuryProduct.Components.Admin.Pages
@@ -20,7 +21,6 @@ namespace MecuryProduct.Components.Admin.Pages
             "Picked Up",
             "Follow Up",
             "Bought",
-            "Delivered",
             "DnD"
         };
         private List<Instruction> title_status = new List<Instruction>()
@@ -60,6 +60,30 @@ namespace MecuryProduct.Components.Admin.Pages
             new Instruction { label = "Yes", value = true },
             new Instruction { label = "No", value = false },
         };
+        private List<string> colors = new List<string>()
+        {
+            "Black",
+            "Blue",
+            "Brown",
+            "Burgundy",
+            "Camo",
+            "Gold",
+            "Greay",
+            "Red",
+            "White",
+            "Green",
+            "Silver",
+            "Yellow",
+            "Other"
+        };
+        private List<string> pull_type = new List<string>()
+        {
+            "Short",
+            "Long"
+        };
+        private string file_name = string.Empty;
+        public string vinImage;
+        public List<DocModel> vehicleImages = new List<DocModel>();
         private List<string> sections = new List<string>();
         private List<string> rows = new List<string>();
         private List<string> makes = new List<string>();
@@ -116,12 +140,29 @@ namespace MecuryProduct.Components.Admin.Pages
             if (getCarById != null)
             {
                 car = getCarById;
-                models = CarService.GetModelsByMake(car.car_make);
-                GetAllRowsBySection(car.section);
+                models = CarService.GetModelsByMake(car.car_make).ToList();
+                rows = ProductionService.GetRowsBySection(car.section).ToList();
                 var vehicle_docs = getCarById.docs?.FindAll(d => d.type.ToLower() == "doc");
                 if (vehicle_docs is not null)
                 {
                     docs = vehicle_docs;
+                }
+                var vin = car.docs?.Find(d => d.type.ToLower() == "vin");
+                var vehicles = car.docs?.FindAll(d => d.type.ToLower() == "vehicle");
+                if (vehicles is not null)
+                {
+                    vehicleImages = vehicles;
+                }
+                if (vin is not null)
+                {
+                    var provider = new FileExtensionContentTypeProvider();
+                    if (!provider.TryGetContentType(vin.file_path, out string contentType))
+                    {
+                        contentType = "application/octet-stream";
+                    }
+                    file_name = vin.file_name;
+                    byte[] imageArray = File.ReadAllBytes(vin.file_path);
+                    vinImage = $"data:{contentType};base64,{Convert.ToBase64String(imageArray)}";
                 }
             }
         }
@@ -130,6 +171,7 @@ namespace MecuryProduct.Components.Admin.Pages
         {
             DocService.DeleteDoc(doc);
             docs.Remove(doc);
+            vehicleImages.Remove(doc);
             StateHasChanged();
         }
 
@@ -145,7 +187,84 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public void ChangeMake(string? make)
         {
+            car.car_model = string.Empty;
             models = CarService.GetModelsByMake(make);
+        }
+
+        public void changeVinImage(string? base64)
+        {
+            if (base64 is not null)
+            {
+                var vin = car.docs?.Find(d => d.type.ToLower() == "vin");
+                string directory = Directory.GetCurrentDirectory();
+                if (vin is not null)
+                {
+                    var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+                    string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
+                    vin.file_name = file_name;
+                    vin.file_path = filePath;
+                    vin.veh_id = car.Id;
+                    vin.short_path = "uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
+                    vin.updated_at = DateTime.UtcNow;
+                    int startingIndex = base64.IndexOf(";base64,") + 8;
+                    string fileBase64 = base64.Substring(startingIndex);
+                    byte[] file = Convert.FromBase64String(fileBase64);
+                    System.IO.File.WriteAllBytes(filePath, file);
+                    DocService.UpdateDoc(vin);
+                }
+                else
+                {
+                    var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+                    string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}";
+                    DocModel doc = new DocModel()
+                    {
+                        file_name = file_name,
+                        file_path = filePath,
+                        type = "vin",
+                        server_name = "localhost",
+                        veh_id = car.Id,
+                        short_path = "uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}",
+                        created_at = DateTime.UtcNow,
+                        updated_at = DateTime.UtcNow
+                    };
+                    int startingIndex = base64.IndexOf(";base64,") + 8;
+                    string fileBase64 = base64.Substring(startingIndex);
+                    byte[] file = Convert.FromBase64String(fileBase64);
+                    System.IO.File.WriteAllBytes(filePath, file);
+                    DocService.AddDoc(doc);
+                }
+            }
+        }
+
+        public async void changeVehicleImages(Radzen.UploadChangeEventArgs e)
+        {
+            string directory = Directory.GetCurrentDirectory();
+            foreach (var file in e.Files)
+            {
+                var datetime = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+                string filePath = $"{directory}/wwwroot/uploads/" + $"stk-{car.Id}-vehicle-{datetime}-{file.Name}";
+                DocModel doc = new DocModel()
+                {
+                    file_name = file.Name,
+                    file_path = filePath,
+                    type = "vehicle",
+                    server_name = "localhost",
+                    veh_id = car.Id,
+                    short_path = "uploads/" + $"stk-{car.Id}-vehicle-{datetime}-{file.Name}",
+                    created_at = DateTime.UtcNow,
+                    updated_at = DateTime.UtcNow
+                };
+                await using (var stream = file.OpenReadStream(long.MaxValue))
+                {
+                    await using (var fs = new FileStream(filePath, FileMode.Create))
+                    {
+                        await stream.CopyToAsync(fs);
+                    }
+                }
+                vehicleImages.Add(doc);
+                DocService.AddDoc(doc);
+                StateHasChanged();
+            }
         }
 
         public void GetAllSections()
@@ -155,6 +274,7 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public void GetAllRowsBySection(string section)
         {
+            car.row = string.Empty;
             rows = ProductionService.GetRowsBySection(section).ToList();
         }
 

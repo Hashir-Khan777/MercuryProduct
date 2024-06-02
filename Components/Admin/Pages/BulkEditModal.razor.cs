@@ -62,6 +62,7 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public void GetAllRowsBySection(string section)
         {
+            EditCarModel.selected_row = null;
             rows = ProductionService.GetRowsBySection(section).ToList();
         }
 

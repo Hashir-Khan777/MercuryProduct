@@ -58,6 +58,8 @@ namespace MecuryProduct.Data
 
         public string customer_notes { get; set; } = string.Empty;
 
+        public string search { get; set; } = string.Empty;
+
         public ApplicationUser? created_by { get; set; }
 
         public List<CarModel>? cars {  get; set; }

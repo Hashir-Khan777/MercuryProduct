@@ -48,7 +48,7 @@ namespace MecuryProduct.Components.Admin.Pages
                 }
                 else
                 {
-                    notes = NoteService.GetNotesByVehicleId(VehId).ToList();
+                    notes = NoteService.GetNotesByVehicleId(VehId).FindAll(d => d.doc_id == null).ToList();
                 }
             }
         }
@@ -128,7 +128,14 @@ namespace MecuryProduct.Components.Admin.Pages
             }
             note.created_at = DateTime.UtcNow;
             note.updated_at = DateTime.UtcNow;
-            if (doc_note != null && doc != null)
+            if (Docs)
+            {
+                if (doc_note != null && doc != null)
+                {
+                    NoteService.AddNote(note);
+                }
+            }
+            else
             {
                 NoteService.AddNote(note);
             }

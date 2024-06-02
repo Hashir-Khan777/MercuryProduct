@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Radzen;
+using System.Text.Json.Serialization;
 
 namespace MecuryProduct.Services
 {
@@ -137,18 +138,29 @@ namespace MecuryProduct.Services
     public class ApiService
     {
         private readonly HttpClient _httpClient;
+        private readonly NotificationService notificationService;
 
-        public ApiService(HttpClient httpClient)
+        public ApiService(HttpClient httpClient, NotificationService notificationService)
         {
             _httpClient = httpClient;
+            this.notificationService = notificationService;
         }
 
         public async Task<string> GetFromApiAsync(string url)
         {
-            var response = await _httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            var jsonString = await response.Content.ReadAsStringAsync();
-            return jsonString;
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                var jsonString = await response.Content.ReadAsStringAsync();
+                return jsonString;
+            }
+            catch (Exception ex)
+            {
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return "";
+            }
         }
     }
 }

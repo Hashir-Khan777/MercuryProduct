@@ -26,5 +26,10 @@ namespace MecuryProduct.Services
             }
             return JsonSerializer.Deserialize<CustomerModel>(jsonData);
         }
+
+        public async Task Clear(string key)
+        {
+            await _cache.RemoveAsync(key);
+        }
     }
 }

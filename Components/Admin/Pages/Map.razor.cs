@@ -53,12 +53,17 @@ namespace MecuryProduct.Components.Admin.Pages
             {
                 GetCustomers();
                 StateHasChanged();
-                if (customers.Count() > 0)
+                List<CustomerModel> filteredCustomers = customers.FindAll(c => c.cars?.FindAll(c => c.scheduled_date.Date >= start_date.Date && c.scheduled_date.Date <= end_date.Date).Count() > 0);
+                if (filteredCustomers.Count() > 0)
                 {
-                    var centerLat = (customers[0].clat + customers[customers.Count() - 1].clat) / 2;
-                    var centerLng = (customers[0].clon + customers[customers.Count() - 1].clon) / 2;
+                    var centerLat = (filteredCustomers[0].clat + filteredCustomers[filteredCustomers.Count() - 1].clat) / 2;
+                    var centerLng = (filteredCustomers[0].clon + filteredCustomers[filteredCustomers.Count() - 1].clon) / 2;
                     await JS.InvokeVoidAsync("initMap", centerLat, centerLng);
                     AddMarkers();
+                }
+                else
+                {
+                    await JS.InvokeVoidAsync("initMap");
                 }
             }
         }
@@ -79,6 +84,10 @@ namespace MecuryProduct.Components.Admin.Pages
                     string? assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
                     await JS.InvokeVoidAsync("addMarker", customer?.clon, customer?.clat, customer?.Id, assemblyName, color, customer?.cfname + " " + customer?.clname, customer?.caddress, customer?.cphone_number);
                 }
+            }
+            if (customers.Count() > 0)
+            {
+                await JS.InvokeVoidAsync("setBounds");
             }
         }
 

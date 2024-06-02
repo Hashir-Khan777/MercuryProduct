@@ -14,8 +14,16 @@
 @inject IEmailSender<ApplicationUser> EmailSender
 @inject NavigationManager NavigationManager
 @inject UserService UserService
+@inject NotificationService NotificationService
+@inject DialogService DialogService
 
 <PageTitle>Add Driver</PageTitle>
+
+<a onclick="history.back();">
+    <RadzenButton Variant="Variant.Flat" Style="margin-bottom: 20px;">
+        <RadzenIcon Icon="arrow_back" />
+    </RadzenButton>
+</a>
 
 <h1>Add Driver</h1>
 
@@ -60,6 +68,20 @@
     public async Task RegisterUser(EditContext editContext)
     {
         var user = CreateUser();
+
+        var exists = await UserStore.FindByNameAsync(Input.Email.ToUpper(), CancellationToken.None);
+
+        if (exists != null)
+        {
+            var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = "Driver with this email already exists", Duration = 4000 };
+            NotificationService.Notify(notificationMessage);
+            await DialogService.OpenAsync<UpdateDriverModal>("Update Driver",
+                new Dictionary<string, object>() { { "DriverId", exists.Id } },
+                new DialogOptions() { Width = "600px", Height = "60%", Resizable = true, Draggable = true }
+            );
+            StateHasChanged();
+            return;
+        }
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();

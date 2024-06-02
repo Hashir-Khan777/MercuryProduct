@@ -8,6 +8,12 @@
 
 <PageTitle>Add State Form</PageTitle>
 
+<a onclick="history.back();">
+    <RadzenButton Variant="Variant.Flat" Style="margin-bottom: 20px;">
+        <RadzenIcon Icon="arrow_back" />
+    </RadzenButton>
+</a>
+
 <h3>Add State Form</h3>
 
 <RadzenTemplateForm TItem="StateFormModel" Data=@state_form Submit="@CreateStateForm">

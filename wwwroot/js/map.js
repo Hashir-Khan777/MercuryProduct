@@ -1,22 +1,39 @@
 var map;
+var center;
+var markers = [];
+var bounds = new tt.LngLatBounds()
 function initMap(centerLat, centerLng) {
-    console.log({ lat: centerLat, lng: centerLng })
+    markers = []
+    center = { lat: centerLat, lng: centerLng }
     window.tt.setProductInfo("Mercury Product", "1.0.0")
-    map = window.tt.map({
-        key: "FAywZGZYK8dXtjREG8KFziDuedaBFSjb",
-        container: "map",
-        stylesVisibility: {
-            trafficIncidents: true,
-            trafficFlow: true,
-        },
-        center: { lat: centerLat, lng: centerLng },
-        zoom: 5
-    })
+    if (centerLat && centerLng) {
+        map = window.tt.map({
+            key: "FAywZGZYK8dXtjREG8KFziDuedaBFSjb",
+            container: "map",
+            stylesVisibility: {
+                trafficIncidents: true,
+                trafficFlow: true,
+            },
+            center: { lat: centerLat, lng: centerLng },
+            zoom: 10
+        })
+    } else {
+        map = window.tt.map({
+            key: "FAywZGZYK8dXtjREG8KFziDuedaBFSjb",
+            container: "map",
+            stylesVisibility: {
+                trafficIncidents: true,
+                trafficFlow: true,
+            },
+            zoom: 10
+        })
+    }
     var nav = new window.tt.NavigationControl();
     map.addControl(nav);
 }
 
 function addMarker(lon, lat, id, name, color, cus_name, cus_address, cus_number) {
+    markers.push([lon, lat])
     var element = document.createElement("div")
     var popup = new window.tt.Popup().setHTML(
         `
@@ -48,6 +65,16 @@ function addMarker(lon, lat, id, name, color, cus_name, cus_address, cus_number)
     element.innerHTML = html
     element.id = "marker"
     new window.tt.Marker({ element: element }).setLngLat([lon, lat]).setPopup(popup).addTo(map)
+}
+
+function setBounds() {
+    var bounds = new tt.LngLatBounds()
+    if (markers.length > 0) {
+        for (var i = 0; i <= markers.length; i++) {
+            bounds.extend(markers[i])
+        }
+        map.fitBounds(bounds, { padding: 20 })
+    }
 }
 
 async function markerClicked(cusId, name) {

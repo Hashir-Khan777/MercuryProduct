@@ -18,6 +18,10 @@ namespace MecuryProduct.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<CustomerModel>()
+                .HasIndex(c => c.cphone_number)
+                .IsUnique();
+
             builder.Entity<CarModel>()
                 .HasOne(c => c.customer)
                 .WithMany(m => m.cars)

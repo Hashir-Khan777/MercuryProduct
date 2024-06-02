@@ -90,6 +90,7 @@ namespace MecuryProduct.Components.Admin.Pages
                 new Dictionary<string, object>() { { "VehId", id }, { "Inventory", true } },
                 new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }
             );
+            GetCars();
             StateHasChanged();
         }
 

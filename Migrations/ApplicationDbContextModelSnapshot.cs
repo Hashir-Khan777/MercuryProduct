@@ -288,7 +288,7 @@ namespace MecuryProduct.Migrations
 
                     b.Property<string>("cphone_number")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("created_at")
                         .HasColumnType("datetime2");
@@ -320,10 +320,17 @@ namespace MecuryProduct.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("search")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("updated_at")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("cphone_number")
+                        .IsUnique();
 
                     b.HasIndex("created_by_id");
 
