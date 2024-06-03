@@ -41,11 +41,11 @@ namespace MecuryProduct.Components.Admin.Pages
         [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject]
-        private ApiService ApiService {  get; set; }
+        private ApiService ApiService { get; set; }
         [Inject]
         private DialogService DialogService { get; set; }
         [Inject]
-        private SessionService SessionService {  get; set; }
+        private SessionService SessionService { get; set; }
         [Inject]
         private NotificationService NotificationService { get; set; }
 
@@ -68,6 +68,9 @@ namespace MecuryProduct.Components.Admin.Pages
             );
         }
 
+        // PP-66: cache info before save the table and clear cache upon commit
+        // Feature: Save form on cheche and clear cheche after comit
+        // Fix: I have added this function to save data on cheche and call this function on change event on every field of every form
         public async void SetInSession()
         {
             await SessionService.Set("customer_form", JsonSerializer.Serialize(customer));
@@ -75,6 +78,9 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public async void CreateCustomer()
         {
+            // PP-90 & 105: customer should not replicate
+            // Bug: customer is replicating
+            // Fix: Add condition on phone number if customer with same phone number exists so it wil open the update customer mosal
             var exists = CustomerService.GetCustomerByPhoneNumber(customer.cphone_number);
             if (exists == null)
             {
@@ -104,6 +110,9 @@ namespace MecuryProduct.Components.Admin.Pages
             var data = JsonSerializer.Deserialize<Root>(response);
             if (data is not null)
             {
+                // PP-88: address validation issue
+                // Bug: getting invalid address
+                // Fix: Add condition on postal code if postal code is null it's invalid else it's valid
                 data.Results = data.Results.FindAll(r => r.Address.PostalCode != null);
                 relatedAddresses = data;
                 StateHasChanged();

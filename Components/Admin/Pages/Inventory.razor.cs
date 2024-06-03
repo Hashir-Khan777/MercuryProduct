@@ -90,6 +90,9 @@ namespace MecuryProduct.Components.Admin.Pages
                 new Dictionary<string, object>() { { "VehId", id }, { "Inventory", true } },
                 new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }
             );
+            // PP-100: real time update in inventory
+            // Bug: inventory data is not updating on real time
+            // Fix: Add GetCars function in update function
             GetCars();
             StateHasChanged();
         }
@@ -140,6 +143,9 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        // PP-76: Bulk edit feature with checkbox selection + shift select functionality like Jira in inventory module
+        // Feature: Add bulk edit functionality like jira
+        // Fix: When checkbox value changes, I am pushing the car on selected_cars list and then opens the bulk edit modal and loop throught the selected_cars to edit multiple cars at a time
         public void MultiSelect(bool isChecked, CarModel car)
         {
             if (IsShiftKey && selected_cars.Count() > 0)

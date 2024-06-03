@@ -10,6 +10,9 @@ namespace MecuryProduct.Components.Driver.Pages
         [Parameter]
         public int id { get; set; }
         private CarModel car = new CarModel();
+        // PP-93: remove delivered status in driver view
+        // Bug: Delivered is not the valid status should change to Bought
+        // Fix: Change Delivered to Bought
         private List<string> statuses = new List<string>()
         {
             "Bought",
@@ -117,6 +120,9 @@ namespace MecuryProduct.Components.Driver.Pages
             {
                 car.pickup_date = DateTime.UtcNow;
             }
+            // PP-68: When driver add VIN it should covert to caps
+            // Feature: Vin should be capital
+            // Fix: Add ToUpper function on before updating vehicle on vin and dl
             car.updated_at = DateTime.UtcNow;
             car.vin_no = car.vin_no.ToUpper();
             car.DL = car.DL.ToUpper();
@@ -127,6 +133,9 @@ namespace MecuryProduct.Components.Driver.Pages
             }
         }
 
+        // PP-69: change image name to stock id
+        // Bug: image name should be unique (to prevent overiding issue)
+        // Fix: Add a stock number and date to the image name
         public void changeVinImage(string? base64)
         {
             if (base64 is not null)
@@ -159,7 +168,7 @@ namespace MecuryProduct.Components.Driver.Pages
                         type = "vin",
                         server_name = "localhost",
                         veh_id = car.Id,
-                        short_path = "uploads/" + $"stk-{ car.Id }-vin-{datetime}-{ file_name }",
+                        short_path = "uploads/" + $"stk-{car.Id}-vin-{datetime}-{file_name}",
                         created_at = DateTime.UtcNow,
                         updated_at = DateTime.UtcNow
                     };

@@ -27,6 +27,9 @@ namespace MecuryProduct.Services
             return JsonSerializer.Deserialize<CustomerModel>(jsonData);
         }
 
+        // PP-85 & 86: cheche clear after adding customer
+        // Bug: Cheche is not clearing after comit the changes
+        // Fix: Add a service function to clear cheche and call this on every form successful commit
         public async Task Clear(string key)
         {
             await _cache.RemoveAsync(key);

@@ -36,6 +36,9 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public void GetNotes()
         {
+            // PP-92 & 99: notes functionality
+            // Bug: Document notes are showing in vehicle comments
+            // Fix: Add if statement in else and filter accrording to the type and doc_id
             if (SfId != null)
             {
                 notes = NoteService.GetNotesByStateFormId(SfId);
@@ -114,6 +117,9 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public void AddNote()
         {
+            // PP-82: test state form comments
+            // Bug: State form comments is not adding or even not saving in database
+            // Fix: I added an else statement when sfId is not null then it sets SfId to note.sf_id
             if (SfId == null)
             {
                 note.veh_id = VehId;

@@ -57,6 +57,9 @@ namespace MecuryProduct.Components.Driver.Pages
 
                 if (userId is not null)
                 {
+                    // PP-94: when bought vehicle should remove from driver view
+                    // Bug: Bought vehicle should not show to driver
+                    // Fix Add a condition on status of vehicle weather it's bought or not
                     cars = CarService.GetCarsByDriverId(userId).ToList().FindAll(c => c.status != "Bought");
                 }
             }

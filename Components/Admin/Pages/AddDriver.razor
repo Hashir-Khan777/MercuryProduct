@@ -69,6 +69,9 @@
     {
         var user = CreateUser();
 
+        // PP-91 & 104: validation in add driver
+        // Bug: driver is replicating
+        // Fix: Add condition on email when driver with same emails exixts it will open update driver modal
         var exists = await UserStore.FindByNameAsync(Input.Email.ToUpper(), CancellationToken.None);
 
         if (exists != null)

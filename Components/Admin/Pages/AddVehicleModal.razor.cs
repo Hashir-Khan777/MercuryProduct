@@ -153,6 +153,9 @@ namespace MecuryProduct.Components.Admin.Pages
         {
             SetInSession();
 
+            // PP-95: when make change model should remove
+            // Bug: Whenever the make changes model should remove
+            // Fix: Assign empty string in model when make changes
             car.car_model = string.Empty;
 
             models = CarService.GetModelsByMake(make);
@@ -190,6 +193,9 @@ namespace MecuryProduct.Components.Admin.Pages
                 vehicleImages = new List<DocModel>();
             }
             await SessionService.Clear("car_form");
+            // PP-60: after adding a vehicle, show a confirmation modal that says "add another vehicle" and "done"
+            // Feature: It should ask for adding second vehicle or not after adding first vehicle
+            // Fix: I have added a confirmation modal after commiting or saving the vehicle
             bool? addAnotherVehicle = await DialogService.Confirm("Are you sure?", "Do you want to add another vehicle?", new ConfirmOptions() { OkButtonText = "Add Another Vehicle", CancelButtonText = "Done" });
             if (addAnotherVehicle != null && addAnotherVehicle == true)
             {

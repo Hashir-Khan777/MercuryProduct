@@ -2,18 +2,26 @@
 
 <PageTitle>Vehicles</PageTitle>
 
-<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
+    JustifyContent="JustifyContent.SpaceBetween">
     <RadzenText TextStyle="TextStyle.H4">Vehicles</RadzenText>
     <RadzenLink Path="/admin/addvehicle">
         <RadzenButton>Add</RadzenButton>
     </RadzenLink>
 </RadzenStack>
 
-<RadzenDataGrid Data="@cars" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
-                AllowSorting="true">
+<RadzenDataGrid Data="@cars" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand"
+    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+    AllowSorting="true">
     <Columns>
         <RadzenDataGridColumn Title="Id">
+            @* PP-83: make ids capatilize
+            Bug: Ids are not capetilize
+            Fix: I added capital letters instead of small letter on every radzen data grid *@
             <Template Context="item">
+                @* PP-102: make ids same in inventory and vehicles
+                Bug: Ids are not same in inventory and vehicles tab
+                Fix: Add Same pattern od Id on both tabs *@
                 M-STK-@item.Id
             </Template>
         </RadzenDataGridColumn>
@@ -28,12 +36,15 @@
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Driver">
             <Template Context="item">
-                <span style="cursor: pointer; color: #4340D2;" @onclick="(() => OpenUpdateDriverModal(item.driver.Id))">@item.driver?.UserName</span>
+                <span style="cursor: pointer; color: #4340D2;"
+                    @onclick="(() => OpenUpdateDriverModal(item.driver.Id))">@item.driver?.UserName</span>
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Customer">
             <Template Context="item">
-                <span style="cursor: pointer; color: #4340D2;" @onclick="(() => OpenUpdateCustomerModal(item.customer.Id))">@item.customer?.cfname @item.customer?.clname</span>
+                <span style="cursor: pointer; color: #4340D2;"
+                    @onclick="(() => OpenUpdateCustomerModal(item.customer.Id))">@item.customer?.cfname
+                    @item.customer?.clname</span>
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Actions">
