@@ -14,6 +14,15 @@ namespace MecuryProduct.Components.Admin.Pages
         public string note = string.Empty;
         public string user_id;
 
+        /// <summary>Injects dependencies for the current component.</summary>
+        /// <remarks>
+        /// Dependencies injected:
+        /// - DocService: Service for handling documents.
+        /// - StateFormService: Service for managing form states.
+        /// - NoteService: Service for managing notes.
+        /// - NavigationManager: Manages navigation within the application.
+        /// - AuthenticationStateProvider: Provides authentication state information.
+        /// </remarks>
         [Inject]
         private DocService DocService { get; set; }
         [Inject]
@@ -25,6 +34,13 @@ namespace MecuryProduct.Components.Admin.Pages
         [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
+        /// <summary>
+        /// Creates a state form by adding a note with specified details and navigating to the inventory page.
+        /// </summary>
+        /// <remarks>
+        /// This method sets the user ID, adds a note to the NoteService with the provided details,
+        /// and then navigates to the inventory page.
+        /// </remarks>
         public void CreateStateForm()
         {
             SetUserId();
@@ -32,6 +48,14 @@ namespace MecuryProduct.Components.Admin.Pages
             NavigationManager.NavigateTo("/admin/inventory");
         }
 
+        /// <summary>
+        /// Deletes a document and its associated data from the system.
+        /// </summary>
+        /// <param name="doc">The document model to be deleted.</param>
+        /// <remarks>
+        /// This method deletes the document from the document service, removes it from the list of environment images,
+        /// deletes the associated state form, and triggers a state change to update the UI.
+        /// </remarks>
         public void DeleteDoc(DocModel doc)
         {
             DocService.DeleteDoc(doc);
@@ -40,6 +64,13 @@ namespace MecuryProduct.Components.Admin.Pages
             StateHasChanged();
         }
 
+        /// <summary>
+        /// Sets the user ID based on the authenticated user's information.
+        /// </summary>
+        /// <remarks>
+        /// This method retrieves the authentication state asynchronously and extracts the user ID from the authenticated user's claims.
+        /// If the user is authenticated and a user ID claim is found, it sets the user_id field to the extracted user ID.
+        /// </remarks>
         public async void SetUserId()
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -56,6 +87,18 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Changes the documents based on the provided upload change event arguments.
+        /// </summary>
+        /// <param name="e">The Radzen.UploadChangeEventArgs containing information about the uploaded files.</param>
+        /// <returns>Task representing the asynchronous operation.</returns>
+        /// <remarks>
+        /// This method performs the following actions:
+        /// - Deletes the first document in the 'envImages' list if it exists.
+        /// - Updates the 'created_at' and 'updated_at' properties of the 'state_form' object to the current UTC time.
+        /// - Adds the 'state_form' object to the StateFormService.
+        /// - Iterates through each uploaded file in the event arguments:
+        ///   - Generates a unique file path based on the
         public async void changeDocs(Radzen.UploadChangeEventArgs e)
         {
             string directory = Directory.GetCurrentDirectory();

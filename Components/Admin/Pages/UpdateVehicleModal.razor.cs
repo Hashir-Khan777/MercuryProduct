@@ -8,7 +8,7 @@ namespace MecuryProduct.Components.Admin.Pages
 {
     public partial class UpdateVehicleModal
     {
-        [Parameter] public int VehId {  get; set; }
+        [Parameter] public int VehId { get; set; }
         [Parameter] public bool Inventory { get; set; } = false;
         [Parameter] public bool Production { get; set; } = false;
         private CarModel car = new CarModel();
@@ -92,6 +92,16 @@ namespace MecuryProduct.Components.Admin.Pages
         public string? veh_notes = null;
         public DocModel doc;
 
+        /// <summary>Injects various services into the class.</summary>
+        /// <remarks>
+        /// The services injected are:
+        /// - CarService: Service for managing cars.
+        /// - UserService: Service for managing users.
+        /// - CustomerService: Service for managing customers.
+        /// - DocService: Service for managing documents.
+        /// - ProductionService: Service for managing production.
+        /// - NoteService: Service for managing notes.
+        /// </remarks>
         [Inject]
         private CarService CarService { get; set; }
         [Inject]
@@ -105,6 +115,9 @@ namespace MecuryProduct.Components.Admin.Pages
         [Inject]
         private NoteService NoteService { get; set; }
 
+        /// <summary>
+        /// Initializes the component by retrieving necessary data such as drivers, customers, cars, sections, makes, and years.
+        /// </summary>
         protected override void OnInitialized()
         {
             GetDrivers();
@@ -115,6 +128,16 @@ namespace MecuryProduct.Components.Admin.Pages
             GetYears();
         }
 
+        /// <summary>
+        /// Updates the car information based on its production status and additional notes.
+        /// </summary>
+        /// <remarks>
+        /// If the production status is "Set", the set date is updated to the current date and time.
+        /// If the production status is "Pulled", the pulled date is updated to the current date and time.
+        /// If there are vehicle notes and a document is provided, a new note is added to the database.
+        /// The car's updated date is set to the current date and time.
+        /// Finally, the car information is updated in the database and the dialog is closed.
+        /// </remarks>
         public void UpdateCar()
         {
             if (car.prod_status == "Set")
@@ -134,6 +157,12 @@ namespace MecuryProduct.Components.Admin.Pages
             dialogService.Close();
         }
 
+        /// <summary>
+        /// Retrieves car information by ID and sets related properties.
+        /// </summary>
+        /// <remarks>
+        /// This method fetches car details by ID using the CarService, and then populates various properties such as models, rows, docs, vehicleImages, and vinImage based on the retrieved car information.
+        /// </remarks>
         public void GetCarById()
         {
             var getCarById = CarService.GetCarById(VehId);
@@ -167,6 +196,10 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Deletes a document from the system.
+        /// </summary>
+        /// <param name="doc">The document to be deleted.</param>
         public void DeleteDoc(DocModel doc)
         {
             DocService.DeleteDoc(doc);
@@ -175,22 +208,40 @@ namespace MecuryProduct.Components.Admin.Pages
             StateHasChanged();
         }
 
+        /// <summary>
+        /// Retrieves a list of car makes from the CarService and assigns it to the 'makes' variable.
+        /// </summary>
         public void GetMakes()
         {
             makes = CarService.GetMakes();
         }
 
+        /// <summary>
+        /// Retrieves the years of available cars from the CarService.
+        /// </summary>
         public void GetYears()
         {
             years = CarService.GetYear();
         }
 
+        /// <summary>
+        /// Changes the make of the car and updates the available models based on the new make.
+        /// </summary>
+        /// <param name="make">The new make of the car.</param>
         public void ChangeMake(string? make)
         {
             car.car_model = string.Empty;
             models = CarService.GetModelsByMake(make);
         }
 
+        /// <summary>
+        /// Changes the VIN image for a car based on the provided base64 string.
+        /// </summary>
+        /// <param name="base64">The base64 string representing the image to be saved.</param>
+        /// <remarks>
+        /// If the base64 string is not null, the method locates the VIN document for the car, updates its information, and saves the image file.
+        /// If the VIN document does not exist, a new document is created and saved with the provided image.
+        /// </remarks>
         public void changeVinImage(string? base64)
         {
             if (base64 is not null)
@@ -236,6 +287,14 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Changes the vehicle images based on the provided upload change event arguments.
+        /// </summary>
+        /// <param name="e">The Radzen.UploadChangeEventArgs containing information about the uploaded files.</param>
+        /// <remarks>
+        /// This method iterates through the uploaded files, saves them to the specified directory,
+        /// and updates the vehicle images collection and database records accordingly.
+        /// </remarks>
         public async void changeVehicleImages(Radzen.UploadChangeEventArgs e)
         {
             string directory = Directory.GetCurrentDirectory();
@@ -267,32 +326,58 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Retrieves all sections from the production service and stores them in a list.
+        /// </summary>
+        /// <remarks>
+        /// This method fetches all sections from the production service and converts them to a list for further processing.
+        /// </remarks>
         public void GetAllSections()
         {
             sections = ProductionService.GetAllSections().ToList();
         }
 
+        /// <summary>
+        /// Retrieves all rows by a specified section and assigns them to the 'rows' variable.
+        /// </summary>
+        /// <param name="section">The section to retrieve rows from.</param>
         public void GetAllRowsBySection(string section)
         {
             car.row = string.Empty;
             rows = ProductionService.GetRowsBySection(section).ToList();
         }
 
+        /// <summary>
+        /// Retrieves a list of drivers from the DriverService based on a specific claim.
+        /// </summary>
+        /// <remarks>
+        /// This method populates the 'drivers' field with a list of users who have the specified claim.
+        /// </remarks>
         public void GetDrivers()
         {
             drivers = DriverService.GetUsersByClaim("Role", "Driver");
         }
 
+        /// <summary>
+        /// Retrieves a list of customers from the CustomerService and assigns it to the 'customers' field.
+        /// </summary>
         public void GetCustomers()
         {
             customers = CustomerService.GetCustomers();
         }
 
+        /// <summary>Checks if a date should be disabled for rendering.</summary>
+        /// <param name="args">The DateRenderEventArgs containing information about the date to render.</param>
         void DateRender(DateRenderEventArgs args)
         {
             args.Disabled = args.Disabled || args.Date.DayOfWeek == DayOfWeek.Sunday || args.Date.Date < DateTime.Today;
         }
 
+        /// <summary>
+        /// Changes the documents based on the provided upload change event arguments.
+        /// </summary>
+        /// <param name="e">The upload change event arguments containing information about the files.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async void changeDocs(Radzen.UploadChangeEventArgs e)
         {
             string directory = Directory.GetCurrentDirectory();
@@ -324,6 +409,9 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Represents an instruction with a label and a boolean value.
+        /// </summary>
         private sealed class Instruction
         {
             public string label { get; set; } = string.Empty;

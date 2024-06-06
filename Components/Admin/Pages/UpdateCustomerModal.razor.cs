@@ -8,7 +8,7 @@ namespace MecuryProduct.Components.Admin.Pages
 {
     public partial class UpdateCustomerModal
     {
-        [Parameter] public int cusId {  get; set; }
+        [Parameter] public int cusId { get; set; }
 
         public CustomerModel customer = new CustomerModel();
         public Root relatedAddresses { get; set; } = new Root();
@@ -34,16 +34,26 @@ namespace MecuryProduct.Components.Admin.Pages
         public IEnumerable<string> selected_contact_prefrence = new string[] { };
         public string email_regex = "^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|.(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
 
+        /// <summary>Injects the CustomerService and ApiService dependencies.</summary>
         [Inject]
         private CustomerService CustomerService { get; set; }
         [Inject]
         private ApiService ApiService { get; set; }
 
+        /// <summary>
+        /// This method is called when the element is initialized.
+        /// It retrieves a customer by their ID.
+        /// </summary>
         protected override void OnInitialized()
         {
             GetCustomerById();
         }
 
+        /// <summary>
+        /// Searches for an address based on the provided arguments by making an asynchronous call to the API.
+        /// </summary>
+        /// <param name="args">The arguments used to load the data for the address search.</param>
+        /// <returns>A Task representing the asynchronous operation.</returns>
         public async void searchAddress(LoadDataArgs args)
         {
             var response = await ApiService.GetFromApiAsync($"https://api.tomtom.com/search/2/search/{args.Filter}.json?key=FAywZGZYK8dXtjREG8KFziDuedaBFSjb&limit=40&typeahead=true&countrySet=USA");
@@ -55,6 +65,10 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Updates customer address information based on the provided address.
+        /// </summary>
+        /// <param name="args">The address to look for in the related addresses.</param>
         public void OnChange(dynamic args)
         {
             Result address = relatedAddresses.Results.Find(a => a.Address.FreeformAddress == args);
@@ -69,6 +83,14 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Retrieves a customer by their ID and updates the customer and selected contact preference fields.
+        /// </summary>
+        /// <remarks>
+        /// This method fetches a customer object from the CustomerService based on the provided customer ID.
+        /// If a customer is found, it updates the 'customer' field with the retrieved customer object
+        /// and the 'selected_contact_prefrence' field with the contact preference of the customer.
+        /// </remarks>
         public void GetCustomerById()
         {
             var result = CustomerService.GetCustomerById(cusId);
@@ -79,6 +101,13 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Updates the customer's contact preference and last updated timestamp, then calls the CustomerService to update the customer.
+        /// </summary>
+        /// <remarks>
+        /// This method updates the customer's contact preference based on the selected preferences, sets the updated timestamp to the current UTC time,
+        /// and then triggers the CustomerService to update the customer with the new information. Finally, it closes the dialog service.
+        /// </remarks>
         public void UpdateCustomer()
         {
             customer.contact_prefrence = selected_contact_prefrence.ToList();

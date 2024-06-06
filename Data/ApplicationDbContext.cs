@@ -5,6 +5,11 @@ namespace MecuryProduct.Data
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
     {
+        /* The above code is defining a DbContext class in C# for Entity Framework. It includes properties for
+        different DbSet entities such as CustomerModel, CarModel, NoteModel, DocModel, StateFormModel,
+        MasterProductionTable, MasterVehicleTable, and MasterYearTable. These properties represent tables in
+        the database and allow interaction with the corresponding entities using Entity Framework's ORM
+        capabilities. */
         public DbSet<CustomerModel> Customers { get; set; }
         public DbSet<CarModel> Cars { get; set; }
         public DbSet<NoteModel> Notes { get; set; }
@@ -18,6 +23,9 @@ namespace MecuryProduct.Data
         {
             base.OnModelCreating(builder);
 
+            /* The above code is configuring relationships between different entities in a database using Entity
+            Framework Core in C#. It defines various one-to-many and one-to-one relationships between entities
+            such as CustomerModel, CarModel, NoteModel, DocModel, and StateFormModel. */
             builder.Entity<CustomerModel>()
                 .HasIndex(c => c.cphone_number)
                 .IsUnique();
@@ -82,6 +90,7 @@ namespace MecuryProduct.Data
                 .HasForeignKey<DocModel>(d => d.sf_id)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
+            /* The above code is using Entity Framework Core to seed data into database tables named "MasterProductionTable", "MasterVehicleTable" and "MasterYearTable", It is adding multiple rows of data with different columns. Each row represents a record in the database table with the specified properties. This seeding process is typically done to populate the database with initial data when the application is first run or when the database is created. */
             builder.Entity<MasterProductionTable>().HasData(
                 new MasterProductionTable { Id = 1, row = "1", section = "SP" },
                 new MasterProductionTable { Id = 2, row = "2", section = "SP" },

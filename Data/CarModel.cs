@@ -2,6 +2,8 @@
 
 namespace MecuryProduct.Data
 {
+    /* The CarModel class represents a car entity with various properties related to car details and
+    transaction information. */
     public class CarModel
     {
         public int Id { get; set; }
@@ -9,7 +11,7 @@ namespace MecuryProduct.Data
         public int? cid { get; set; }
 
         [Required]
-        public int? car_year {  get; set; }
+        public int? car_year { get; set; }
 
         [Required]
         public string car_make { get; set; } = string.Empty;

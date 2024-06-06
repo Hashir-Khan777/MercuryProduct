@@ -84,6 +84,16 @@ namespace MecuryProduct.Components.Admin.Pages
         private DocModel? doc;
         private DocModel? update_doc;
 
+        /// <summary>Injects various services into the current class.</summary>
+        /// <remarks>
+        /// The services injected are:
+        /// - CarService: Service for managing cars.
+        /// - DriverService: Service for managing drivers.
+        /// - AuthenticationStateProvider: Provider for authentication state.
+        /// - DialogService: Service for displaying dialogs.
+        /// - SessionService: Service for managing sessions.
+        /// - DocService: Service for handling documents.
+        /// </remarks>
         [Inject]
         private CarService CarService { get; set; }
         [Inject]
@@ -97,6 +107,20 @@ namespace MecuryProduct.Components.Admin.Pages
         [Inject]
         private DocService DocService { get; set; }
 
+        /// <summary>
+        /// Initializes the page by retrieving necessary data and setting up the session.
+        /// </summary>
+        /// <remarks>
+        /// This method performs the following tasks:
+        /// 1. Retrieves a list of drivers.
+        /// 2. Sets the user ID.
+        /// 3. Retrieves a list of car makes.
+        /// 4. Retrieves a list of car years.
+        /// 5. Retrieves a CarModel object from the session named "car_form".
+        /// 6. Retrieves a DocModel object from the session named "doc".
+        /// 7. Retrieves a DocModel object from the session named "update_doc".
+        /// 8. Retrieves a list of DocModel objects from the session named "vehicle_images".
+        /// 9. Updates the
         protected override async void OnInitialized()
         {
             GetDrivers();
@@ -131,6 +155,11 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Opens a modal dialog to add a vehicle for a specific customer.
+        /// </summary>
+        /// <param name="CusId">The ID of the customer for whom the vehicle is being added.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task OpenAddVehicleModal(int CusId)
         {
             await DialogService.OpenAsync<AddVehicleModal>("Add Vehicle",
@@ -139,16 +168,29 @@ namespace MecuryProduct.Components.Admin.Pages
             );
         }
 
+        /// <summary>
+        /// Retrieves the list of car makes from the CarService and assigns it to the 'makes' variable.
+        /// </summary>
         public void GetMakes()
         {
             makes = CarService.GetMakes();
         }
 
+        /// <summary>
+        /// Retrieves the years of available cars from the CarService.
+        /// </summary>
         public void GetYears()
         {
             years = CarService.GetYear();
         }
 
+        /// <summary>
+        /// Changes the make of a car and updates the available models accordingly.
+        /// </summary>
+        /// <param name="make">The new make of the car.</param>
+        /// <remarks>
+        /// This method sets the car's make, clears the car model, and retrieves the available models based on the new make.
+        /// </remarks>
         public void ChangeMake(string? make)
         {
             SetInSession();
@@ -161,11 +203,29 @@ namespace MecuryProduct.Components.Admin.Pages
             models = CarService.GetModelsByMake(make);
         }
 
+        /// <summary>
+        /// Sets the car form data in the session.
+        /// </summary>
+        /// <remarks>
+        /// This method serializes the car object using JSON and stores it in the session with the key "car_form".
+        /// </remarks>
         public async void SetInSession()
         {
             await SessionService.Set("car_form", JsonSerializer.Serialize(car));
         }
 
+        /// <summary>
+        /// Creates a new car entry with associated documents and images.
+        /// </summary>
+        /// <remarks>
+        /// The method sets the creation and update timestamps for the car, adds the car with notes using the CarService.
+        /// If there are documents associated with the car, they are linked and added using the DocService.
+        /// Any existing documents to update are also linked and added.
+        /// Images related to the car are associated and added as documents.
+        /// The method clears the session data for the car form.
+        /// A confirmation dialog is displayed to inquire about adding another vehicle.
+        /// If confirmed, a new vehicle modal is opened for the specified customer ID.
+        /// </remarks>
         public async void CreateCar()
         {
             car.created_at = DateTime.UtcNow;
@@ -208,16 +268,31 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Retrieves a list of drivers from the DriverService based on a specific claim.
+        /// </summary>
+        /// <remarks>
+        /// This method populates the 'drivers' field with a list of users who have the specified claim.
+        /// </remarks>
         public void GetDrivers()
         {
             drivers = DriverService.GetUsersByClaim("Role", "Driver");
         }
 
+        /// <summary>Checks if a date should be disabled for rendering.</summary>
+        /// <param name="args">The DateRenderEventArgs containing information about the date to render.</param>
         void DateRender(DateRenderEventArgs args)
         {
             args.Disabled = args.Disabled || args.Date.DayOfWeek == DayOfWeek.Sunday || args.Date.Date < DateTime.Today;
         }
 
+        /// <summary>
+        /// Sets the user ID for the current user.
+        /// </summary>
+        /// <remarks>
+        /// This method retrieves the authentication state of the user and sets the user ID if the user is authenticated.
+        /// </remarks>
+        /// <returns>Void</returns>
         public async void SetUserId()
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -235,6 +310,14 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Changes the VIN image for a car based on the provided base64 string.
+        /// </summary>
+        /// <param name="base64">The base64 string representing the image to be saved.</param>
+        /// <remarks>
+        /// If the base64 string is not null, the method locates the VIN document for the car, updates its information, and saves the image file.
+        /// If the VIN document does not exist, a new document is created and saved.
+        /// </remarks>
         public async void changeVinImage(string? base64)
         {
             if (base64 is not null)
@@ -280,12 +363,21 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>Deletes a document from the list of vehicle images.</summary>
+        /// <param name="doc">The document to be deleted.</param>
         public void DeleteDoc(DocModel doc)
         {
             vehicleImages.Remove(doc);
             StateHasChanged();
         }
 
+        /// <summary>
+        /// Changes the vehicle images based on the provided upload change event arguments.
+        /// </summary>
+        /// <param name="e">The Radzen.UploadChangeEventArgs containing information about the uploaded files.</param>
+        /// <remarks>
+        /// This method iterates through the uploaded files, saves them to the specified directory, and updates the vehicle images.
+        /// </remarks>
         public async void changeVehicleImages(Radzen.UploadChangeEventArgs e)
         {
             string directory = Directory.GetCurrentDirectory();
@@ -316,6 +408,9 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Represents an instruction with a label and a boolean value.
+        /// </summary>
         private sealed class Instruction
         {
             public string label { get; set; } = string.Empty;

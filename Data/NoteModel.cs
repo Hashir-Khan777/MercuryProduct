@@ -2,6 +2,8 @@
 
 namespace MecuryProduct.Data
 {
+    /* The NoteModel class represents a note entity with various properties related to notes and associated
+    entities. */
     public class NoteModel
     {
         public int Id { get; set; }

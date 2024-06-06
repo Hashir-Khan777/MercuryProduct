@@ -1,12 +1,53 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\Zini Tecnologies Projects\\MecuryProduct\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\services\\emailsender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:services\\emailsender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAEEAAAAANDMzMzMbwFEAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-06T03:09:33.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EmailSender.cs",
+              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Services\\EmailSender.cs",
+              "RelativeDocumentMoniker": "Services\\EmailSender.cs",
+              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Services\\EmailSender.cs",
+              "RelativeToolTip": "Services\\EmailSender.cs",
+              "ViewState": "AQIAABkAAABAmpmZmZklwCkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-06T03:08:14.319Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
         {
           "DockedHeight": 200,
           "SelectedChildIndex": -1,

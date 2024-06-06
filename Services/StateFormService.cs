@@ -9,12 +9,18 @@ namespace MecuryProduct.Services
         private readonly ApplicationDbContext db;
         private readonly NotificationService notificationService;
 
+        /// <summary>Initializes a new instance of the StateFormService class.</summary>
+        /// <param name="db">The application's database context.</param>
+        /// <param name="notificationService">The notification service used for sending notifications.</param>
         public StateFormService(ApplicationDbContext db, NotificationService notificationService)
         {
             this.db = db;
             this.notificationService = notificationService;
         }
 
+        /// <summary>Adds a StateFormModel to the database.</summary>
+        /// <param name="state_form">The StateFormModel to be added.</param>
+        /// <exception cref="Exception">Thrown when an error occurs while adding the StateFormModel to the database.</exception>
         public void Add(StateFormModel state_form)
         {
             try
@@ -29,6 +35,8 @@ namespace MecuryProduct.Services
             }
         }
 
+        /// <summary>Retrieves a list of StateFormModel objects from the database.</summary>
+        /// <returns>A list of StateFormModel objects with associated documents, or null if an exception occurs.</returns>
         public List<StateFormModel>? Get()
         {
             try
@@ -43,6 +51,12 @@ namespace MecuryProduct.Services
             }
         }
 
+        /// <summary>
+        /// Retrieves a StateFormModel by its ID from the database.
+        /// </summary>
+        /// <param name="id">The ID of the StateFormModel to retrieve.</param>
+        /// <returns>The StateFormModel with the specified ID if found; otherwise, null.</returns>
+        /// <exception cref="Exception">Thrown when an error occurs during the retrieval process.</exception>
         public StateFormModel? GetById(int id)
         {
             try
@@ -57,6 +71,14 @@ namespace MecuryProduct.Services
             }
         }
 
+        /// <summary>
+        /// Deletes a StateFormModel from the database.
+        /// </summary>
+        /// <param name="state_form">The StateFormModel to be deleted.</param>
+        /// <remarks>
+        /// This method removes the specified StateFormModel from the database. If an exception occurs during the deletion process,
+        /// an error notification message is created and displayed using the notification service.
+        /// </remarks>
         public void Delete(StateFormModel state_form)
         {
             try
@@ -71,6 +93,11 @@ namespace MecuryProduct.Services
             }
         }
 
+        /// <summary>
+        /// Updates the state form model in the database.
+        /// </summary>
+        /// <param name="state_form">The StateFormModel object to be updated.</param>
+        /// <exception cref="Exception">Thrown when an error occurs during the update process.</exception>
         public void Update(StateFormModel state_form)
         {
             try

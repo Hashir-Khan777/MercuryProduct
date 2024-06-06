@@ -9,21 +9,37 @@ namespace MecuryProduct.Components.Admin.Pages
     {
         private List<ApplicationUser> drivers = new List<ApplicationUser>();
 
+        /// <summary>Injects the UserService and DialogService dependencies.</summary>
         [Inject]
         private UserService DriverService { get; set; }
         [Inject]
         private DialogService DialogService { get; set; }
 
+        /// <summary>
+        /// This method is called when the object is initialized.
+        /// It triggers the retrieval of drivers.
+        /// </summary>
         protected override async void OnInitialized()
         {
             GetDrivers();
         }
 
+        /// <summary>
+        /// Retrieves a list of drivers from the DriverService based on a specific claim.
+        /// </summary>
+        /// <remarks>
+        /// This method populates the 'drivers' list with users who have the claim "Role" set to "Driver".
+        /// </remarks>
         public void GetDrivers()
         {
             drivers = DriverService.GetUsersByClaim("Role", "Driver").ToList();
         }
 
+        /// <summary>
+        /// Opens a modal dialog to update a driver with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the driver to update.</param>
+        /// <returns>Task representing the asynchronous operation.</returns>
         public async void OpenUpdateDriverModal(string id)
         {
             await DialogService.OpenAsync<UpdateDriverModal>("Update Driver",
@@ -33,6 +49,11 @@ namespace MecuryProduct.Components.Admin.Pages
             StateHasChanged();
         }
 
+        /// <summary>
+        /// Opens a modal dialog to show vehicles associated with a customer.
+        /// </summary>
+        /// <param name="Id">The identifier of the customer.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task OpenShowVehiclesModal(string Id)
         {
             await DialogService.OpenAsync<ShowCustomerVehiclesModal>("Vehicles",
@@ -41,6 +62,11 @@ namespace MecuryProduct.Components.Admin.Pages
             );
         }
 
+        /// <summary>
+        /// Deletes a user after confirming the action through a dialog.
+        /// </summary>
+        /// <param name="user">The user to be deleted.</param>
+        /// <returns>Void</returns>
         public async void DeleteUser(ApplicationUser user)
         {
             bool? deleteUser = await DialogService.Confirm("Are you sure?", "Do you want to delete driver?", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" });

@@ -18,6 +18,10 @@ namespace MecuryProduct.Components.Admin.Pages
         public DocModel doc;
         public string doc_note = string.Empty;
 
+        /// <summary>Injects services into the class properties.</summary>
+        /// <remarks>
+        /// This method injects the NoteService, AuthenticationStateProvider, CarService, and DocService into the corresponding properties of the class.
+        /// </remarks>
         [Inject]
         private NoteService NoteService { get; set; }
         [Inject]
@@ -27,6 +31,9 @@ namespace MecuryProduct.Components.Admin.Pages
         [Inject]
         private DocService DocService { get; set; }
 
+        /// <summary>
+        /// Initializes the object by setting the user ID, retrieving notes, and getting car information.
+        /// </summary>
         protected override void OnInitialized()
         {
             SetUserId();
@@ -34,6 +41,14 @@ namespace MecuryProduct.Components.Admin.Pages
             GetCar();
         }
 
+        /// <summary>
+        /// Retrieves notes based on certain conditions.
+        /// </summary>
+        /// <remarks>
+        /// If <see cref="SfId"/> is not null, retrieves notes using <see cref="NoteService.GetNotesByStateFormId"/>.
+        /// If <see cref="SfId"/> is null and <see cref="Docs"/> is true, retrieves documents using <see cref="DocService.GetDocsByVehId"/> with type "doc".
+        /// If <see cref="SfId"/> is null and <see cref="Docs"/> is false, retrieves notes using <see cref="NoteService.GetNotesByVehicleId"/> with doc_id as null.
+        /// </remarks>
         public void GetNotes()
         {
             // PP-92 & 99: notes functionality
@@ -56,11 +71,23 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Retrieves a car object based on the specified vehicle ID.
+        /// </summary>
+        /// <remarks>
+        /// This method fetches a car object from the CarService using the provided vehicle ID.
+        /// </remarks>
         public void GetCar()
         {
             car = CarService.GetCarById(VehId);
         }
 
+        /// <summary>
+        /// Sets the user ID based on the authenticated user's information.
+        /// </summary>
+        /// <remarks>
+        /// This method retrieves the authentication state of the user and sets the user ID if the user is authenticated.
+        /// </remarks>
         public async void SetUserId()
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -77,6 +104,10 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Deletes a document from the system.
+        /// </summary>
+        /// <param name="doc">The document to be deleted.</param>
         public void DeleteDoc(DocModel doc)
         {
             DocService.DeleteDoc(doc);
@@ -84,6 +115,13 @@ namespace MecuryProduct.Components.Admin.Pages
             StateHasChanged();
         }
 
+        /// <summary>
+        /// Changes the documents based on the provided upload change event arguments.
+        /// </summary>
+        /// <param name="e">The Radzen.UploadChangeEventArgs containing information about the uploaded files.</param>
+        /// <remarks>
+        /// This method processes each uploaded file, saves it to the specified directory, and updates the document information.
+        /// </remarks>
         public async void changeDocs(Radzen.UploadChangeEventArgs e)
         {
             string directory = Directory.GetCurrentDirectory();
@@ -115,6 +153,15 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>Adds a note based on the provided information.</summary>
+        /// <remarks>
+        /// If SfId is null, sets the veh_id of the note to VehId; otherwise, sets the sf_id to SfId.
+        /// If Docs is true and doc is not null, sets the doc_id of the note to the Id of the doc.
+        /// Sets the created_at and updated_at fields of the note to the current UTC time.
+        /// If Docs is true and both doc_note and doc are not null, adds the note using the NoteService.
+        /// If Docs is false, adds the note using the NoteService.
+        /// Finally, closes the dialog.
+        /// </remarks>
         public void AddNote()
         {
             // PP-82: test state form comments

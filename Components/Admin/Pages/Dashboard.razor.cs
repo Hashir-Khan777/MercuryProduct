@@ -6,7 +6,7 @@ namespace MecuryProduct.Components.Admin.Pages
 {
     public class AvgCarOfferByCatModel
     {
-        public string title {  get; set; } = string.Empty;
+        public string title { get; set; } = string.Empty;
         public int totalCars { get; set; }
         public int avgAmount { get; set; }
     }
@@ -23,9 +23,14 @@ namespace MecuryProduct.Components.Admin.Pages
             "Full Service",
         };
 
+        /// <summary>Gets or sets the CarService dependency for the current class.</summary>
+        /// <remarks>This property is annotated with the [Inject] attribute to indicate dependency injection.</remarks>
         [Inject]
         private CarService CarService { get; set; }
 
+        /// <summary>
+        /// Initializes the object by retrieving car data, calculating average values for each vehicle type, and calculating the total average.
+        /// </summary>
         protected override void OnInitialized()
         {
             GetCars();
@@ -36,11 +41,18 @@ namespace MecuryProduct.Components.Admin.Pages
             GetTotalAvg();
         }
 
+        /// <summary>
+        /// Retrieves a list of cars from the CarService and stores them in the 'cars' field.
+        /// </summary>
         public void GetCars()
         {
             cars = CarService.GetCars().ToList();
         }
 
+        /// <summary>Calculates the average offered amount for cars of a specific category.</summary>
+        /// <param name="cat">The category of cars to calculate the average for.</param>
+        /// <remarks>This method filters cars by the specified category, calculates the average offered amount,
+        /// and adds the result to the data collection.</remarks>
         public void GetAverage(string cat)
         {
             var filterdByCategory = cars.FindAll(c => c.vehicle_type.ToLower() == cat.ToLower());
@@ -64,6 +76,13 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Calculates the total average car offer amount by category.
+        /// </summary>
+        /// <returns>
+        /// An instance of AvgCarOfferByCatModel containing the total number of cars, the average offer amount,
+        /// and a title indicating the total average, or null if there are no cars or the average amount is zero.
+        /// </returns>
         public AvgCarOfferByCatModel? GetTotalAvg()
         {
             int avgAmount = 0;

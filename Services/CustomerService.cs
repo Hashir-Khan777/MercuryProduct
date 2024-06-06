@@ -9,12 +9,25 @@ namespace MecuryProduct.Services
         private readonly ApplicationDbContext db;
         private readonly NotificationService notificationService;
 
+        /* The `CustomerService` class in the provided C# code snippet has a constructor method `public
+        CustomerService(ApplicationDbContext db, NotificationService notificationService)`. This constructor
+        initializes a new instance of the `CustomerService` class with two parameters: an
+        `ApplicationDbContext` object named `db` and a `NotificationService` object named
+        `notificationService`. */
         public CustomerService(ApplicationDbContext db, NotificationService notificationService)
         {
             this.db = db;
             this.notificationService = notificationService;
         }
 
+        /// <summary>
+        /// The AddCustomer function in C# adds a customer to a database and generates a search string based on
+        /// the customer's name and phone number, handling any exceptions with a notification message.
+        /// </summary>
+        /// <param name="CustomerModel">CustomerModel is a model class that represents a customer entity with
+        /// properties such as cfname (customer first name), clname (customer last name), cphone_number
+        /// (customer phone number), and search (a concatenated string of customer's name and phone number for
+        /// searching purposes).</param>
         public void AddCustomer(CustomerModel customer)
         {
             try
@@ -30,6 +43,14 @@ namespace MecuryProduct.Services
             }
         }
 
+        /// <summary>
+        /// The function `GetCustomers` retrieves a list of customers from a database, including related
+        /// entities, and handles exceptions by notifying with an error message.
+        /// </summary>
+        /// <returns>
+        /// A `List<CustomerModel>` is being returned from the `GetCustomers` method. If an exception occurs, a
+        /// notification message is created and the method returns `null`.
+        /// </returns>
         public List<CustomerModel>? GetCustomers()
         {
             try
@@ -44,6 +65,18 @@ namespace MecuryProduct.Services
             }
         }
 
+        /// <summary>
+        /// The function `GetCustomerById` retrieves a customer by their ID from a database, handling exceptions
+        /// and returning a nullable `CustomerModel`.
+        /// </summary>
+        /// <param name="CusId">The `CusId` parameter is an integer representing the unique identifier of the
+        /// customer you want to retrieve from the database.</param>
+        /// <returns>
+        /// The `GetCustomerById` method is returning a `CustomerModel` object if the customer with the
+        /// specified `CusId` is found in the database. If an exception occurs during the database query, it
+        /// catches the exception, creates a notification message with the error details, notifies the
+        /// `notificationService`, and then returns `null`.
+        /// </returns>
         public CustomerModel? GetCustomerById(int CusId)
         {
             try
@@ -58,6 +91,20 @@ namespace MecuryProduct.Services
             }
         }
 
+        /// <summary>
+        /// The function `GetCustomerByPhoneNumber` retrieves a customer by their phone number from a database,
+        /// handling exceptions and returning a nullable `CustomerModel`.
+        /// </summary>
+        /// <param name="phone_number">The `GetCustomerByPhoneNumber` method is designed to retrieve a
+        /// `CustomerModel` object based on the provided `phone_number`. The method attempts to fetch the
+        /// customer from the database using Entity Framework's `Include` method to eagerly load related
+        /// entities like `created_by`, `cars`, and `driver</param>
+        /// <returns>
+        /// The method `GetCustomerByPhoneNumber` is returning a `CustomerModel` object that corresponds to the
+        /// customer with the provided phone number. If an exception occurs during the database query, it
+        /// catches the exception, creates a notification message with the error details, notifies the user
+        /// using the `notificationService`, and then returns `null`.
+        /// </returns>
         public CustomerModel? GetCustomerByPhoneNumber(string phone_number)
         {
             try
@@ -72,6 +119,13 @@ namespace MecuryProduct.Services
             }
         }
 
+        /// <summary>
+        /// The UpdateCustomer function updates a customer record in a database and notifies the user of any
+        /// errors that occur.
+        /// </summary>
+        /// <param name="CustomerModel">CustomerModel is a model class that represents a customer entity. It
+        /// likely contains properties such as cfname (customer first name), clname (customer last name),
+        /// cphone_number (customer phone number), and possibly other customer-related information.</param>
         public void UpdateCustomer(CustomerModel customer)
         {
             try
@@ -87,6 +141,14 @@ namespace MecuryProduct.Services
             }
         }
 
+        /// <summary>
+        /// The DeleteCustomer function removes a customer from the database and handles any exceptions by
+        /// notifying with an error message.
+        /// </summary>
+        /// <param name="CustomerModel">CustomerModel is a class that represents a customer entity in the
+        /// application. It likely contains properties such as customer ID, name, address, contact information,
+        /// etc. The DeleteCustomer method takes an instance of CustomerModel as a parameter and attempts to
+        /// remove that customer from the database. If an exception occurs during</param>
         public void DeleteCustomer(CustomerModel customer)
         {
             try

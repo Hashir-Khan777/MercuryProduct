@@ -65,11 +65,19 @@ namespace MecuryProduct.Components.Driver.Pages
         public string vinImage;
         public List<DocModel> vehicleImages = new List<DocModel>();
 
+        /// <summary>Injects the CarService and DocService dependencies.</summary>
         [Inject]
         private CarService CarService { get; set; }
         [Inject]
         private DocService DocService { get; set; }
 
+        /// <summary>
+        /// Initializes the view model by retrieving necessary data such as car details, models, and images.
+        /// </summary>
+        /// <remarks>
+        /// This method populates the view model with data required for display.
+        /// It retrieves car details by ID, including associated models and images.
+        /// </remarks>
         protected override void OnInitialized()
         {
             GetMakes();
@@ -99,21 +107,41 @@ namespace MecuryProduct.Components.Driver.Pages
             }
         }
 
+        /// <summary>
+        /// Retrieves the list of car makes from the CarService and assigns it to the 'makes' variable.
+        /// </summary>
         public void GetMakes()
         {
             makes = CarService.GetMakes();
         }
 
+        /// <summary>
+        /// Retrieves the years of available cars from the CarService.
+        /// </summary>
         public void GetYears()
         {
             years = CarService.GetYear();
         }
 
+        /// <summary>
+        /// Updates the list of car models based on the specified make.
+        /// </summary>
+        /// <param name="make">The make of the car for which models need to be retrieved.</param>
         public void ChangeMake(string? make)
         {
             models = CarService.GetModelsByMake(make);
         }
 
+        /// <summary>
+        /// Updates the car information including pickup date, timestamp, and other details.
+        /// </summary>
+        /// <remarks>
+        /// If the car status is "bought", the pickup date is set to the current UTC date and time.
+        /// The car's updated timestamp is set to the current UTC date and time.
+        /// The VIN number and DL (Driver's License) are converted to uppercase.
+        /// If there are vehicle images associated with the car, the car information is updated using the CarService
+        /// and the dialog service is closed.
+        /// </remarks>
         public void UpdateCar()
         {
             if (car.status.ToLower() == "bought")
@@ -133,6 +161,14 @@ namespace MecuryProduct.Components.Driver.Pages
             }
         }
 
+        /// <summary>
+        /// Changes the VIN image for a car based on the provided base64 string.
+        /// </summary>
+        /// <param name="base64">The base64 string representing the image to be saved.</param>
+        /// <remarks>
+        /// If the base64 string is not null, the method locates the VIN document for the car, updates its information, and saves the image file.
+        /// If the VIN document does not exist, a new document is created and saved with the provided image.
+        /// </remarks>
         // PP-69: change image name to stock id
         // Bug: image name should be unique (to prevent overiding issue)
         // Fix: Add a stock number and date to the image name
@@ -181,6 +217,10 @@ namespace MecuryProduct.Components.Driver.Pages
             }
         }
 
+        /// <summary>
+        /// Deletes a document from the system.
+        /// </summary>
+        /// <param name="doc">The document to be deleted.</param>
         public void DeleteDoc(DocModel doc)
         {
             DocService.DeleteDoc(doc);
@@ -188,6 +228,14 @@ namespace MecuryProduct.Components.Driver.Pages
             StateHasChanged();
         }
 
+        /// <summary>
+        /// Changes the vehicle images based on the provided upload change event arguments.
+        /// </summary>
+        /// <param name="e">The Radzen.UploadChangeEventArgs containing information about the changed files.</param>
+        /// <remarks>
+        /// This method iterates through the files in the upload change event arguments, saves them to the specified directory,
+        /// and updates the vehicle images accordingly.
+        /// </remarks>
         public async void changeVehicleImages(Radzen.UploadChangeEventArgs e)
         {
             string directory = Directory.GetCurrentDirectory();
@@ -219,6 +267,9 @@ namespace MecuryProduct.Components.Driver.Pages
             }
         }
 
+        /// <summary>
+        /// Represents an instruction with a label and a boolean value.
+        /// </summary>
         private sealed class Instruction
         {
             public string label { get; set; } = string.Empty;

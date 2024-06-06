@@ -23,6 +23,10 @@ namespace MecuryProduct.Components.Admin.Pages
             _app = this;
         }
 
+        /// <summary>Injects dependencies for the current component.</summary>
+        /// <remarks>
+        /// Injects the CustomerService, DialogService, and IJSRuntime dependencies into the current component.
+        /// </remarks>
         [Inject]
         private CustomerService CustomerService { get; set; }
         [Inject]
@@ -30,6 +34,11 @@ namespace MecuryProduct.Components.Admin.Pages
         [Inject]
         private IJSRuntime JS { get; set; }
 
+        /// <summary>
+        /// Method called after the component has been rendered.
+        /// </summary>
+        /// <param name="firstRender">A boolean indicating if this is the first render of the component.</param>
+        /// <returns>An asynchronous Task.</returns>
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -47,6 +56,15 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// This method is called when the component's parameters are set.
+        /// It retrieves customers, filters them based on scheduled dates, and initializes the map accordingly.
+        /// </summary>
+        /// <remarks>
+        /// If it's not the first render, it fetches customers, filters them based on scheduled dates within a specified range,
+        /// calculates the center coordinates of the filtered customers, initializes the map with the center coordinates, and adds markers.
+        /// If no customers match the filter criteria, it initializes the map without any markers.
+        /// </remarks>
         protected override async void OnParametersSet()
         {
             if (!first_render)
@@ -68,11 +86,21 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Retrieves a list of customers from the CustomerService and stores them in the 'customers' field.
+        /// </summary>
         public void GetCustomers()
         {
             customers = CustomerService.GetCustomers().ToList();
         }
 
+        /// <summary>Adds markers for customers based on their cars' scheduled dates and status.</summary>
+        /// <remarks>
+        /// This method iterates through the list of customers and filters their cars based on the scheduled dates within a specified range.
+        /// It then determines the color of the marker based on the status of the car (Scheduled, Bought, DnD).
+        /// The marker is added using JavaScript interop with the specified customer details.
+        /// Finally, it sets the bounds for the markers on the map if there are customers present.
+        /// </remarks>
         public async void AddMarkers()
         {
             foreach (var customer in customers)
@@ -91,6 +119,11 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Handles the click event on a marker and opens a modal dialog to show customer vehicles.
+        /// </summary>
+        /// <param name="id">The ID of the marker clicked.</param>
+        /// <returns>Task representing the asynchronous operation.</returns>
         [JSInvokable("OnMarkerClick")]
         public static async void OnMarkerClick(int id)
         {

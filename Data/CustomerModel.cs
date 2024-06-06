@@ -2,6 +2,8 @@
 
 namespace MecuryProduct.Data
 {
+    /* The CustomerModel class represents a customer entity with various properties including personal
+    information, contact details, and related entities like cars and notes. */
     public class CustomerModel
     {
         public int Id { get; set; }
@@ -62,7 +64,7 @@ namespace MecuryProduct.Data
 
         public ApplicationUser? created_by { get; set; }
 
-        public List<CarModel>? cars {  get; set; }
+        public List<CarModel>? cars { get; set; }
 
         public List<NoteModel>? notes { get; set; }
     }

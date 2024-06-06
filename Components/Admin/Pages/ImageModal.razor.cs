@@ -10,6 +10,10 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public int index = 0;
 
+        /// <summary>Move to the next item in the collection of paths.</summary>
+        /// <remarks>
+        /// If the current index is at the end of the collection, it wraps around to the beginning.
+        /// </remarks>
         public void Next()
         {
             if (index + 1 >= Paths.Count())
@@ -22,6 +26,12 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Moves to the previous item in the collection.
+        /// </summary>
+        /// <remarks>
+        /// If the current index is at the beginning of the collection, it wraps around to the end.
+        /// </remarks>
         public void Previous()
         {
             if (index <= 0)

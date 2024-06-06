@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 
 namespace MecuryProduct.Services
 {
+    /* The class structure represents a model for handling location-based query results with detailed
+    address information and geographic positions. */
     public class QuerySummary
     {
         [JsonPropertyName("query")]
@@ -140,12 +142,26 @@ namespace MecuryProduct.Services
         private readonly HttpClient _httpClient;
         private readonly NotificationService notificationService;
 
+        /* The `ApiService` constructor in the provided C# code is initializing the private fields
+        `_httpClient` and `notificationService` of the `ApiService` class with the values passed as
+        parameters to the constructor. */
         public ApiService(HttpClient httpClient, NotificationService notificationService)
         {
             _httpClient = httpClient;
             this.notificationService = notificationService;
         }
 
+        /// <summary>
+        /// This C# function asynchronously retrieves data from an API using HttpClient and handles exceptions
+        /// by notifying with a message.
+        /// </summary>
+        /// <param name="url">The `url` parameter in the `GetFromApiAsync` method is the URL of the API endpoint
+        /// from which you want to retrieve data asynchronously.</param>
+        /// <returns>
+        /// The method `GetFromApiAsync` returns a `Task<string>`. The string being returned is either the JSON
+        /// response from the API if the request is successful, or an empty string if there is an exception
+        /// caught during the API call.
+        /// </returns>
         public async Task<string> GetFromApiAsync(string url)
         {
             try

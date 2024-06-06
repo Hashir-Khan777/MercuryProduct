@@ -12,21 +12,35 @@ namespace MecuryProduct.Components.Admin.Pages
         public DateTime start_date = DateTime.Today.Date;
         public DateTime end_date = DateTime.Today.Date;
 
+        /// <summary>Injects the CarService and DialogService dependencies.</summary>
         [Inject]
         private CarService CarService { get; set; }
         [Inject]
         private DialogService DialogService { get; set; }
 
+        /// <summary>
+        /// This method is called when the object is initialized.
+        /// It triggers the retrieval of cars.
+        /// </summary>
         protected override void OnInitialized()
         {
             GetCars();
         }
 
+        /// <summary>
+        /// Changes the view mode between map view and another view.
+        /// </summary>
+        /// <param name="isMapView">A boolean indicating whether to switch to map view or not.</param>
         public async void changeView(bool isMapView)
         {
             mapView = isMapView;
         }
 
+        /// <summary>
+        /// Opens a modal dialog to update a vehicle based on the selected appointment.
+        /// </summary>
+        /// <param name="args">The event arguments containing the selected car model.</param>
+        /// <returns>Task representing the asynchronous operation.</returns>
         public async void OnAppointmentSelect(SchedulerAppointmentSelectEventArgs<CarModel> args)
         {
             await DialogService.OpenAsync<UpdateVehicleModal>("Update Vehicle",
@@ -36,6 +50,9 @@ namespace MecuryProduct.Components.Admin.Pages
             StateHasChanged();
         }
 
+        /// <summary>
+        /// Retrieves a list of cars from the CarService and stores them in the 'cars' list.
+        /// </summary>
         public void GetCars()
         {
             cars = CarService.GetCars().ToList();

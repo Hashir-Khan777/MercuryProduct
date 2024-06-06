@@ -1,5 +1,6 @@
 ﻿namespace MecuryProduct.Data
 {
+    /* The MasterProductionTable class in C# has properties for Id, section, and row. */
     public class MasterProductionTable
     {
         public int Id { get; set; }

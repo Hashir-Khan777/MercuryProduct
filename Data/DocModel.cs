@@ -2,6 +2,8 @@
 
 namespace MecuryProduct.Data
 {
+    /* The `DocModel` class in C# represents a document entity with various properties including Id, type,
+    file details, timestamps, and optional related models for car, state form, and note. */
     public class DocModel
     {
         public int Id { get; set; }

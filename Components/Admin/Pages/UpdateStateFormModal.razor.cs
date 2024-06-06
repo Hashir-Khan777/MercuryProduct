@@ -6,20 +6,29 @@ namespace MecuryProduct.Components.Admin.Pages
 {
     public partial class UpdateStateFormModal
     {
-        [Parameter] public int SfId {  get; set; }
+        [Parameter] public int SfId { get; set; }
         public StateFormModel state_form = new StateFormModel();
         public List<DocModel> envImages = new List<DocModel>();
 
+        /// <summary>Injects the DocService and StateFormService dependencies.</summary>
         [Inject]
         private DocService DocService { get; set; }
         [Inject]
         private StateFormService StateFormService { get; set; }
 
+        /// <summary>
+        /// This method is called when the element is initialized.
+        /// It retrieves the state form by its identifier.
+        /// </summary>
         protected override void OnInitialized()
         {
             GetStateFormById();
         }
 
+        /// <summary>
+        /// Updates the state form by setting the updated timestamp to the current UTC time,
+        /// then calls the StateFormService to update the state form and closes the dialog.
+        /// </summary>
         public void UpdateStateForm()
         {
             state_form.updated_at = DateTime.UtcNow;
@@ -27,6 +36,13 @@ namespace MecuryProduct.Components.Admin.Pages
             dialogService.Close();
         }
 
+        /// <summary>
+        /// Retrieves a state form by its ID and updates the state_form and envImages properties accordingly.
+        /// </summary>
+        /// <remarks>
+        /// This method fetches a StateFormModel object by its ID using the StateFormService. If a valid result is obtained,
+        /// it updates the state_form property with the retrieved StateFormModel and assigns the document to the envImages list.
+        /// </remarks>
         public async void GetStateFormById()
         {
             StateFormModel? result = StateFormService.GetById(SfId);
@@ -37,6 +53,10 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Deletes a document and its associated images from the environment.
+        /// </summary>
+        /// <param name="doc">The document to be deleted.</param>
         public void DeleteDoc(DocModel doc)
         {
             DocService.DeleteDoc(doc);
@@ -44,6 +64,14 @@ namespace MecuryProduct.Components.Admin.Pages
             state_form = new StateFormModel();
         }
 
+        /// <summary>
+        /// Changes the documents based on the uploaded files.
+        /// </summary>
+        /// <param name="e">The event arguments containing the uploaded files.</param>
+        /// <remarks>
+        /// This method updates the documents based on the files uploaded. It deletes the existing document if any,
+        /// and then processes each uploaded file to save it to the specified directory.
+        /// </remarks>
         public async void changeDocs(Radzen.UploadChangeEventArgs e)
         {
             string directory = Directory.GetCurrentDirectory();

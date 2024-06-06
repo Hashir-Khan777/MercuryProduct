@@ -84,8 +84,14 @@ namespace MecuryProduct.Components.Admin.Pages
         private DocModel? doc;
         private DocModel? update_doc;
 
+        /// <summary>
+        /// Represents a class that manages dependency injection for various services and components.
+        /// </summary>
+        /// <remarks>
+        /// This class provides properties to access different services using dependency injection.
+        /// </remarks>
         [Inject]
-        private CarService CarService {  get; set; }
+        private CarService CarService { get; set; }
         [Inject]
         private UserService DriverService { get; set; }
         [Inject]
@@ -99,6 +105,17 @@ namespace MecuryProduct.Components.Admin.Pages
         [Inject]
         private DocService DocService { get; set; }
 
+        /// <summary>
+        /// Initializes the view model by retrieving necessary data from session and services.
+        /// </summary>
+        /// <remarks>
+        /// This method performs the following tasks:
+        /// 1. Retrieves drivers and customers information.
+        /// 2. Sets the user ID.
+        /// 3. Retrieves car makes and years.
+        /// 4. Retrieves session data for car form, document, updated document, and vehicle images.
+        /// 5. Processes the retrieved session data to update the view model properties.
+        /// </remarks>
         protected override async void OnInitialized()
         {
             GetDrivers();
@@ -134,6 +151,15 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Creates a new car entity with associated documents and images.
+        /// </summary>
+        /// <remarks>
+        /// This method sets the creation and update timestamps for the car entity, adds the car to the CarService,
+        /// associates any provided document with the car, associates any provided updated document with the car,
+        /// associates any provided images with the car, clears the session data related to the car form,
+        /// and navigates to the admin vehicles page.
+        /// </remarks>
         public async void CreateCar()
         {
             car.created_at = DateTime.UtcNow;
@@ -164,21 +190,40 @@ namespace MecuryProduct.Components.Admin.Pages
             NavigationManager.NavigateTo("/admin/vehicles");
         }
 
+        /// <summary>
+        /// Sets the car form data in the session.
+        /// </summary>
+        /// <remarks>
+        /// This method serializes the car object using JSON and stores it in the session with the key "car_form".
+        /// </remarks>
         public async void SetInSession()
         {
             await SessionService.Set("car_form", JsonSerializer.Serialize(car));
         }
 
+        /// <summary>
+        /// Retrieves the list of car makes from the CarService.
+        /// </summary>
         public void GetMakes()
         {
             makes = CarService.GetMakes();
         }
 
+        /// <summary>
+        /// Retrieves the years of available cars from the CarService.
+        /// </summary>
         public void GetYears()
         {
             years = CarService.GetYear();
         }
 
+        /// <summary>
+        /// Changes the make of the car and updates the available models accordingly.
+        /// </summary>
+        /// <param name="make">The new make of the car.</param>
+        /// <remarks>
+        /// This method sets the car's make, clears the car model, and retrieves the available models based on the new make.
+        /// </remarks>
         public void ChangeMake(string? make)
         {
             SetInSession();
@@ -188,16 +233,32 @@ namespace MecuryProduct.Components.Admin.Pages
             models = CarService.GetModelsByMake(make);
         }
 
+        /// <summary>
+        /// Retrieves a list of drivers from the DriverService based on a specific claim.
+        /// </summary>
+        /// <remarks>
+        /// This method populates the 'drivers' field with a list of users who have the specified claim.
+        /// </remarks>
         public void GetDrivers()
         {
             drivers = DriverService.GetUsersByClaim("Role", "Driver");
         }
 
+        /// <summary>
+        /// Retrieves a list of customers from the CustomerService and assigns it to the customers field.
+        /// </summary>
         public void GetCustomers()
         {
             customers = CustomerService.GetCustomers();
         }
 
+        /// <summary>
+        /// Sets the user ID based on the authenticated user's information.
+        /// </summary>
+        /// <remarks>
+        /// This method retrieves the authentication state of the user and extracts the user ID from the claims.
+        /// If the user is authenticated and the user ID is found in the claims, it sets the created_by_id property to the user ID.
+        /// </remarks>
         public async void SetUserId()
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -214,6 +275,14 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>
+        /// Changes the VIN image for a car based on the provided base64 string.
+        /// </summary>
+        /// <param name="base64">The base64 string representing the image to be saved.</param>
+        /// <remarks>
+        /// If the base64 string is not null, the VIN image for the car is updated or added based on the existing VIN document.
+        /// The image is saved in the specified directory with a unique file name and path.
+        /// </remarks>
         public async void changeVinImage(string? base64)
         {
             if (base64 is not null)
@@ -259,12 +328,19 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>Deletes a document from the list of vehicle images.</summary>
+        /// <param name="doc">The document to be deleted.</param>
         public void DeleteDoc(DocModel doc)
         {
             vehicleImages.Remove(doc);
             StateHasChanged();
         }
 
+        /// <summary>
+        /// Changes and uploads vehicle images to the server.
+        /// </summary>
+        /// <param name="e">The event arguments containing the uploaded files.</param>
+        /// <returns>Task representing the asynchronous operation.</returns>
         public async void changeVehicleImages(Radzen.UploadChangeEventArgs e)
         {
             string directory = Directory.GetCurrentDirectory();
@@ -295,11 +371,16 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// <summary>Checks if a date should be disabled for rendering.</summary>
+        /// <param name="args">The DateRenderEventArgs containing information about the date to render.</param>
         void DateRender(DateRenderEventArgs args)
         {
             args.Disabled = args.Disabled || args.Date.DayOfWeek == DayOfWeek.Sunday || args.Date.Date < DateTime.Today;
         }
 
+        /// <summary>
+        /// Represents an instruction with a label and a boolean value.
+        /// </summary>
         private sealed class Instruction
         {
             public string label { get; set; } = string.Empty;
