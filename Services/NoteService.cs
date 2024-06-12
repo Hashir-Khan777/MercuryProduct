@@ -1,6 +1,7 @@
 ﻿using MecuryProduct.Data;
 using Microsoft.EntityFrameworkCore;
 using Radzen;
+using System.Text.Json;
 
 namespace MecuryProduct.Services
 {
@@ -8,14 +9,16 @@ namespace MecuryProduct.Services
     {
         private readonly ApplicationDbContext db;
         private readonly NotificationService notificationService;
+        private readonly HelperService helperService;
 
         /// <summary>Initializes a new instance of the NoteService class.</summary>
         /// <param name="db">The application's database context.</param>
         /// <param name="notificationService">The notification service used for sending notifications.</param>
-        public NoteService(ApplicationDbContext db, NotificationService notificationService)
+        public NoteService(ApplicationDbContext db, NotificationService notificationService, HelperService helperService)
         {
             this.db = db;
             this.notificationService = notificationService;
+            this.helperService = helperService;
         }
 
         /// <summary>
@@ -32,6 +35,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -52,6 +56,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -73,6 +78,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }

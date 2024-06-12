@@ -1,0 +1,161 @@
+﻿@page "/employee/inventory"
+
+<PageTitle>Inventory</PageTitle>
+
+<RadzenTabs RenderMode="TabRenderMode.Client">
+    <Tabs>
+        <RadzenTabsItem Text="Inventory">
+            <RadzenDataGrid Data="@cars" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                            AllowSorting="true">
+                <Columns>
+                    <RadzenDataGridColumn Title="Id" Width="100px">
+                        <Template Context="item">
+                            M-STK-@item.Id
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="VIN" Property="vin_no" />
+                    <RadzenDataGridColumn Title="Vehicle Details" Width="200px">
+                        <Template Context="item">
+                            <RadzenStack Orientation="Orientation.Horizontal">
+                                <RadzenStack>Year:</RadzenStack>
+                                <RadzenStack>@item.car_year</RadzenStack>
+                            </RadzenStack>
+                            <RadzenStack Orientation="Orientation.Horizontal">
+                                <RadzenStack>Make:</RadzenStack>
+                                <RadzenStack>@item.car_make</RadzenStack>
+                            </RadzenStack>
+                            <RadzenStack Orientation="Orientation.Horizontal">
+                                <RadzenStack>Model:</RadzenStack>
+                                <RadzenStack>@item.car_model</RadzenStack>
+                            </RadzenStack>
+                            <RadzenStack Orientation="Orientation.Horizontal">
+                                <RadzenStack>Color:</RadzenStack>
+                                <RadzenStack>@item.car_color</RadzenStack>
+                            </RadzenStack>
+                            <RadzenStack Orientation="Orientation.Horizontal">
+                                <RadzenStack>Pickup:</RadzenStack>
+                                <RadzenStack>@item.pickup_date</RadzenStack>
+                            </RadzenStack>
+                            <RadzenStack Orientation="Orientation.Horizontal">
+                                <RadzenStack>Status:</RadzenStack>
+                                <RadzenStack>@item.status</RadzenStack>
+                            </RadzenStack>
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Picture">
+                        <Template Context="item">
+                            <RadzenImage Style="width: 200px; height: 200px; object-fit: cover; cursor: pointer;" Path="@item?.docs?.FindAll(d => d.type == "vehicle")?[0].short_path" Click="@(() => OpenImageModal(item?.docs?.FindAll(d => d.type == "vehicle"), true))" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="VIN Picture">
+                        <Template Context="item">
+                            <RadzenImage Style="width: 200px; height: 200px; object-fit: cover; cursor: pointer;" Path="@item?.docs?.FindAll(d => d.type == "vin")?[0].short_path" Click="@(() => OpenImageModal(item?.docs?.FindAll(d => d.type == "vin"), false))" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Docs">
+                        <Template Context="item">
+                            <RadzenButton Variant="Variant.Text" Click="() => OpenDocsModal(item.Id)">
+                                <RadzenIcon Icon="folder" Style="font-size: 20px" />
+                            </RadzenButton>
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Actions">
+                        <Template Context="item">
+                            <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateVehicleModal(item.Id)">
+                                <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                            </RadzenButton>
+                            <RadzenButton Variant="Variant.Text" Click="() => DeleteVehicle(item)">
+                                <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                            </RadzenButton>
+                            <RadzenButton Variant="Variant.Text" Click="() => OpenVehicleCommentModal(item.Id)">
+                                <RadzenIcon Icon="question_answer" Style="font-size: 20px" />
+                            </RadzenButton>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="State Form">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" JustifyContent="JustifyContent.End">
+                <RadzenLink Path="/employee/addstateform">
+                    <RadzenButton>Add</RadzenButton>
+                </RadzenLink>
+            </RadzenStack>
+            <RadzenDataGrid Style="margin-top: 20px;" Data="@stateForms" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                            AllowSorting="true">
+                <Columns>
+                    <RadzenDataGridColumn Title="Id" Width="100px">
+                        <Template Context="item">
+                            M-ENV-@item.Id
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Envelop">
+                        <Template Context="item">
+                            <RadzenLink Path="@item.doc?.short_path" Target="_env">@item.doc?.file_name</RadzenLink>
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Company">
+                        <Template Context="item">
+                            @item?.Company?.Name
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Created At" Property="created_at" />
+                    <RadzenDataGridColumn Title="Actions">
+                        <Template Context="item">
+                            <RadzenButton Variant="Variant.Text" Click="() => DeleteStateForm(item)">
+                                <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                            </RadzenButton>
+                            <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateStateFormModal(item.Id)">
+                                <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                            </RadzenButton>
+                            <RadzenButton Variant="Variant.Text" Click="() => OpenStateFormCommentModal(item.Id)">
+                                <RadzenIcon Icon="question_answer" Style="font-size: 20px" />
+                            </RadzenButton>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="Production">
+            @if (selected_cars.Count() > 0)
+            {
+                <RadzenButton Click="OpenBulkEditModal" Variant="Variant.Text" Style="margin-bottom: 10px;">Bulk Edit</RadzenButton>
+            }
+            <RadzenDataGrid Data="@cars" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                            AllowSorting="true">
+                <Columns>
+                    <RadzenDataGridColumn Title="" Width="60px">
+                        <Template Context="item">
+                            <RadzenCheckBox TValue="bool" Value="GetValue(item)" @onkeydown="KeyPress" @onkeyup="KeyPress" Change=@(args => MultiSelect(args, item)) Name="CheckBox2" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Id" Width="100px">
+                        <Template Context="item">
+                            M-STK-@item.Id
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Status" Property="status" />
+                    <RadzenDataGridColumn Title="Prod Status" Property="prod_status" />
+                    <RadzenDataGridColumn Title="Section" Property="section" />
+                    <RadzenDataGridColumn Title="Row" Property="row" />
+                    <RadzenDataGridColumn Title="Set Date" Property="set_date" />
+                    <RadzenDataGridColumn Title="Pulled Date" Property="pulled_date" />
+                    <RadzenDataGridColumn Title="Pickup Date" Property="pickup_date" />
+                    <RadzenDataGridColumn Title="Actions">
+                        <Template Context="item">
+                            <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateVehicleProductionModal(item.Id)">
+                                <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                            </RadzenButton>
+                            <RadzenButton Variant="Variant.Text" Click="() => DeleteVehicle(item)">
+                                <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                            </RadzenButton>
+                            <RadzenButton Variant="Variant.Text" Click="() => OpenVehicleCommentModal(item.Id)">
+                                <RadzenIcon Icon="question_answer" Style="font-size: 20px" />
+                            </RadzenButton>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenTabsItem>
+    </Tabs>
+</RadzenTabs>

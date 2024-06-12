@@ -1,0 +1,21 @@
+﻿@page "/admin/updatecompany/{CompId}"
+
+@inject Radzen.DialogService dialogService
+
+<RadzenTemplateForm TItem="CompanyModel" Data=@company Submit="@UpdateCompany">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Company Name" Component="CompanyName" />
+            <RadzenTextBox @bind-Value="company.Name" Name="CompanyName" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="CompanyName" Text="First name is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Manager" Component="Model" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@company.ManagerId"
+                            Data="@managers" TextProperty="UserName" ValueProperty="Id" Style="width: 100%;" Name="Model" />
+            <RadzenRequiredValidator Component="Model" Text="Manager is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit">Update Company</RadzenButton>
+</RadzenTemplateForm>

@@ -1,0 +1,12 @@
+﻿@using MecuryProduct.Components.Employee.Shared
+@using Radzen
+@using Radzen.Blazor
+@using Microsoft.AspNetCore.Authorization
+@using MecuryProduct.Data
+@using MecuryProduct.Components.Account
+@using MecuryProduct.Services
+@using MecuryProduct.Modals
+
+@layout EmployeeLayout
+
+@attribute [Authorize(Policy = "Employee")]

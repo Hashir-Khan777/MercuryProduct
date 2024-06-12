@@ -85,6 +85,10 @@ namespace MecuryProduct.Data
 
         public string DL { get; set; } = string.Empty;
 
+        public int? CompanyId { get; set; }
+
+        public CompanyModel? Company { get; set; }
+
         public CustomerModel? customer { get; set; }
 
         public ApplicationUser? driver { get; set; }

@@ -24,6 +24,11 @@
         <RadzenDataGridColumn Property="clname" Title="Last Name" />
         <RadzenDataGridColumn Property="email" Title="Email" />
         <RadzenDataGridColumn Property="cphone_number" Title="Phone Number" />
+        <RadzenDataGridColumn Title="Company">
+            <Template Context="item">
+                @item.Company?.Name
+            </Template>
+        </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Created By">
             <Template Context="item">
                 @item.created_by?.UserName

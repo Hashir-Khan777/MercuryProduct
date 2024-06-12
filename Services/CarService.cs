@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Radzen;
 using System.Linq.Dynamic.Core;
+using System.Text.Json;
 
 namespace MecuryProduct.Services
 {
@@ -9,16 +10,18 @@ namespace MecuryProduct.Services
     {
         private readonly ApplicationDbContext db;
         private readonly NotificationService notificationService;
+        private readonly HelperService helperService;
 
         /* The `CarService` constructor is initializing the `db` and `notificationService` fields of the
         `CarService` class with the values passed as arguments when an instance of `CarService` is created.
         This allows the `CarService` class to have access to the database context (`ApplicationDbContext`)
         and the notification service (`NotificationService`) that are needed for performing operations
         related to cars. */
-        public CarService(ApplicationDbContext db, NotificationService notificationService)
+        public CarService(ApplicationDbContext db, NotificationService notificationService, HelperService helperService)
         {
             this.db = db;
             this.notificationService = notificationService;
+            this.helperService = helperService;
         }
 
         /// <summary>
@@ -44,6 +47,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }
@@ -65,6 +69,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }
@@ -83,10 +88,11 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Cars.Include(c => c.docs).FirstOrDefault(c => c.Id == id);
+                return db.Cars.Include(c => c.docs).Include(c => c.Company).FirstOrDefault(c => c.Id == id);
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -107,10 +113,41 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Cars.OrderByDescending(c => c.created_at).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.docs).ToList();
+                return db.Cars.OrderByDescending(c => c.created_at).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.docs).Include(c => c.Company).ToList();
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<CarModel>? GetCarsByManagerId(string ManagerId)
+        {
+            try
+            {
+                return db.Cars.Where(c => c.Company.ManagerId == ManagerId).OrderByDescending(c => c.created_at).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.docs).Include(c => c.Company).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<CarModel>? GetCarsByCompanyId(int? CompanyId)
+        {
+            try
+            {
+                return db.Cars.Where(c => c.CompanyId == CompanyId).OrderByDescending(c => c.created_at).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.docs).Include(c => c.Company).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -134,6 +171,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -162,6 +200,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -186,6 +225,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -210,10 +250,11 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Cars.OrderBy(c => c.scheduled_date).Where(c => c.driver_id == driver_id && c.scheduled_date.Date == DateTime.Today.Date).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).ToList();
+                return db.Cars.OrderBy(c => c.scheduled_date).Where(c => c.driver_id == driver_id && c.scheduled_date.Date == DateTime.Today.Date).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.Company).ToList();
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -236,6 +277,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }

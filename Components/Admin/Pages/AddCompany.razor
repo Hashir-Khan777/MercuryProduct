@@ -1,0 +1,29 @@
+﻿@page "/admin/addcompany"
+
+<PageTitle>Add Company</PageTitle>
+
+<a onclick="history.back();">
+    <RadzenButton Variant="Variant.Flat" Style="margin-bottom: 20px;">
+        <RadzenIcon Icon="arrow_back" />
+    </RadzenButton>
+</a>
+
+<h3>Add Company</h3>
+
+<RadzenTemplateForm TItem="CompanyModel" Data=@company Submit="@CreateCompany">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Company Name" Component="CompanyName" />
+            <RadzenTextBox @bind-Value="company.Name" Name="CompanyName" Style="width: 100%;" Change="SetInSession" />
+            <RadzenRequiredValidator Component="CompanyName" Text="First name is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Manager" Component="Model" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown Change="SetInSession" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@company.ManagerId"
+                            Data="@managers" TextProperty="UserName" ValueProperty="Id" Style="width: 100%;" Name="Model" />
+            <RadzenRequiredValidator Component="Model" Text="Manager is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit">Add Company</RadzenButton>
+</RadzenTemplateForm>

@@ -70,6 +70,19 @@ namespace Microsoft.AspNetCore.Routing
                 return TypedResults.LocalRedirect($"~/{returnUrl}");
             });
 
+            accountGroup.MapPost("/LoginAs", async (
+                SignInManager<ApplicationUser> signInManager,
+                UserManager<ApplicationUser> userManager,
+                [FromForm] string userId,
+                [FromForm] string returnUrl) =>
+            {
+                ApplicationUser? user = await userManager.FindByIdAsync(userId);
+                if (user == null) return null;
+                await signInManager.SignOutAsync();
+                await signInManager.SignInAsync(user, false);
+                return TypedResults.LocalRedirect($"~/{returnUrl}");
+            });
+
             var manageGroup = accountGroup.MapGroup("/Manage").RequireAuthorization();
 
             /// <summary>Handles linking an external login provider.</summary>

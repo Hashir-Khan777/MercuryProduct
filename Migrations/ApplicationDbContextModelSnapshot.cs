@@ -30,6 +30,9 @@ namespace MecuryProduct.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -87,6 +90,8 @@ namespace MecuryProduct.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -105,6 +110,9 @@ namespace MecuryProduct.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("DL")
                         .IsRequired()
@@ -235,6 +243,8 @@ namespace MecuryProduct.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("cid");
 
                     b.HasIndex("created_by_id");
@@ -244,6 +254,28 @@ namespace MecuryProduct.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.CompanyModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ManagerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId");
+
+                    b.ToTable("Companies");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.CustomerModel", b =>
                 {
                     b.Property<int>("Id")
@@ -251,6 +283,9 @@ namespace MecuryProduct.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("caddress")
                         .IsRequired()
@@ -328,6 +363,8 @@ namespace MecuryProduct.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("cphone_number")
                         .IsUnique();
@@ -6356,6 +6393,9 @@ namespace MecuryProduct.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("created_at")
                         .HasColumnType("datetime2");
 
@@ -6363,6 +6403,8 @@ namespace MecuryProduct.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("StateForm");
                 });
@@ -6500,8 +6542,21 @@ namespace MecuryProduct.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.ApplicationUser", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.CompanyModel", "Company")
+                        .WithMany("Employees")
+                        .HasForeignKey("CompanyId");
+
+                    b.Navigation("Company");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.CarModel", b =>
                 {
+                    b.HasOne("MecuryProduct.Data.CompanyModel", "Company")
+                        .WithMany("Cars")
+                        .HasForeignKey("CompanyId");
+
                     b.HasOne("MecuryProduct.Data.CustomerModel", "customer")
                         .WithMany("cars")
                         .HasForeignKey("cid");
@@ -6514,6 +6569,8 @@ namespace MecuryProduct.Migrations
                         .WithMany("driver_cars")
                         .HasForeignKey("driver_id");
 
+                    b.Navigation("Company");
+
                     b.Navigation("created_by");
 
                     b.Navigation("customer");
@@ -6521,11 +6578,26 @@ namespace MecuryProduct.Migrations
                     b.Navigation("driver");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.CompanyModel", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.ApplicationUser", "Manager")
+                        .WithMany("companies")
+                        .HasForeignKey("ManagerId");
+
+                    b.Navigation("Manager");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.CustomerModel", b =>
                 {
+                    b.HasOne("MecuryProduct.Data.CompanyModel", "Company")
+                        .WithMany("Customers")
+                        .HasForeignKey("CompanyId");
+
                     b.HasOne("MecuryProduct.Data.ApplicationUser", "created_by")
                         .WithMany("customers")
                         .HasForeignKey("created_by_id");
+
+                    b.Navigation("Company");
 
                     b.Navigation("created_by");
                 });
@@ -6580,6 +6652,15 @@ namespace MecuryProduct.Migrations
                     b.Navigation("state_form");
 
                     b.Navigation("vehicle");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.StateFormModel", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.CompanyModel", "Company")
+                        .WithMany("StateForms")
+                        .HasForeignKey("CompanyId");
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -6637,6 +6718,8 @@ namespace MecuryProduct.Migrations
                 {
                     b.Navigation("cars");
 
+                    b.Navigation("companies");
+
                     b.Navigation("customers");
 
                     b.Navigation("driver_cars");
@@ -6649,6 +6732,17 @@ namespace MecuryProduct.Migrations
                     b.Navigation("docs");
 
                     b.Navigation("notes");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.CompanyModel", b =>
+                {
+                    b.Navigation("Cars");
+
+                    b.Navigation("Customers");
+
+                    b.Navigation("Employees");
+
+                    b.Navigation("StateForms");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.CustomerModel", b =>

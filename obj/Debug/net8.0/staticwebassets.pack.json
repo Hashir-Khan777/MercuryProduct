@@ -17,12 +17,20 @@
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\externalbinaries\\TeamViewer_Setup_x64.exe",
+      "PackagePath": "staticwebassets\\externalbinaries\\TeamViewer_Setup_x64.exe"
+    },
+    {
       "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {
       "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\js\\map.js",
       "PackagePath": "staticwebassets\\js\\map.js"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\env-1-env-20240611192518556-blog1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\env-1-env-20240611192518556-blog1.jpg"
     },
     {
       "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-2-vehicle-20240603041459976-banner1.jpg",

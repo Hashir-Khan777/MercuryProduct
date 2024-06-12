@@ -12,6 +12,7 @@ namespace MecuryProduct.Components.Admin.Pages
         public StateFormModel state_form = new StateFormModel();
         public List<DocModel> envImages = new List<DocModel>();
         public string note = string.Empty;
+        public List<CompanyModel> companies = new List<CompanyModel>();
         public string user_id;
 
         /// <summary>Injects dependencies for the current component.</summary>
@@ -33,6 +34,13 @@ namespace MecuryProduct.Components.Admin.Pages
         private NavigationManager NavigationManager { get; set; }
         [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [Inject]
+        private CompanyService CompanyService { get; set; }
+
+        protected override void OnInitialized()
+        {
+            companies = CompanyService.GetCompanies();
+        }
 
         /// <summary>
         /// Creates a state form by adding a note with specified details and navigating to the inventory page.

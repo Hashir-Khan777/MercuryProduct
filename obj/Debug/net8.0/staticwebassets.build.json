@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qSxA5+kmAO6CN47yAFnX95oUP9MXXY5HOIzdBFZR0h0=",
+  "Hash": "pIulyz07DK39H2m4cGefOe3JcEMCalLK1nMSn9lFCJk=",
   "Source": "MecuryProduct",
   "BasePath": "_content/MecuryProduct",
   "Mode": "Default",
@@ -1043,6 +1043,25 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\externalbinaries\\TeamViewer_Setup_x64.exe",
+      "SourceId": "MecuryProduct",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\",
+      "BasePath": "_content/MecuryProduct",
+      "RelativePath": "externalbinaries/TeamViewer_Setup_x64.exe",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\externalbinaries\\TeamViewer_Setup_x64.exe"
+    },
+    {
       "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\favicon.png",
       "SourceId": "MecuryProduct",
       "SourceType": "Discovered",
@@ -1079,6 +1098,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\map.js"
+    },
+    {
+      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\env-1-env-20240611192518556-blog1.jpg",
+      "SourceId": "MecuryProduct",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\",
+      "BasePath": "_content/MecuryProduct",
+      "RelativePath": "uploads/env-1-env-20240611192518556-blog1.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\env-1-env-20240611192518556-blog1.jpg"
     },
     {
       "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-2-vehicle-20240603041459976-banner1.jpg",

@@ -1,4 +1,5 @@
 ﻿using Radzen;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace MecuryProduct.Services
@@ -141,14 +142,16 @@ namespace MecuryProduct.Services
     {
         private readonly HttpClient _httpClient;
         private readonly NotificationService notificationService;
+        private readonly HelperService helperService;
 
         /* The `ApiService` constructor in the provided C# code is initializing the private fields
         `_httpClient` and `notificationService` of the `ApiService` class with the values passed as
         parameters to the constructor. */
-        public ApiService(HttpClient httpClient, NotificationService notificationService)
+        public ApiService(HttpClient httpClient, NotificationService notificationService, HelperService helperService)
         {
             _httpClient = httpClient;
             this.notificationService = notificationService;
+            this.helperService = helperService;
         }
 
         /// <summary>
@@ -175,6 +178,7 @@ namespace MecuryProduct.Services
             {
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 return "";
             }
         }

@@ -1,4 +1,5 @@
 ﻿using MecuryProduct.Data;
+using MecuryProduct.Modals;
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -42,7 +43,7 @@ namespace MecuryProduct.Components.Driver.Pages
         public async void OpenUpdateVehicleModal(int id)
         {
             await DialogService.OpenAsync<UpdateVehicleModal>("Update Vehicle",
-                new Dictionary<string, object>() { { "id", id } },
+                new Dictionary<string, object>() { { "VehId", id } },
                 new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }
             );
             StateHasChanged();

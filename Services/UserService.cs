@@ -1,6 +1,7 @@
 ﻿using MecuryProduct.Data;
 using Microsoft.EntityFrameworkCore;
 using Radzen;
+using System.Text.Json;
 
 namespace MecuryProduct.Services
 {
@@ -8,14 +9,16 @@ namespace MecuryProduct.Services
     {
         private readonly ApplicationDbContext db;
         private readonly NotificationService notificationService;
+        private readonly HelperService helperService;
 
         /// <summary>Initializes a new instance of the UserService class.</summary>
         /// <param name="db">The application's database context.</param>
         /// <param name="notificationService">The notification service used for sending notifications.</param>
-        public UserService(ApplicationDbContext db, NotificationService notificationService)
+        public UserService(ApplicationDbContext db, NotificationService notificationService, HelperService helperService)
         {
             this.db = db;
             this.notificationService = notificationService;
+            this.helperService = helperService;
         }
 
         /// <summary>
@@ -35,7 +38,7 @@ namespace MecuryProduct.Services
 
                 foreach (var claim in allClaims)
                 {
-                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).FirstOrDefault(u => u.Id == claim.UserId && u.EmailConfirmed);
+                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).Include(c => c.Company).FirstOrDefault(u => u.Id == claim.UserId && u.EmailConfirmed);
 
                     if (user is not null)
                     {
@@ -46,6 +49,109 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<ApplicationUser>? GetUsersByClaimByManagerId(string claimType, string claimValue, string ManagerId)
+        {
+            try
+            {
+                var allClaims = db.UserClaims.Where(c => c.ClaimType == claimType && c.ClaimValue == claimValue).ToList();
+
+                List<ApplicationUser> allUsers = new List<ApplicationUser>();
+
+                foreach (var claim in allClaims)
+                {
+                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).Include(c => c.Company).FirstOrDefault(u => u.Id == claim.UserId && u.Company.ManagerId == ManagerId && u.EmailConfirmed);
+
+                    if (user is not null)
+                    {
+                        allUsers.Add(user);
+                    }
+                }
+                return allUsers;
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<ApplicationUser>? GetUsersByClaimByCompanyId(string claimType, string claimValue, int? CompanyId)
+        {
+            try
+            {
+                var allClaims = db.UserClaims.Where(c => c.ClaimType == claimType && c.ClaimValue == claimValue).ToList();
+
+                List<ApplicationUser> allUsers = new List<ApplicationUser>();
+
+                foreach (var claim in allClaims)
+                {
+                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).Include(c => c.Company).FirstOrDefault(u => u.Id == claim.UserId && u.CompanyId == CompanyId && u.EmailConfirmed);
+
+                    if (user is not null)
+                    {
+                        allUsers.Add(user);
+                    }
+                }
+                return allUsers;
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<ApplicationUser> GetAllUsers()
+        {
+            try
+            {
+                return db.Users.Include(u => u.Company).Include(u => u.companies).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<ApplicationUser> GetAllUsersByManagerId(string ManagerId)
+        {
+            try
+            {
+                return db.Users.Where(u => u.Company.ManagerId == ManagerId).Include(u => u.Company).Include(u => u.companies).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public string GetUserClaimByUserId(string UserId)
+        {
+            try
+            {
+                var claim = db.UserClaims.FirstOrDefault(c => c.UserId == UserId && c.ClaimType == "Role");
+                return claim.ClaimValue;
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -66,6 +172,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -85,6 +192,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }
@@ -118,6 +226,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }
@@ -158,6 +267,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -180,6 +290,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }
@@ -206,6 +317,22 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+            }
+        }
+
+        public void UpdateUser(ApplicationUser user)
+        {
+            try
+            {
+                db.Users.Update(user);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }

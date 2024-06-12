@@ -1,4 +1,5 @@
 ﻿using MecuryProduct.Data;
+using MecuryProduct.Modals;
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;

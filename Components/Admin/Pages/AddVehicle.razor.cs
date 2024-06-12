@@ -13,6 +13,7 @@ namespace MecuryProduct.Components.Admin.Pages
     {
         private CarModel car = new CarModel();
         private List<ApplicationUser> drivers = new List<ApplicationUser>();
+        public List<CompanyModel> companies = new List<CompanyModel>();
         private List<CustomerModel> customers = new List<CustomerModel>();
         private List<string> statuses = new List<string>()
         {
@@ -104,6 +105,8 @@ namespace MecuryProduct.Components.Admin.Pages
         private SessionService SessionService { get; set; }
         [Inject]
         private DocService DocService { get; set; }
+        [Inject]
+        private CompanyService CompanyService { get; set; }
 
         /// <summary>
         /// Initializes the view model by retrieving necessary data from session and services.
@@ -123,6 +126,8 @@ namespace MecuryProduct.Components.Admin.Pages
             SetUserId();
             GetMakes();
             GetYears();
+
+            companies = CompanyService.GetCompanies();
 
             var result = await SessionService.Get<CarModel>("car_form");
             var session_doc = await SessionService.Get<DocModel>("doc");

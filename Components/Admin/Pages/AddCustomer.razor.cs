@@ -1,4 +1,5 @@
 ﻿using MecuryProduct.Data;
+using MecuryProduct.Modals;
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -11,6 +12,7 @@ namespace MecuryProduct.Components.Admin.Pages
     public partial class AddCustomer
     {
         public CustomerModel customer = new CustomerModel();
+        public List<CompanyModel> companies = new List<CompanyModel>();
         public Root relatedAddresses { get; set; } = new Root();
         public List<string> customer_types = new List<string>()
         {
@@ -55,6 +57,10 @@ namespace MecuryProduct.Components.Admin.Pages
         private SessionService SessionService { get; set; }
         [Inject]
         private NotificationService NotificationService { get; set; }
+        [Inject]
+        private HelperService HelperService { get; set; }
+        [Inject]
+        private CompanyService CompanyService { get; set; }
 
         /// <summary>
         /// Initializes the component and retrieves the customer data from the session service.
@@ -67,6 +73,8 @@ namespace MecuryProduct.Components.Admin.Pages
         {
             SetUserId();
             var result = await SessionService.Get<CustomerModel>("customer_form");
+
+            companies = CompanyService.GetCompanies();
 
             if (result != null)
             {
@@ -129,6 +137,7 @@ namespace MecuryProduct.Components.Admin.Pages
             {
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = "Customer with this phone number already exists", Duration = 4000 };
                 NotificationService.Notify(notificationMessage);
+                HelperService.WriteLog(exception: "Customer with this phone number already exists");
                 await DialogService.OpenAsync<UpdateCustomerModal>("Update Customer",
                     new Dictionary<string, object>() { { "CusId", exists.Id } },
                     new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }

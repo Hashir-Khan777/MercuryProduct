@@ -29,12 +29,17 @@
         <RadzenDataGridColumn Property="car_make" Title="Make" />
         <RadzenDataGridColumn Property="car_model" Title="Model" />
         <RadzenDataGridColumn Property="status" Title="Status" />
-        <RadzenDataGridColumn Title="Created By">
+        <RadzenDataGridColumn Title="Company">
+            <Template Context="item">
+                @item?.Company?.Name
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Created By" Width="200px">
             <Template Context="item">
                 @item.created_by?.UserName
             </Template>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn Title="Driver">
+        <RadzenDataGridColumn Title="Driver" Width="200px">
             <Template Context="item">
                 <span style="cursor: pointer; color: #4340D2;"
                     @onclick="(() => OpenUpdateDriverModal(item.driver.Id))">@item.driver?.UserName</span>
@@ -47,7 +52,7 @@
                     @item.customer?.clname</span>
             </Template>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn Title="Actions">
+        <RadzenDataGridColumn Title="Actions" Width="200px">
             <Template Context="item">
                 <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateVehicleModal(item.Id)">
                     <RadzenIcon Icon="edit" Style="font-size: 20px" />

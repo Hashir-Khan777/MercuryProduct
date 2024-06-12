@@ -16,6 +16,10 @@ namespace MecuryProduct.Data
         [Required]
         public DateTime updated_at { get; set; }
 
+        public int? CompanyId { get; set; }
+
+        public CompanyModel? Company { get; set; }
+
         public List<NoteModel>? notes { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace MecuryProduct.Data
         public DbSet<MasterProductionTable> MasterProductionTable { get; set; }
         public DbSet<MasterVehicleTable> MasterVehicleTable { get; set; }
         public DbSet<MasterYearTable> MasterYearTable { get; set; }
+        public DbSet<CompanyModel> Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -90,7 +91,37 @@ namespace MecuryProduct.Data
                 .HasForeignKey<DocModel>(d => d.sf_id)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-            /* The above code is using Entity Framework Core to seed data into database tables named "MasterProductionTable", "MasterVehicleTable" and "MasterYearTable", It is adding multiple rows of data with different columns. Each row represents a record in the database table with the specified properties. This seeding process is typically done to populate the database with initial data when the application is first run or when the database is created. */
+            builder.Entity<CompanyModel>()
+                .HasMany(c => c.Employees)
+                .WithOne(e => e.Company)
+                .HasForeignKey(e => e.CompanyId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<CompanyModel>()
+                .HasMany(c => c.Cars)
+                .WithOne(e => e.Company)
+                .HasForeignKey(e => e.CompanyId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<CompanyModel>()
+                .HasMany(c => c.Customers)
+                .WithOne(e => e.Company)
+                .HasForeignKey(e => e.CompanyId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<CompanyModel>()
+                .HasMany(c => c.StateForms)
+                .WithOne(e => e.Company)
+                .HasForeignKey(e => e.CompanyId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<CompanyModel>()
+                .HasOne(c => c.Manager)
+                .WithMany(e => e.companies)
+                .HasForeignKey(e => e.ManagerId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            /* The code below is using Entity Framework Core to seed data into database tables named "MasterProductionTable", "MasterVehicleTable" and "MasterYearTable", It is adding multiple rows of data with different columns. Each row represents a record in the database table with the specified properties. This seeding process is typically done to populate the database with initial data when the application is first run or when the database is created. */
             builder.Entity<MasterProductionTable>().HasData(
                 new MasterProductionTable { Id = 1, row = "1", section = "SP" },
                 new MasterProductionTable { Id = 2, row = "2", section = "SP" },

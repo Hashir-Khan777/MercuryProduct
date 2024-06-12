@@ -23,6 +23,11 @@
                 <span style="cursor: pointer; color: #4340D2;" @onclick="() => OpenShowVehiclesModal(item.Id)">@item?.driver_cars?.Count()</span>
             </Template>
         </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Company">
+            <Template Context="item">
+                @item?.Company?.Name
+            </Template>
+        </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Action">
             <Template Context="item">
                 <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateDriverModal(item.Id)">

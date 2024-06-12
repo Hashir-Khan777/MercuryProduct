@@ -1,6 +1,7 @@
 ﻿using MecuryProduct.Data;
 using Microsoft.EntityFrameworkCore;
 using Radzen;
+using System.Text.Json;
 
 namespace MecuryProduct.Services
 {
@@ -8,14 +9,16 @@ namespace MecuryProduct.Services
     {
         private readonly ApplicationDbContext db;
         private readonly NotificationService notificationService;
+        private readonly HelperService helperService;
 
         /// <summary>Initializes a new instance of the StateFormService class.</summary>
         /// <param name="db">The application's database context.</param>
         /// <param name="notificationService">The notification service used for sending notifications.</param>
-        public StateFormService(ApplicationDbContext db, NotificationService notificationService)
+        public StateFormService(ApplicationDbContext db, NotificationService notificationService, HelperService helperService)
         {
             this.db = db;
             this.notificationService = notificationService;
+            this.helperService = helperService;
         }
 
         /// <summary>Adds a StateFormModel to the database.</summary>
@@ -30,6 +33,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }
@@ -41,10 +45,41 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.StateForm.Include(s => s.doc).ToList();
+                return db.StateForm.Include(s => s.doc).Include(s => s.Company).ToList();
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<StateFormModel>? GetByManagerId(string ManagerId)
+        {
+            try
+            {
+                return db.StateForm.Where(s => s.Company.ManagerId == ManagerId).Include(s => s.doc).Include(s => s.Company).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<StateFormModel>? GetByCompanyId(int? CompanyId)
+        {
+            try
+            {
+                return db.StateForm.Where(s => s.CompanyId == CompanyId).Include(s => s.doc).Include(s => s.Company).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -65,6 +100,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;
@@ -88,6 +124,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }
@@ -107,6 +144,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
+                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }

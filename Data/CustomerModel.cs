@@ -62,6 +62,10 @@ namespace MecuryProduct.Data
 
         public string search { get; set; } = string.Empty;
 
+        public int? CompanyId { get; set; }
+
+        public CompanyModel? Company { get; set; }
+
         public ApplicationUser? created_by { get; set; }
 
         public List<CarModel>? cars { get; set; }

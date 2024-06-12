@@ -94,6 +94,11 @@
                             <RadzenLink Path="@item.doc?.short_path" Target="_env">@item.doc?.file_name</RadzenLink>
                         </Template>
                     </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Company">
+                        <Template Context="item">
+                            @item?.Company?.Name
+                        </Template>
+                    </RadzenDataGridColumn>
                     <RadzenDataGridColumn Title="Created At" Property="created_at" />
                     <RadzenDataGridColumn Title="Actions">
                         <Template Context="item">

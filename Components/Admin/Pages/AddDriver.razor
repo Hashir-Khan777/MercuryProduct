@@ -16,6 +16,10 @@
 @inject UserService UserService
 @inject NotificationService NotificationService
 @inject DialogService DialogService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HelperService HelperService
+@inject UserService UserService
+@inject CompanyService CompanyService
 
 <PageTitle>Add Driver</PageTitle>
 
@@ -49,6 +53,13 @@
                 <label for="confirm-password">Confirm Password <span style="color: red;">*</span></label>
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
             </div>
+            <div class="form-floating mb-3">
+                <RadzenDropDown class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@Input.CompanyId"
+                                Data="@companies" TextProperty="Name" ValueProperty="Id" Style="width: 100%;" Name="Model" />
+                <label for="role">Company<span style="color: red;">*</span></label>
+                <ValidationMessage For="() => Input.CompanyId" class="text-danger" />
+            </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Add Driver</button>
         </EditForm>
     </div>
@@ -57,6 +68,8 @@
 @code {
     private IEnumerable<IdentityError>? identityErrors;
 
+    public List<CompanyModel> companies = new List<CompanyModel>();
+
     [SupplyParameterFromForm]
     private InputModel Input { get; set; } = new();
 
@@ -64,6 +77,13 @@
     private string? ReturnUrl { get; set; }
 
     private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        companies = CompanyService.GetCompanies();
+    }
 
     public async Task RegisterUser(EditContext editContext)
     {
@@ -78,6 +98,7 @@
         {
             var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = "Driver with this email already exists", Duration = 4000 };
             NotificationService.Notify(notificationMessage);
+            HelperService.WriteLog(exception: "Driver with this email already exists");
             await DialogService.OpenAsync<UpdateDriverModal>("Update Driver",
                 new Dictionary<string, object>() { { "DriverId", exists.Id } },
                 new DialogOptions() { Width = "600px", Height = "60%", Resizable = true, Draggable = true }
@@ -104,6 +125,9 @@
         await UserManager.AddClaimAsync(user, new Claim("Role", "Driver"));
         UserService.SetDriverId(userId);
         UserService.SetOldThreePasswords(userId, Input.Password);
+
+        user.CompanyId = Input.CompanyId;
+        UserService.UpdateUser(user);
 
         NavigationManager.NavigateTo("/admin/drivers");
     }
@@ -147,5 +171,9 @@
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = "";
+
+        [Required]
+        [Display(Name = "CompanyId")]
+        public int CompanyId { get; set; }
     }
 }
