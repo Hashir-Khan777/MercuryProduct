@@ -55,7 +55,6 @@
             <div class="form-floating mb-3">
                 <InputSelect @bind-Value="Input.Role" TValue="string" class="form-control" aria-required="true">
                     <option value="">Select Role</option>
-                    <option value="Manager">Manager</option>
                     <option value="Employee">Employee</option>
                     <option value="Driver">Driver</option>
                 </InputSelect>
@@ -94,7 +93,23 @@
     {
         base.OnInitialized();
 
-        companies = CompanyService.GetCompanies();
+        GetCompanyByUserId();
+    }
+
+    public async void GetCompanyByUserId()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                companies = CompanyService.GetCompaniesByManagerId(userId);
+            }
+        }
     }
 
     public async Task RegisterUser(EditContext editContext)
@@ -138,7 +153,7 @@
         user.CompanyId = Input.CompanyId;
         UserService.UpdateUser(user);
 
-        NavigationManager.NavigateTo("/admin/users");
+        NavigationManager.NavigateTo("/manager/users");
     }
 
     private ApplicationUser CreateUser()

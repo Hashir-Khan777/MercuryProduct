@@ -39,7 +39,7 @@ namespace MecuryProduct.Components.Manager.Pages
 
         protected override void OnInitialized()
         {
-            companies = CompanyService.GetCompanies();
+            SetUserId();
         }
 
         /// <summary>
@@ -51,9 +51,8 @@ namespace MecuryProduct.Components.Manager.Pages
         /// </remarks>
         public void CreateStateForm()
         {
-            SetUserId();
             NoteService.AddNote(new NoteModel { created_by_id = user_id, sf_id = state_form.Id, note = note, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow });
-            NavigationManager.NavigateTo("/admin/inventory");
+            NavigationManager.NavigateTo("/manager/inventory");
         }
 
         /// <summary>
@@ -91,6 +90,7 @@ namespace MecuryProduct.Components.Manager.Pages
                 if (userId is not null)
                 {
                     user_id = userId;
+                    companies = CompanyService.GetCompaniesByManagerId(userId);
                 }
             }
         }

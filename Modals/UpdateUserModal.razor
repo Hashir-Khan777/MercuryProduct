@@ -18,6 +18,7 @@
 @inject Radzen.DialogService dialogService
 @inject UserService UserService
 @inject CompanyService CompanyService
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="row">
     <div class="col-12">
@@ -79,7 +80,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        companies = CompanyService.GetCompanies();
+        GetCompanyByUserId();
 
         var result = await UserManager.FindByIdAsync(UserId);
         if (result != null)
@@ -96,6 +97,31 @@
         Input.Role = role;
         previous_role = role;
         Input.CompanyId = user.CompanyId ?? 0;
+    }
+
+    public async void GetCompanyByUserId()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                var role = UserService.GetUserClaimByUserId(userId);
+
+                if (role == "Manager")
+                {
+                    companies = CompanyService.GetCompaniesByManagerId(userId);
+                }
+                else
+                {
+                    companies = CompanyService.GetCompanies();
+                }
+            }
+        }
     }
 
     private async Task OnValidSubmitAsync()

@@ -135,15 +135,11 @@ namespace MecuryProduct.Modals
         /// </summary>
         protected override void OnInitialized()
         {
-            GetDrivers();
-            GetCustomers();
             GetCarById();
             GetAllSections();
             GetMakes();
             GetYears();
             SetUserId();
-
-            companies = CompanyService.GetCompanies();
         }
 
         /// <summary>
@@ -232,6 +228,25 @@ namespace MecuryProduct.Modals
                 if (userId is not null)
                 {
                     user_role = UserService.GetUserClaimByUserId(userId);
+
+                    if (user_role == "Manager")
+                    {
+                        companies = CompanyService.GetCompaniesByManagerId(userId);
+                        drivers = DriverService.GetUsersByClaimByManagerId("Role", "Driver", userId);
+                        customers = CustomerService.GetCustomersByManagerId(userId);
+                    }
+                    else if (user_role == "Employee")
+                    {
+                        var userById = UserService.GetUserById(userId);
+                        drivers = DriverService.GetUsersByClaimByCompanyId("Role", "Driver", userById?.CompanyId);
+                        customers = CustomerService.GetCustomersByCompanyId(userById?.CompanyId);
+                    }
+                    else
+                    {
+                        companies = CompanyService.GetCompanies();
+                        GetDrivers();
+                        GetCustomers();
+                    }
                 }
             }
         }

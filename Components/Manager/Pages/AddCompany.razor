@@ -17,13 +17,6 @@
             <RadzenTextBox @bind-Value="company.Name" Name="CompanyName" Style="width: 100%;" Change="SetInSession" />
             <RadzenRequiredValidator Component="CompanyName" Text="First name is required" />
         </RadzenColumn>
-        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
-            <RadzenLabel Text="Manager" Component="Model" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
-            <RadzenDropDown Change="SetInSession" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@company.ManagerId"
-                            Data="@managers" TextProperty="UserName" ValueProperty="Id" Style="width: 100%;" Name="Model" />
-            <RadzenRequiredValidator Component="Model" Text="Manager is required" />
-        </RadzenColumn>
     </RadzenRow>
     <RadzenButton ButtonType="ButtonType.Submit">Add Company</RadzenButton>
 </RadzenTemplateForm>

@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Caching.Distributed
+@using System.Text.Json
+
+@inject IDistributedCache _cache
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -30,4 +35,13 @@
     private HttpContext? HttpContext { get; set; }
 
     private IComponentRenderMode? RenderModeForPage => HttpContext.Request.Path.StartsWithSegments("/Account") ? null : InteractiveServer;
+
+    protected override async void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var cookies = HttpContext.Request.Cookies;
+
+        await _cache.SetStringAsync("cookies", JsonSerializer.Serialize(cookies));
+    }
 }

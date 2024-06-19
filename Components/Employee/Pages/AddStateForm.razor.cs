@@ -55,7 +55,7 @@ namespace MecuryProduct.Components.Employee.Pages
         {
             SetUserId();
             NoteService.AddNote(new NoteModel { created_by_id = user_id, sf_id = state_form.Id, note = note, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow });
-            NavigationManager.NavigateTo("/admin/inventory");
+            NavigationManager.NavigateTo("/employee/inventory");
         }
 
         /// <summary>

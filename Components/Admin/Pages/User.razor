@@ -2,6 +2,12 @@
 
 <PageTitle>Users</PageTitle>
 
+@*
+PP-118: Create user management module.
+Feature: Add a user management module for admin.
+Fix: Create a table to show all users and perform actions like create, read, update, delete.
+*@
+
 <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
     <RadzenText TextStyle="TextStyle.H4">Users</RadzenText>
     <RadzenLink Path="/admin/adduser">
@@ -66,6 +72,11 @@
                             <RadzenIcon Icon="lock_open" Style="font-size: 20px" />
                         </RadzenButton>
                     }
+                    @*
+                        PP-47: Login As functionality.
+                        Feature: Admin should login as other users without knowing thier passwords.
+                        Fix: Post a reaquest on account/ login as route in IdentityComponentsEndpointRouteBuilderExtensions.cs file
+                    *@
                     <form action="Account/LoginAs" method="post" style="display: inline;">
                         <AntiforgeryToken />
                         <input type="hidden" name="UserId" value="@item.Id" />

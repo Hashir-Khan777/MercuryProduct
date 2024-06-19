@@ -38,7 +38,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
-                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                helperService.WriteLog(exception: $"{ex}");
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }
@@ -61,7 +61,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
-                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                helperService.WriteLog(exception: $"{ex}");
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }
@@ -84,7 +84,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
-                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                helperService.WriteLog(exception: $"{ex}");
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
             }
@@ -108,7 +108,7 @@ namespace MecuryProduct.Services
             }
             catch (Exception ex)
             {
-                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                helperService.WriteLog(exception: $"{ex}");
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
                 return null;

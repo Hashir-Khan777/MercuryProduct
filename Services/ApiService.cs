@@ -178,7 +178,7 @@ namespace MecuryProduct.Services
             {
                 var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
                 notificationService.Notify(notificationMessage);
-                helperService.WriteLog(exception: JsonSerializer.Serialize(ex));
+                helperService.WriteLog(exception: $"{ex}");
                 return "";
             }
         }

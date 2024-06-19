@@ -121,13 +121,9 @@ namespace MecuryProduct.Components.Manager.Pages
         /// </remarks>
         protected override async void OnInitialized()
         {
-            GetDrivers();
-            GetCustomers();
             SetUserId();
             GetMakes();
             GetYears();
-
-            companies = CompanyService.GetCompanies();
 
             var result = await SessionService.Get<CarModel>("car_form");
             var session_doc = await SessionService.Get<DocModel>("doc");
@@ -192,7 +188,7 @@ namespace MecuryProduct.Components.Manager.Pages
                 vehicleImages = new List<DocModel>();
             }
             await SessionService.Clear("car_form");
-            NavigationManager.NavigateTo("/admin/vehicles");
+            NavigationManager.NavigateTo("/manager/vehicles");
         }
 
         /// <summary>
@@ -276,6 +272,9 @@ namespace MecuryProduct.Components.Manager.Pages
                 if (userId is not null)
                 {
                     car.created_by_id = userId;
+                    companies = CompanyService.GetCompaniesByManagerId(userId);
+                    customers = CustomerService.GetCustomersByManagerId(userId);
+                    drivers = DriverService.GetUsersByClaimByManagerId("Role", "Driver", userId);
                 }
             }
         }

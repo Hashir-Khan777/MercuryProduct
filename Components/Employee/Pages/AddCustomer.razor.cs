@@ -133,7 +133,7 @@ namespace MecuryProduct.Components.Employee.Pages
                 CustomerService.AddCustomer(customer);
                 await SessionService.Clear("customer_form");
                 await OpenAddVehicleModal(customer.Id);
-                NavigationManager.NavigateTo("/admin/customers");
+                NavigationManager.NavigateTo("/employee/customers");
             }
             else
             {

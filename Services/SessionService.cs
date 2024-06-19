@@ -22,6 +22,18 @@ namespace MecuryProduct.Services
         /// <returns>A task representing the asynchronous operation.</returns>
         public async Task Set(string key, string value)
         {
+            var keys = await _cache.GetStringAsync("keys");
+            if (keys != null)
+            {
+                if (!keys.Contains(key))
+                {
+                   await _cache.SetStringAsync("keys", $"{key},");
+                }
+            }
+            else
+            {
+                await _cache.SetStringAsync("keys", $"{key},");
+            }
             await _cache.SetStringAsync(key, value);
         }
 
@@ -39,6 +51,16 @@ namespace MecuryProduct.Services
                 return default;
             }
             return JsonSerializer.Deserialize<CustomerModel>(jsonData);
+        }
+
+        public async Task<string> GetAllKeys()
+        {
+            var jsonData = await _cache.GetStringAsync("keys");
+            if (jsonData == null)
+            {
+                return default;
+            }
+            return jsonData;
         }
 
         /// <summary>

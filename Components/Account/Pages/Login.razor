@@ -4,11 +4,13 @@
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
 @using MecuryProduct.Data
+@using MecuryProduct.Services
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject HelperService HelperService
 
 <PageTitle>Log in</PageTitle>
 
@@ -109,6 +111,7 @@
         else
         {
             errorMessage = "Error: Invalid login attempt.";
+            HelperService.WriteLog(errorMessage);
         }
     }
 

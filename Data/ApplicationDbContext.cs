@@ -35,91 +35,95 @@ namespace MecuryProduct.Data
                 .HasOne(c => c.customer)
                 .WithMany(m => m.cars)
                 .HasForeignKey(m => m.cid)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<CarModel>()
                 .HasOne(c => c.driver)
                 .WithMany(m => m.driver_cars)
                 .HasForeignKey(m => m.driver_id)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<CarModel>()
                 .HasOne(c => c.created_by)
                 .WithMany(m => m.cars)
                 .HasForeignKey(m => m.created_by_id)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<NoteModel>()
                 .HasOne(c => c.vehicle)
                 .WithMany(m => m.notes)
                 .HasForeignKey(m => m.veh_id)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<NoteModel>()
                 .HasOne(c => c.state_form)
                 .WithMany(m => m.notes)
                 .HasForeignKey(m => m.sf_id)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<DocModel>()
                 .HasOne(c => c.note)
                 .WithOne(m => m.doc)
                 .HasForeignKey<NoteModel>(m => m.doc_id)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<NoteModel>()
                 .HasOne(c => c.created_by)
                 .WithMany(m => m.notes)
                 .HasForeignKey(m => m.created_by_id)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<CustomerModel>()
                 .HasOne(c => c.created_by)
                 .WithMany(m => m.customers)
                 .HasForeignKey(m => m.created_by_id)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<DocModel>()
                 .HasOne(c => c.car)
                 .WithMany(m => m.docs)
                 .HasForeignKey(m => m.veh_id)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<StateFormModel>()
                 .HasOne(c => c.doc)
                 .WithOne(m => m.state_form)
                 .HasForeignKey<DocModel>(d => d.sf_id)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            // PP-55: multitenant application architecture.
+            // Feature: Create a multitenant architecture for multi role user like admin, manager, employee and driver
+            // Fix: Create a company model and assign company with a sub admin (Manager) and employees
 
             builder.Entity<CompanyModel>()
                 .HasMany(c => c.Employees)
                 .WithOne(e => e.Company)
                 .HasForeignKey(e => e.CompanyId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<CompanyModel>()
                 .HasMany(c => c.Cars)
                 .WithOne(e => e.Company)
                 .HasForeignKey(e => e.CompanyId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<CompanyModel>()
                 .HasMany(c => c.Customers)
                 .WithOne(e => e.Company)
                 .HasForeignKey(e => e.CompanyId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<CompanyModel>()
                 .HasMany(c => c.StateForms)
                 .WithOne(e => e.Company)
                 .HasForeignKey(e => e.CompanyId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<CompanyModel>()
                 .HasOne(c => c.Manager)
                 .WithMany(e => e.companies)
                 .HasForeignKey(e => e.ManagerId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.ClientNoAction);
 
             /* The code below is using Entity Framework Core to seed data into database tables named "MasterProductionTable", "MasterVehicleTable" and "MasterYearTable", It is adding multiple rows of data with different columns. Each row represents a record in the database table with the specified properties. This seeding process is typically done to populate the database with initial data when the application is first run or when the database is created. */
             builder.Entity<MasterProductionTable>().HasData(

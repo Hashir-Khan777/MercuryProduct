@@ -6546,7 +6546,8 @@ namespace MecuryProduct.Migrations
                 {
                     b.HasOne("MecuryProduct.Data.CompanyModel", "Company")
                         .WithMany("Employees")
-                        .HasForeignKey("CompanyId");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.Navigation("Company");
                 });
@@ -6555,19 +6556,23 @@ namespace MecuryProduct.Migrations
                 {
                     b.HasOne("MecuryProduct.Data.CompanyModel", "Company")
                         .WithMany("Cars")
-                        .HasForeignKey("CompanyId");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.HasOne("MecuryProduct.Data.CustomerModel", "customer")
                         .WithMany("cars")
-                        .HasForeignKey("cid");
+                        .HasForeignKey("cid")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.HasOne("MecuryProduct.Data.ApplicationUser", "created_by")
                         .WithMany("cars")
-                        .HasForeignKey("created_by_id");
+                        .HasForeignKey("created_by_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.HasOne("MecuryProduct.Data.ApplicationUser", "driver")
                         .WithMany("driver_cars")
-                        .HasForeignKey("driver_id");
+                        .HasForeignKey("driver_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.Navigation("Company");
 
@@ -6582,7 +6587,8 @@ namespace MecuryProduct.Migrations
                 {
                     b.HasOne("MecuryProduct.Data.ApplicationUser", "Manager")
                         .WithMany("companies")
-                        .HasForeignKey("ManagerId");
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.Navigation("Manager");
                 });
@@ -6591,11 +6597,13 @@ namespace MecuryProduct.Migrations
                 {
                     b.HasOne("MecuryProduct.Data.CompanyModel", "Company")
                         .WithMany("Customers")
-                        .HasForeignKey("CompanyId");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.HasOne("MecuryProduct.Data.ApplicationUser", "created_by")
                         .WithMany("customers")
-                        .HasForeignKey("created_by_id");
+                        .HasForeignKey("created_by_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.Navigation("Company");
 
@@ -6606,11 +6614,13 @@ namespace MecuryProduct.Migrations
                 {
                     b.HasOne("MecuryProduct.Data.StateFormModel", "state_form")
                         .WithOne("doc")
-                        .HasForeignKey("MecuryProduct.Data.DocModel", "sf_id");
+                        .HasForeignKey("MecuryProduct.Data.DocModel", "sf_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.HasOne("MecuryProduct.Data.CarModel", "car")
                         .WithMany("docs")
-                        .HasForeignKey("veh_id");
+                        .HasForeignKey("veh_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.Navigation("car");
 
@@ -6629,19 +6639,23 @@ namespace MecuryProduct.Migrations
 
                     b.HasOne("MecuryProduct.Data.ApplicationUser", "created_by")
                         .WithMany("notes")
-                        .HasForeignKey("created_by_id");
+                        .HasForeignKey("created_by_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.HasOne("MecuryProduct.Data.DocModel", "doc")
                         .WithOne("note")
-                        .HasForeignKey("MecuryProduct.Data.NoteModel", "doc_id");
+                        .HasForeignKey("MecuryProduct.Data.NoteModel", "doc_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.HasOne("MecuryProduct.Data.StateFormModel", "state_form")
                         .WithMany("notes")
-                        .HasForeignKey("sf_id");
+                        .HasForeignKey("sf_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.HasOne("MecuryProduct.Data.CarModel", "vehicle")
                         .WithMany("notes")
-                        .HasForeignKey("veh_id");
+                        .HasForeignKey("veh_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.Navigation("corrected_by");
 
@@ -6658,7 +6672,8 @@ namespace MecuryProduct.Migrations
                 {
                     b.HasOne("MecuryProduct.Data.CompanyModel", "Company")
                         .WithMany("StateForms")
-                        .HasForeignKey("CompanyId");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.Navigation("Company");
                 });

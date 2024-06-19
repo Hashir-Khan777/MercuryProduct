@@ -82,7 +82,23 @@
     {
         base.OnInitialized();
 
-        companies = CompanyService.GetCompanies();
+        GetCompanyByUserId();
+    }
+
+    public async void GetCompanyByUserId()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                companies = CompanyService.GetCompaniesByManagerId(userId);
+            }
+        }
     }
 
     public async Task RegisterUser(EditContext editContext)
@@ -129,7 +145,7 @@
         user.CompanyId = Input.CompanyId;
         UserService.UpdateUser(user);
 
-        NavigationManager.NavigateTo("/admin/drivers");
+        NavigationManager.NavigateTo("/manager/drivers");
     }
 
     private ApplicationUser CreateUser()

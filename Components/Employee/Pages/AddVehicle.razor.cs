@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.StaticFiles;
 using Radzen;
+using System.ComponentModel.Design;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -123,8 +124,6 @@ namespace MecuryProduct.Components.Employee.Pages
         /// </remarks>
         protected override async void OnInitialized()
         {
-            GetDrivers();
-            GetCustomers();
             SetUserId();
             GetMakes();
             GetYears();
@@ -194,7 +193,7 @@ namespace MecuryProduct.Components.Employee.Pages
                 vehicleImages = new List<DocModel>();
             }
             await SessionService.Clear("car_form");
-            NavigationManager.NavigateTo("/admin/vehicles");
+            NavigationManager.NavigateTo("/employee/vehicles");
         }
 
         /// <summary>
@@ -277,9 +276,11 @@ namespace MecuryProduct.Components.Employee.Pages
 
                 if (userId is not null)
                 {
-                    int? companyId = UserService.GetUserById(userId)?.CompanyId;
+                    var userById = UserService.GetUserById(userId);
                     car.created_by_id = userId;
-                    car.CompanyId = companyId;
+                    car.CompanyId = userById?.CompanyId;
+                    drivers = DriverService.GetUsersByClaimByCompanyId("Role", "Driver", userById.CompanyId);
+                    customers = CustomerService.GetCustomersByCompanyId(userById.CompanyId);
                 }
             }
         }

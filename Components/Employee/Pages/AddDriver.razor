@@ -76,6 +76,7 @@
         base.OnInitialized();
 
         companies = CompanyService.GetCompanies();
+        SetCompanyId();
     }
 
     public async Task RegisterUser(EditContext editContext)
@@ -118,13 +119,29 @@
         await UserManager.AddClaimAsync(user, new Claim("Role", "Driver"));
         UserService.SetDriverId(userId);
         UserService.SetOldThreePasswords(userId, Input.Password);
-        int? companyId = UserService.GetUserById(userId)?.CompanyId;
 
-        user.CompanyId = companyId;
         user.CompanyId = Input.CompanyId;
         UserService.UpdateUser(user);
 
-        NavigationManager.NavigateTo("/admin/drivers");
+        NavigationManager.NavigateTo("/employee/drivers");
+    }
+
+    public async void SetCompanyId()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                var userById = UserService.GetUserById(userId);
+
+                Input.CompanyId = userById?.CompanyId;
+            }
+        }
     }
 
     private ApplicationUser CreateUser()
@@ -169,6 +186,6 @@
 
         [Required]
         [Display(Name = "CompanyId")]
-        public int CompanyId { get; set; }
+        public int? CompanyId { get; set; }
     }
 }

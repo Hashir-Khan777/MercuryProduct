@@ -125,7 +125,7 @@ namespace MecuryProduct.Modals
         /// 9. Updates the
         protected override async void OnInitialized()
         {
-            GetDrivers();
+            GetDriversByUserId();
             SetUserId();
             GetMakes();
             GetYears();
@@ -154,6 +154,36 @@ namespace MecuryProduct.Modals
             {
                 car = result;
                 models = CarService.GetModelsByMake(car.car_make);
+            }
+        }
+
+        public async void GetDriversByUserId()
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (user.Identity is not null && user.Identity.IsAuthenticated)
+            {
+                var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId is not null)
+                {
+                    var role = DriverService.GetUserClaimByUserId(userId);
+
+                    if (role == "Manager")
+                    {
+                        drivers = DriverService.GetUsersByClaimByManagerId("Role", "Driver", userId);
+                    }
+                    else if (role == "Employee")
+                    {
+                        var userById = DriverService.GetUserById(userId);
+                        drivers = DriverService.GetUsersByClaimByCompanyId("Role", "Driver", userById.CompanyId);
+                    }
+                    else
+                    {
+                        GetDrivers();
+                    }
+                }
             }
         }
 

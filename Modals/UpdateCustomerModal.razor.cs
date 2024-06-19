@@ -1,7 +1,9 @@
 ﻿using MecuryProduct.Data;
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Radzen;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace MecuryProduct.Modals
@@ -34,6 +36,7 @@ namespace MecuryProduct.Modals
         };
         public IEnumerable<string> selected_contact_prefrence = new string[] { };
         public string email_regex = "^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|.(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        public string user_role = string.Empty;
 
         /// <summary>Injects the CustomerService and ApiService dependencies.</summary>
         [Inject]
@@ -42,6 +45,10 @@ namespace MecuryProduct.Modals
         private ApiService ApiService { get; set; }
         [Inject]
         private CompanyService CompanyService { get; set; }
+        [Inject]
+        private UserService UserService { get; set; }
+        [Inject]
+        private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
         /// <summary>
         /// This method is called when the element is initialized.
@@ -49,9 +56,8 @@ namespace MecuryProduct.Modals
         /// </summary>
         protected override void OnInitialized()
         {
+            GetCompanyByUserId();
             GetCustomerById();
-
-            companies = CompanyService.GetCompanies();
         }
 
         /// <summary>
@@ -67,6 +73,32 @@ namespace MecuryProduct.Modals
             {
                 relatedAddresses = data;
                 StateHasChanged();
+            }
+        }
+
+        public async void GetCompanyByUserId()
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (user.Identity is not null && user.Identity.IsAuthenticated)
+            {
+                var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId is not null)
+                {
+                    var role = UserService.GetUserClaimByUserId(userId);
+                    user_role = role;
+
+                    if (role == "Manager")
+                    {
+                        companies = CompanyService.GetCompaniesByManagerId(userId);
+                    }
+                    else
+                    {
+                        companies = CompanyService.GetCompanies();
+                    }
+                }
             }
         }
 

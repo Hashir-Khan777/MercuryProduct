@@ -78,16 +78,19 @@
             <RadzenRequiredValidator Component="NumberType" Text="Number type is required" />
         </RadzenColumn>
     </RadzenRow>
-    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
-        <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
-            <RadzenLabel Text="Company" Component="DropDownBindValue"
-                         Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
-            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@customer.CompanyId" Data="@companies"
-                            Name="NumberType" Style="width: 100%" TextProperty="Name" ValueProperty="Id" />
-            <RadzenRequiredValidator Component="NumberType" Text="Company is required" />
-        </RadzenColumn>
-    </RadzenRow>
+    @if (user_role != "Employee")
+    {
+        <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+            <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+                <RadzenLabel Text="Company" Component="DropDownBindValue"
+                             Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+                <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@customer.CompanyId" Data="@companies"
+                                Name="NumberType" Style="width: 100%" TextProperty="Name" ValueProperty="Id" />
+                <RadzenRequiredValidator Component="NumberType" Text="Company is required" />
+            </RadzenColumn>
+        </RadzenRow>
+    }
     <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
         <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
             <RadzenFormField Text="Customer Notes" Variant="Variant.Flat" Style="width: 100%; max-width: 770px;">

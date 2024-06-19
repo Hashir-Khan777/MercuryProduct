@@ -74,8 +74,6 @@ namespace MecuryProduct.Components.Manager.Pages
             SetUserId();
             var result = await SessionService.Get<CustomerModel>("customer_form");
 
-            companies = CompanyService.GetCompanies();
-
             if (result != null)
             {
                 customer = result;
@@ -131,7 +129,7 @@ namespace MecuryProduct.Components.Manager.Pages
                 CustomerService.AddCustomer(customer);
                 await SessionService.Clear("customer_form");
                 await OpenAddVehicleModal(customer.Id);
-                NavigationManager.NavigateTo("/admin/customers");
+                NavigationManager.NavigateTo("/manager/customers");
             }
             else
             {
@@ -214,6 +212,7 @@ namespace MecuryProduct.Components.Manager.Pages
                 if (userId is not null)
                 {
                     customer.created_by_id = userId;
+                    companies = CompanyService.GetCompaniesByManagerId(userId);
                 }
             }
         }

@@ -1,6 +1,8 @@
 ﻿using MecuryProduct.Data;
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using System.Security.Claims;
 
 namespace MecuryProduct.Modals
 {
@@ -10,6 +12,7 @@ namespace MecuryProduct.Modals
         public StateFormModel state_form = new StateFormModel();
         public List<DocModel> envImages = new List<DocModel>();
         public List<CompanyModel> companies = new List<CompanyModel>();
+        public string user_role = string.Empty;
 
         /// <summary>Injects the DocService and StateFormService dependencies.</summary>
         [Inject]
@@ -18,6 +21,10 @@ namespace MecuryProduct.Modals
         private StateFormService StateFormService { get; set; }
         [Inject]
         private CompanyService CompanyService { get; set; }
+        [Inject]
+        private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [Inject]
+        private UserService UserService { get; set; }
 
         /// <summary>
         /// This method is called when the element is initialized.
@@ -26,7 +33,7 @@ namespace MecuryProduct.Modals
         protected override void OnInitialized()
         {
             GetStateFormById();
-            companies = CompanyService.GetCompanies();
+            GetCompanyByUserId();
         }
 
         /// <summary>
@@ -38,6 +45,31 @@ namespace MecuryProduct.Modals
             state_form.updated_at = DateTime.UtcNow;
             StateFormService.Update(state_form);
             dialogService.Close();
+        }
+
+        public async void GetCompanyByUserId()
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (user.Identity is not null && user.Identity.IsAuthenticated)
+            {
+                var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId is not null)
+                {
+                    user_role = UserService.GetUserClaimByUserId(userId);
+
+                    if (user_role == "Manager")
+                    {
+                        companies = CompanyService.GetCompaniesByManagerId(userId);
+                    }
+                    else
+                    {
+                        companies = CompanyService.GetCompanies();
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -65,7 +97,6 @@ namespace MecuryProduct.Modals
         {
             DocService.DeleteDoc(doc);
             envImages.Remove(doc);
-            state_form = new StateFormModel();
         }
 
         /// <summary>

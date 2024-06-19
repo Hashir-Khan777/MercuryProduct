@@ -135,7 +135,10 @@
         UserService.SetDriverId(userId);
         UserService.SetOldThreePasswords(userId, Input.Password);
 
-        user.CompanyId = Input.CompanyId;
+        if (Input.Role != "Manager")
+        {
+            user.CompanyId = Input.CompanyId;
+        }
         UserService.UpdateUser(user);
 
         NavigationManager.NavigateTo("/admin/users");
