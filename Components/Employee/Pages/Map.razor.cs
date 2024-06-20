@@ -2,9 +2,11 @@
 using MecuryProduct.Modals;
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using Radzen;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace MecuryProduct.Components.Employee.Pages
 {
@@ -34,6 +36,10 @@ namespace MecuryProduct.Components.Employee.Pages
         private DialogService DialogService { get; set; }
         [Inject]
         private IJSRuntime JS { get; set; }
+        [Inject]
+        private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [Inject]
+        private UserService UserService { get; set; }
 
         /// <summary>
         /// Method called after the component has been rendered.
@@ -90,9 +96,21 @@ namespace MecuryProduct.Components.Employee.Pages
         /// <summary>
         /// Retrieves a list of customers from the CustomerService and stores them in the 'customers' field.
         /// </summary>
-        public void GetCustomers()
+        public async void GetCustomers()
         {
-            customers = CustomerService.GetCustomers().ToList();
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (user.Identity is not null && user.Identity.IsAuthenticated)
+            {
+                var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId is not null)
+                {
+                    int? companyId = UserService.GetUserById(userId)?.CompanyId;
+                    customers = CustomerService.GetCustomersByCompanyId(companyId).ToList();
+                }
+            }
         }
 
         /// <summary>Adds markers for customers based on their cars' scheduled dates and status.</summary>

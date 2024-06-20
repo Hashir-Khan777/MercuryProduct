@@ -61,16 +61,13 @@
                 <label for="role">Role<span style="color: red;">*</span></label>
                 <ValidationMessage For="() => Input.Role" class="text-danger" />
             </div>
-            @if (Input.Role == "Employee" || Input.Role == "Driver")
-            {
-                <div class="form-floating mb-3">
-                    <RadzenDropDown class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                                    FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@Input.CompanyId"
-                                    Data="@companies" TextProperty="Name" ValueProperty="Id" Style="width: 100%;" Name="Model" />
-                    <label for="role">Company<span style="color: red;">*</span></label>
-                    <ValidationMessage For="() => Input.CompanyId" class="text-danger" />
-                </div>
-            }
+            <div class="form-floating mb-3">
+                <RadzenDropDown class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@Input.CompanyId"
+                                Data="@companies" TextProperty="Name" ValueProperty="Id" Style="width: 100%;" Name="Model" />
+                <label for="role">Company<span style="color: red;">*</span></label>
+                <ValidationMessage For="() => Input.CompanyId" class="text-danger" />
+            </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Add User</button>
         </EditForm>
     </div>
