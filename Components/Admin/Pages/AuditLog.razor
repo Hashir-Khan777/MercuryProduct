@@ -1,0 +1,26 @@
+﻿@page "/admin/logs"
+
+<PageTitle>Audit Logs</PageTitle>
+
+<h3>Audit Logs</h3>
+
+<RadzenDataGrid Data="@logs"
+                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                M-LOG-@item.Id
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="entity_name" Title="Table Name" />
+        <RadzenDataGridColumn Property="action_type" Title="Action Type" />
+        <RadzenDataGridColumn Property="user_role" Title="User Role" />
+        <RadzenDataGridColumn Title="User Name">
+            <Template Context="item">
+                @item.user?.UserName
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="created_at" Title="Created At" />
+    </Columns>
+</RadzenDataGrid>

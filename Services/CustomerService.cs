@@ -201,5 +201,20 @@ namespace MecuryProduct.Services
                 notificationService.Notify(notificationMessage);
             }
         }
+
+        public List<CustomerModel>? SearchCustomerListByPhoneNumber(string phone_number)
+        {
+            try
+            {
+                return db.Customers.Where(c => c.cphone_number.Contains(phone_number)).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
     }
 }

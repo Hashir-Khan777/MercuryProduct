@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace MecuryProduct.Data
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor HttpContextAccessor) : IdentityDbContext<ApplicationUser>(options)
     {
+        private IHttpContextAccessor HttpContextAccessor = HttpContextAccessor;
+
         /* The above code is defining a DbContext class in C# for Entity Framework. It includes properties for
         different DbSet entities such as CustomerModel, CarModel, NoteModel, DocModel, StateFormModel,
         MasterProductionTable, MasterVehicleTable, and MasterYearTable. These properties represent tables in
@@ -19,6 +22,60 @@ namespace MecuryProduct.Data
         public DbSet<MasterVehicleTable> MasterVehicleTable { get; set; }
         public DbSet<MasterYearTable> MasterYearTable { get; set; }
         public DbSet<CompanyModel> Companies { get; set; }
+        public DbSet<AuditLogModel> Logs { get; set; }
+
+        private void AuditChanges()
+        {
+            var UserId = HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var UserClaim = HttpContextAccessor.HttpContext?.User?.Claims?.ToList();
+
+            if (UserClaim == null) return;
+
+            var UserRole = "";
+
+            try
+            {
+                UserRole = UserClaim[4]?.Value;
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                UserRole = null;
+            }
+
+
+            var entries = ChangeTracker.Entries()
+                                        .Where(e => e.State == EntityState.Added
+                                                 || e.State == EntityState.Modified
+                                                 || e.State == EntityState.Deleted).ToList();
+
+            foreach (var entry in entries)
+            {
+                var entityId = entry.Property("Id").CurrentValue;
+                var entityTableName = entry.Metadata.GetTableName();
+                var auditEntry = new AuditLogModel
+                {
+                    user_id = UserId,
+                    user_role = UserRole,
+                    entity_name = entry.Entity.GetType().Name,
+                    action_type = entry.State.ToString(),
+                    created_at = DateTime.UtcNow
+                };
+
+                Logs.Add(auditEntry);
+            }
+        }
+
+        public override int SaveChanges()
+        {
+            AuditChanges();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            AuditChanges();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -123,6 +180,12 @@ namespace MecuryProduct.Data
                 .HasOne(c => c.Manager)
                 .WithMany(e => e.companies)
                 .HasForeignKey(e => e.ManagerId)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<AuditLogModel>()
+                .HasOne(c => c.user)
+                .WithMany(e => e.logs)
+                .HasForeignKey(e => e.user_id)
                 .OnDelete(DeleteBehavior.ClientNoAction);
 
             /* The code below is using Entity Framework Core to seed data into database tables named "MasterProductionTable", "MasterVehicleTable" and "MasterYearTable", It is adding multiple rows of data with different columns. Each row represents a record in the database table with the specified properties. This seeding process is typically done to populate the database with initial data when the application is first run or when the database is created. */

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MecuryProduct.Services
 {
@@ -45,12 +46,17 @@ namespace MecuryProduct.Services
         /// <returns>The cached object of type CustomerModel if found; otherwise, the default value for CustomerModel.</returns>
         public async Task<CustomerModel> Get<CustomerModel>(string key)
         {
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
             var jsonData = await _cache.GetStringAsync(key);
             if (jsonData == null)
             {
                 return default;
             }
-            return JsonSerializer.Deserialize<CustomerModel>(jsonData);
+            return JsonSerializer.Deserialize<CustomerModel>(jsonData, options);
         }
 
         public async Task<string> GetAllKeys()

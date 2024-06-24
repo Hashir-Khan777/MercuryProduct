@@ -103,6 +103,38 @@ namespace MecuryProduct.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.AuditLogModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("action_type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("entity_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("user_id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("user_role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("user_id");
+
+                    b.ToTable("Logs");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.CarModel", b =>
                 {
                     b.Property<int>("Id")
@@ -6552,6 +6584,16 @@ namespace MecuryProduct.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.AuditLogModel", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.ApplicationUser", "user")
+                        .WithMany("logs")
+                        .HasForeignKey("user_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.CarModel", b =>
                 {
                     b.HasOne("MecuryProduct.Data.CompanyModel", "Company")
@@ -6738,6 +6780,8 @@ namespace MecuryProduct.Migrations
                     b.Navigation("customers");
 
                     b.Navigation("driver_cars");
+
+                    b.Navigation("logs");
 
                     b.Navigation("notes");
                 });

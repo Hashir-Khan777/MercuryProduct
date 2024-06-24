@@ -6,14 +6,17 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Radzen;
 using System.Security.Claims;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MecuryProduct.Components.Admin.Pages
 {
     public partial class AddCustomer
     {
+        public bool update_customer = false;
         public CustomerModel customer = new CustomerModel();
         public List<CompanyModel> companies = new List<CompanyModel>();
         public Root relatedAddresses { get; set; } = new Root();
+        public List<CustomerModel> customers_by_phone_number = new List<CustomerModel>();
         public List<string> customer_types = new List<string>()
         {
             "Phone",
@@ -107,7 +110,13 @@ namespace MecuryProduct.Components.Admin.Pages
         // Fix: I have added this function to save data on cheche and call this function on change event on every field of every form
         public async void SetInSession()
         {
-            await SessionService.Set("customer_form", JsonSerializer.Serialize(customer));
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+
+            await SessionService.Set("customer_form", JsonSerializer.Serialize(customer, options));
         }
 
         /// <summary>
@@ -119,30 +128,40 @@ namespace MecuryProduct.Components.Admin.Pages
         /// <returns>Task representing the asynchronous operation.</returns>
         public async void CreateCustomer()
         {
-            // PP-90 & 105: customer should not replicate
-            // Bug: customer is replicating
-            // Fix: Add condition on phone number if customer with same phone number exists so it wil open the update customer mosal
-            var exists = CustomerService.GetCustomerByPhoneNumber(customer.cphone_number);
-            if (exists == null)
+            if (!update_customer)
             {
-                customer.created_at = DateTime.UtcNow;
-                customer.updated_at = DateTime.UtcNow;
-                customer.contact_prefrence = selected_contact_prefrence.ToList();
-                CustomerService.AddCustomer(customer);
-                await SessionService.Clear("customer_form");
-                await OpenAddVehicleModal(customer.Id);
-                NavigationManager.NavigateTo("/admin/customers");
+                // PP-90 & 105: customer should not replicate
+                // Bug: customer is replicating
+                // Fix: Add condition on phone number if customer with same phone number exists so it wil open the update customer mosal
+                var exists = CustomerService.GetCustomerByPhoneNumber(customer.cphone_number);
+                if (exists == null)
+                {
+                    customer.created_at = DateTime.UtcNow;
+                    customer.updated_at = DateTime.UtcNow;
+                    customer.contact_prefrence = selected_contact_prefrence.ToList();
+                    CustomerService.AddCustomer(customer);
+                    await SessionService.Clear("customer_form");
+                    await OpenAddVehicleModal(customer.Id);
+                    NavigationManager.NavigateTo("/admin/customers");
+                }
+                else
+                {
+                    var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = "Customer with this phone number already exists", Duration = 4000 };
+                    NotificationService.Notify(notificationMessage);
+                    HelperService.WriteLog(exception: "Customer with this phone number already exists");
+                    await DialogService.OpenAsync<UpdateCustomerModal>("Update Customer",
+                        new Dictionary<string, object>() { { "CusId", exists.Id } },
+                        new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }
+                    );
+                    StateHasChanged();
+                }
             }
             else
             {
-                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = "Customer with this phone number already exists", Duration = 4000 };
-                NotificationService.Notify(notificationMessage);
-                HelperService.WriteLog(exception: "Customer with this phone number already exists");
-                await DialogService.OpenAsync<UpdateCustomerModal>("Update Customer",
-                    new Dictionary<string, object>() { { "CusId", exists.Id } },
-                    new DialogOptions() { Width = "700px", Height = "90%", Resizable = true, Draggable = true }
-                );
-                StateHasChanged();
+                customer.contact_prefrence = selected_contact_prefrence.ToList();
+                customer.updated_at = DateTime.UtcNow;
+                CustomerService.UpdateCustomer(customer);
+                NavigationManager.NavigateTo("/admin/customers");
             }
         }
 
@@ -168,6 +187,27 @@ namespace MecuryProduct.Components.Admin.Pages
                 data.Results = data.Results.FindAll(r => r.Address.PostalCode != null);
                 relatedAddresses = data;
                 StateHasChanged();
+            }
+        }
+
+        public void searchPhoneNumber(LoadDataArgs args)
+        {
+            var filtred_customers = CustomerService.SearchCustomerListByPhoneNumber(args.Filter);
+            if (filtred_customers is not null)
+            {
+                customers_by_phone_number = filtred_customers;
+                StateHasChanged();
+            }
+        }
+
+        public void changePhoneNumber(dynamic args)
+        {
+            var filtred_customer = customers_by_phone_number.Find(c => c.cphone_number == args);
+            if (filtred_customer != null)
+            {
+                update_customer = true;
+                customer = filtred_customer;
+                SetInSession();
             }
         }
 
