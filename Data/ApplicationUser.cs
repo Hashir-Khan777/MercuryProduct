@@ -27,5 +27,7 @@ namespace MecuryProduct.Data
         public List<CompanyModel>? companies { get; set; }
 
         public List<AuditLogModel>? logs { get; set; }
+
+        public List<ProductModel>? products { get; set; }
     }
 }

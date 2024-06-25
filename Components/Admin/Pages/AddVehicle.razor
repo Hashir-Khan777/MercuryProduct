@@ -213,16 +213,16 @@
                     <RadzenLabel>Vehicle Pictures</RadzenLabel> <span style="color: red;">*</span>
                     <RadzenUpload Auto="true" Multiple Change="changeVehicleImages" class="w-100"
                         InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
-                @foreach (var file in vehicleImages)
-                {
-                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
-                                JustifyContent="JustifyContent.SpaceBetween">
-                                <RadzenImage Style="width: 100px; margin-bottom: 10px;" Path="@file.short_path" />
-                                <RadzenButton Click="@(() => DeleteDoc(file))" Variant="Variant.Flat">
-                                    <RadzenIcon Icon="close" />
-                                </RadzenButton>
-                            </RadzenStack>
-                }
+                    @foreach (var file in vehicleImages)
+                    {
+                                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
+                                    JustifyContent="JustifyContent.SpaceBetween">
+                                    <RadzenImage Style="width: 100px; margin-bottom: 10px;" Path="@file.short_path" />
+                                    <RadzenButton Click="@(() => DeleteDoc(file))" Variant="Variant.Flat">
+                                        <RadzenIcon Icon="close" />
+                                    </RadzenButton>
+                                </RadzenStack>
+                    }
                 </RadzenColumn>
             </RadzenRow>
     }

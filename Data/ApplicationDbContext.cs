@@ -22,6 +22,7 @@ namespace MecuryProduct.Data
         public DbSet<MasterVehicleTable> MasterVehicleTable { get; set; }
         public DbSet<MasterYearTable> MasterYearTable { get; set; }
         public DbSet<CompanyModel> Companies { get; set; }
+        public DbSet<ProductModel> Products { get; set; }
         public DbSet<AuditLogModel> Logs { get; set; }
 
         private void AuditChanges()
@@ -148,6 +149,18 @@ namespace MecuryProduct.Data
                 .HasForeignKey<DocModel>(d => d.sf_id)
                 .OnDelete(DeleteBehavior.ClientNoAction);
 
+            builder.Entity<ProductModel>()
+                .HasMany(c => c.images)
+                .WithOne(m => m.product)
+                .HasForeignKey(d => d.product_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<ProductModel>()
+                .HasOne(c => c.created_by)
+                .WithMany(m => m.products)
+                .HasForeignKey(d => d.created_by_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
             // PP-55: multitenant application architecture.
             // Feature: Create a multitenant architecture for multi role user like admin, manager, employee and driver
             // Fix: Create a company model and assign company with a sub admin (Manager) and employees
@@ -174,6 +187,12 @@ namespace MecuryProduct.Data
                 .HasMany(c => c.StateForms)
                 .WithOne(e => e.Company)
                 .HasForeignKey(e => e.CompanyId)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<CompanyModel>()
+                .HasMany(c => c.Products)
+                .WithOne(e => e.company)
+                .HasForeignKey(e => e.company_id)
                 .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<CompanyModel>()

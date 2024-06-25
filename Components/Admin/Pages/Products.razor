@@ -1,0 +1,43 @@
+﻿@page "/admin/products"
+
+<PageTitle>Products</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenText TextStyle="TextStyle.H4">Products</RadzenText>
+    <RadzenLink Path="/admin/addproduct">
+        <RadzenButton>Add</RadzenButton>
+    </RadzenLink>
+</RadzenStack>
+
+<RadzenDataGrid Data="@products"
+                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                M-PROD-@item.Id
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="product_name" Title="Product Name" />
+        <RadzenDataGridColumn Property="regular_price" Title="Regular Price" />
+        <RadzenDataGridColumn Property="custom_price_1" Title="Custom Price 1" />
+        <RadzenDataGridColumn Property="custom_price_2" Title="Custom Price 2" />
+        <RadzenDataGridColumn Property="custom_price_3" Title="Custom Price 3" />
+        <RadzenDataGridColumn Property="custom_price_4" Title="Custom Price 4" />
+        <RadzenDataGridColumn Title="Created By">
+            <Template Context="item">
+                @item.created_by?.UserName
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Actions" Width="300px">
+            <Template Context="item">
+                <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateProductModal(item.Id)">
+                    <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                </RadzenButton>
+                <RadzenButton Variant="Variant.Text" Click="() => DeleteProduct(item)">
+                    <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                </RadzenButton>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

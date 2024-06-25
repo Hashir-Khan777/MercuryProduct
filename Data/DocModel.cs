@@ -12,6 +12,8 @@ namespace MecuryProduct.Data
 
         public int? sf_id { get; set; }
 
+        public int? product_id { get; set; }
+
         [Required]
         public string type { get; set; } = string.Empty;
 
@@ -34,6 +36,8 @@ namespace MecuryProduct.Data
         public DateTime updated_at { get; set; }
 
         public CarModel? car { get; set; }
+
+        public ProductModel? product { get; set; }
 
         public StateFormModel? state_form { get; set; }
 

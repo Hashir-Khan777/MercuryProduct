@@ -20,5 +20,7 @@ namespace MecuryProduct.Data
         public List<CustomerModel>? Customers { get; set; }
 
         public List<StateFormModel>? StateForms { get; set; }
+
+        public List<ProductModel>? Products { get; set; }
     }
 }

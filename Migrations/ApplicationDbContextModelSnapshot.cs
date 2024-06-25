@@ -425,6 +425,9 @@ namespace MecuryProduct.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("product_id")
+                        .HasColumnType("int");
+
                     b.Property<string>("server_name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -447,6 +450,8 @@ namespace MecuryProduct.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("product_id");
 
                     b.HasIndex("sf_id")
                         .IsUnique()
@@ -6417,6 +6422,69 @@ namespace MecuryProduct.Migrations
                     b.ToTable("Notes");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.ProductModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("company_id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("created_by_id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("custom_price_1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("custom_price_2")
+                        .HasColumnType("int");
+
+                    b.Property<int>("custom_price_3")
+                        .HasColumnType("int");
+
+                    b.Property<int>("custom_price_4")
+                        .HasColumnType("int");
+
+                    b.Property<string>("department_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("product_description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("product_grade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("product_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("regular_price")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("company_id");
+
+                    b.HasIndex("created_by_id");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.StateFormModel", b =>
                 {
                     b.Property<int>("Id")
@@ -6654,6 +6722,11 @@ namespace MecuryProduct.Migrations
 
             modelBuilder.Entity("MecuryProduct.Data.DocModel", b =>
                 {
+                    b.HasOne("MecuryProduct.Data.ProductModel", "product")
+                        .WithMany("images")
+                        .HasForeignKey("product_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
                     b.HasOne("MecuryProduct.Data.StateFormModel", "state_form")
                         .WithOne("doc")
                         .HasForeignKey("MecuryProduct.Data.DocModel", "sf_id")
@@ -6665,6 +6738,8 @@ namespace MecuryProduct.Migrations
                         .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.Navigation("car");
+
+                    b.Navigation("product");
 
                     b.Navigation("state_form");
                 });
@@ -6708,6 +6783,23 @@ namespace MecuryProduct.Migrations
                     b.Navigation("state_form");
 
                     b.Navigation("vehicle");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.ProductModel", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.CompanyModel", "company")
+                        .WithMany("Products")
+                        .HasForeignKey("company_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.HasOne("MecuryProduct.Data.ApplicationUser", "created_by")
+                        .WithMany("products")
+                        .HasForeignKey("created_by_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.Navigation("company");
+
+                    b.Navigation("created_by");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.StateFormModel", b =>
@@ -6784,6 +6876,8 @@ namespace MecuryProduct.Migrations
                     b.Navigation("logs");
 
                     b.Navigation("notes");
+
+                    b.Navigation("products");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.CarModel", b =>
@@ -6801,6 +6895,8 @@ namespace MecuryProduct.Migrations
 
                     b.Navigation("Employees");
 
+                    b.Navigation("Products");
+
                     b.Navigation("StateForms");
                 });
 
@@ -6814,6 +6910,11 @@ namespace MecuryProduct.Migrations
             modelBuilder.Entity("MecuryProduct.Data.DocModel", b =>
                 {
                     b.Navigation("note");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.ProductModel", b =>
+                {
+                    b.Navigation("images");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.StateFormModel", b =>
