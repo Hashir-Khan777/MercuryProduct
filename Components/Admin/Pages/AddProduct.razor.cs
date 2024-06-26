@@ -43,6 +43,7 @@ namespace MecuryProduct.Components.Admin.Pages
         protected override async void OnInitialized()
         {
             var result = await SessionService.Get<ProductModel>("product_form");
+            companies = CompanyService.GetCompanies().ToList();
 
             SetUserId();
 
@@ -130,7 +131,6 @@ namespace MecuryProduct.Components.Admin.Pages
                 if (userId is not null)
                 {
                     product.created_by_id = userId;
-                    companies = CompanyService.GetCompaniesByManagerId(userId);
                 }
             }
         }

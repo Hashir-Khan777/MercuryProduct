@@ -46,8 +46,6 @@ namespace MecuryProduct.Components.Manager.Pages
 
             SetUserId();
 
-            companies = CompanyService.GetCompanies();
-
             var session_vehicleImages = await SessionService.Get<List<DocModel>>("product_images");
 
             if (session_vehicleImages is not null)
@@ -132,6 +130,7 @@ namespace MecuryProduct.Components.Manager.Pages
                 if (userId is not null)
                 {
                     product.created_by_id = userId;
+                    companies = CompanyService.GetCompaniesByManagerId(userId);
                 }
             }
         }
