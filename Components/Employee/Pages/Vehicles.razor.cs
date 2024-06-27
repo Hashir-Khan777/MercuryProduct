@@ -17,8 +17,6 @@ namespace MecuryProduct.Components.Employee.Pages
         [Inject]
         private CarService CarService { get; set; }
         [Inject]
-        private UserService UserService { get; set; }
-        [Inject]
         private DialogService DialogService { get; set; }
         [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
@@ -45,8 +43,7 @@ namespace MecuryProduct.Components.Employee.Pages
                 var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                 if (userId is not null)
                 {
-                    int? companyId = UserService.GetUserById(userId)?.CompanyId;
-                    cars = CarService.GetCarsByCompanyId(companyId).ToList();
+                    cars = CarService.GetCarsByDriverId(userId).ToList();
                 }
             }
         }

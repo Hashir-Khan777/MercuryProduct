@@ -19,8 +19,6 @@ namespace MecuryProduct.Components.Employee.Pages
         [Inject]
         private DialogService DialogService { get; set; }
         [Inject]
-        private UserService UserService { get; set; }
-        [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
         /// <summary>
@@ -49,8 +47,7 @@ namespace MecuryProduct.Components.Employee.Pages
 
                 if (userId is not null)
                 {
-                    int? companyId = UserService.GetUserById(userId)?.CompanyId;
-                    drivers = DriverService.GetUsersByClaimByCompanyId("Role", "Driver", companyId).ToList();
+                    drivers = DriverService.GetUsersByClaimByEmployeeId("Role", "Driver", userId).ToList();
                 }
             }
         }

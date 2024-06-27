@@ -66,17 +66,14 @@
             <RadzenNumeric @bind-Value="product.quantity" Name="Quantity" Style="width: 100%;" />
             <RadzenRequiredValidator Component="Quantity" Text="Quantity is required" />
         </RadzenColumn>
-        @if (user_role != "Employee")
-        {
-            <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
-                <RadzenLabel Text="Company" Component="DropDownBindValue"
-                             Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
-                <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                                FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@product.company_id" Data="@companies"
-                                Name="Company" Style="width: 100%" TextProperty="Name" ValueProperty="Id" />
-                <RadzenRequiredValidator Component="Company" Text="Company is required" />
-            </RadzenColumn>
-        }
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Company" Component="DropDownBindValue"
+                            Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@product.company_id" Data="@companies"
+                            Name="Company" Style="width: 100%" TextProperty="Name" ValueProperty="Id" />
+            <RadzenRequiredValidator Component="Company" Text="Company is required" />
+        </RadzenColumn>
     </RadzenRow>
     <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="multi-upload rz-py-sm-4">
         <RadzenColumn Size="12" SizeMD="6" SizeLG="6">

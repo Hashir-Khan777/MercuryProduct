@@ -53,6 +53,13 @@
                 <label for="confirm-password">Confirm Password <span style="color: red;">*</span></label>
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
             </div>
+            <div class="form-floating mb-3">
+                <RadzenDropDown Multiple class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@selected_companies"
+                                Data="@companies" TextProperty="Name" ValueProperty="Id" Style="width: 100%;" Name="Model" />
+                <label for="role">Company<span style="color: red;">*</span></label>
+                <ValidationMessage For="() => Input.CompanyId" class="text-danger" />
+            </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Add Driver</button>
         </EditForm>
     </div>
@@ -62,6 +69,7 @@
     private IEnumerable<IdentityError>? identityErrors;
 
     public List<CompanyModel> companies = new List<CompanyModel>();
+    public List<int> selected_companies = new List<int>();
 
     [SupplyParameterFromForm]
     private InputModel Input { get; set; } = new();
@@ -75,8 +83,23 @@
     {
         base.OnInitialized();
 
-        companies = CompanyService.GetCompanies();
-        SetCompanyId();
+        GetCompanyByUserId();
+    }
+
+    public async void GetCompanyByUserId()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                companies = CompanyService.GetCompaniesByEmployeeId(userId);
+            }
+        }
     }
 
     public async Task RegisterUser(EditContext editContext)
@@ -120,28 +143,14 @@
         UserService.SetDriverId(userId);
         UserService.SetOldThreePasswords(userId, Input.Password);
 
-        user.CompanyId = Input.CompanyId;
+        foreach (var company in selected_companies)
+        {
+            UserService.SetCompanyDriver(new CompanyDrivers { company_id = company, driver_id = userId });
+        }
+        
         UserService.UpdateUser(user);
 
         NavigationManager.NavigateTo("/employee/drivers");
-    }
-
-    public async void SetCompanyId()
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        if (user.Identity is not null && user.Identity.IsAuthenticated)
-        {
-            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            if (userId is not null)
-            {
-                var userById = UserService.GetUserById(userId);
-
-                Input.CompanyId = userById?.CompanyId;
-            }
-        }
     }
 
     private ApplicationUser CreateUser()
@@ -186,6 +195,6 @@
 
         [Required]
         [Display(Name = "CompanyId")]
-        public int? CompanyId { get; set; }
+        public int CompanyId { get; set; }
     }
 }

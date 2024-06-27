@@ -25,7 +25,10 @@
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Company">
             <Template Context="item">
-                @item?.Company?.Name
+                @foreach (var comp in item.CompanyDrivers)
+                {
+                    <span>@comp.company.Name</span>
+                }
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Action">

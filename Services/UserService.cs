@@ -1,6 +1,7 @@
 ﻿using MecuryProduct.Data;
 using Microsoft.EntityFrameworkCore;
 using Radzen;
+using System.Linq.Dynamic.Core;
 using System.Text.Json;
 
 namespace MecuryProduct.Services
@@ -21,6 +22,82 @@ namespace MecuryProduct.Services
             this.helperService = helperService;
         }
 
+        public void SetCompanyDriver(CompanyDrivers CompanyDriver)
+        {
+            try
+            {
+                var alreadyExists = db.CompanyDrivers.Any(x => x.company_id == CompanyDriver.company_id && x.driver_id == CompanyDriver.driver_id);
+                if (!alreadyExists)
+                {
+                    db.CompanyDrivers.Add(CompanyDriver);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+            }
+        }
+
+        public void DeleteCompanyDriver(CompanyDrivers CompanyDriver)
+        {
+            try
+            {
+                var alreadyExists = db.CompanyDrivers.Where(x => x.company_id == CompanyDriver.company_id && x.driver_id == CompanyDriver.driver_id);
+                if (alreadyExists is not null)
+                {
+                    db.CompanyDrivers.Remove(CompanyDriver);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+            }
+        }
+
+        public void SetCompanyEmployees(CompanyEmployees CompanyEmployees)
+        {
+            try
+            {
+                var alreadyExists = db.CompanyEmployees.Any(x => x.company_id == CompanyEmployees.company_id && x.employee_id == CompanyEmployees.employee_id);
+                if (!alreadyExists)
+                {
+                    db.CompanyEmployees.Add(CompanyEmployees);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+            }
+        }
+
+        public void DeleteCompanyEmployees(CompanyEmployees CompanyEmployees)
+        {
+            try
+            {
+                var alreadyExists = db.CompanyEmployees.Where(x => x.company_id == CompanyEmployees.company_id && x.employee_id == CompanyEmployees.employee_id);
+                if (alreadyExists is not null)
+                {
+                    db.CompanyEmployees.Remove(CompanyEmployees);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+            }
+        }
+
         /// <summary>
         /// Retrieves a list of users based on a specific claim.
         /// </summary>
@@ -38,7 +115,7 @@ namespace MecuryProduct.Services
 
                 foreach (var claim in allClaims)
                 {
-                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).Include(c => c.Company).FirstOrDefault(u => u.Id == claim.UserId && u.EmailConfirmed);
+                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).Include(c => c.CompanyManagers).ThenInclude(cm => cm.company).Include(c => c.CompanyEmployees).ThenInclude(cm => cm.company).Include(c => c.CompanyDrivers).ThenInclude(cm => cm.company).FirstOrDefault(u => u.Id == claim.UserId && u.EmailConfirmed);
 
                     if (user is not null)
                     {
@@ -66,11 +143,45 @@ namespace MecuryProduct.Services
 
                 foreach (var claim in allClaims)
                 {
-                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).Include(c => c.Company).FirstOrDefault(u => u.Id == claim.UserId && u.Company.ManagerId == ManagerId && u.EmailConfirmed);
+                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).Include(c => c.CompanyManagers).ThenInclude(cm => cm.company).ThenInclude(cm => cm.CompanyManagers).Include(c => c.CompanyEmployees).ThenInclude(cm => cm.company).ThenInclude(cm => cm.CompanyManagers).Include(c => c.CompanyDrivers).ThenInclude(cm => cm.company).ThenInclude(cm => cm.CompanyManagers).FirstOrDefault(u => u.Id == claim.UserId && u.EmailConfirmed);
 
                     if (user is not null)
                     {
-                        allUsers.Add(user);
+                        if (user.CompanyDrivers.Count() > 0 ? user.CompanyDrivers.Any(cd => cd.company.CompanyManagers.Any(cm => cm.manager_id == ManagerId)) : user.CompanyEmployees.Count() > 0 ? user.CompanyEmployees.Any(cd => cd.company.CompanyManagers.Any(cm => cm.manager_id == ManagerId)) : user.CompanyManagers.Count() > 0 ? user.CompanyManagers.Any(cd => cd.company.CompanyManagers.Any(cm => cm.manager_id == ManagerId)) : false)
+                        {
+                            allUsers.Add(user);
+                        }
+                    }
+                }
+                return allUsers;
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<ApplicationUser>? GetUsersByClaimByEmployeeId(string claimType, string claimValue, string EmployeeId)
+        {
+            try
+            {
+                var allClaims = db.UserClaims.Where(c => c.ClaimType == claimType && c.ClaimValue == claimValue).ToList();
+
+                List<ApplicationUser> allUsers = new List<ApplicationUser>();
+
+                foreach (var claim in allClaims)
+                {
+                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).Include(c => c.CompanyManagers).ThenInclude(cm => cm.company).ThenInclude(cm => cm.CompanyEmployees).Include(c => c.CompanyEmployees).ThenInclude(cm => cm.company).ThenInclude(cm => cm.CompanyEmployees).Include(c => c.CompanyDrivers).ThenInclude(cm => cm.company).ThenInclude(cm => cm.CompanyEmployees).FirstOrDefault(u => u.Id == claim.UserId && u.EmailConfirmed);
+
+                    if (user is not null)
+                    {
+                        if (user.CompanyDrivers.Count() > 0 ? user.CompanyDrivers.Any(cd => cd.company.CompanyEmployees.Any(cm => cm.employee_id == EmployeeId)) : user.CompanyEmployees.Count() > 0 ? user.CompanyEmployees.Any(cd => cd.company.CompanyEmployees.Any(cm => cm.employee_id == EmployeeId)) : user.CompanyManagers.Count() > 0 ? user.CompanyManagers.Any(cd => cd.company.CompanyEmployees.Any(cm => cm.employee_id == EmployeeId)) : false)
+                        {
+                            allUsers.Add(user);
+                        }
                     }
                 }
                 return allUsers;
@@ -94,7 +205,7 @@ namespace MecuryProduct.Services
 
                 foreach (var claim in allClaims)
                 {
-                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).Include(c => c.Company).FirstOrDefault(u => u.Id == claim.UserId && u.CompanyId == CompanyId && u.EmailConfirmed);
+                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).Include(c => c.CompanyManagers).Include(c => c.CompanyEmployees).Include(c => c.CompanyDrivers).FirstOrDefault(u => u.Id == claim.UserId && u.CompanyManagers.Any(x => x.company_id == CompanyId) && u.EmailConfirmed);
 
                     if (user is not null)
                     {
@@ -116,7 +227,7 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Users.Include(u => u.Company).Include(u => u.companies).ToList();
+                return db.Users.Include(c => c.CompanyManagers).ThenInclude(cm => cm.company).Include(c => c.CompanyEmployees).ThenInclude(cm => cm.company).Include(c => c.CompanyDrivers).ThenInclude(cm => cm.company).ToList();
             }
             catch (Exception ex)
             {
@@ -131,7 +242,22 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Users.Where(u => u.Company.ManagerId == ManagerId).Include(u => u.Company).Include(u => u.companies).ToList();
+                return db.Users.Include(c => c.CompanyManagers).ThenInclude(cm => cm.company).Include(c => c.CompanyEmployees).ThenInclude(cm => cm.company).Include(c => c.CompanyDrivers).ThenInclude(cm => cm.company).Where(u => u.CompanyEmployees.Any(e => e.company.CompanyManagers.Any(cm => cm.manager_id == ManagerId)) || u.CompanyDrivers.Any(e => e.company.CompanyManagers.Any(cm => cm.manager_id == ManagerId)) || u.CompanyManagers.Any(e => e.company.CompanyManagers.Any(cm => cm.manager_id == ManagerId))).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<ApplicationUser> GetAllUsersByEmployeeId(string EmployeeId)
+        {
+            try
+            {
+                return db.Users.Include(c => c.CompanyManagers).ThenInclude(cm => cm.company).Include(c => c.CompanyEmployees).ThenInclude(cm => cm.company).Include(c => c.CompanyDrivers).ThenInclude(cm => cm.company).Where(u => u.CompanyEmployees.Any(e => e.company.CompanyEmployees.Any(cm => cm.employee_id == EmployeeId)) || u.CompanyDrivers.Any(e => e.company.CompanyEmployees.Any(cm => cm.employee_id == EmployeeId)) || u.CompanyManagers.Any(e => e.company.CompanyEmployees.Any(cm => cm.employee_id == EmployeeId))).ToList();
             }
             catch (Exception ex)
             {
@@ -168,7 +294,7 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Users.Include(u => u.driver_cars).ThenInclude(c => c.customer).Include(u => u.driver_cars).ThenInclude(c => c.created_by).FirstOrDefault(u => u.Id == Id);
+                return db.Users.Include(u => u.driver_cars).ThenInclude(c => c.customer).Include(u => u.driver_cars).ThenInclude(c => c.created_by).Include(c => c.CompanyManagers).ThenInclude(cm => cm.company).Include(c => c.CompanyEmployees).ThenInclude(cm => cm.company).Include(c => c.CompanyDrivers).ThenInclude(cm => cm.company).FirstOrDefault(u => u.Id == Id);
             }
             catch (Exception ex)
             {

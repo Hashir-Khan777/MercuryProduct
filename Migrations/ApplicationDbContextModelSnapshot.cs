@@ -30,9 +30,6 @@ namespace MecuryProduct.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -88,9 +85,10 @@ namespace MecuryProduct.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("permissions")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("CompanyId");
+                    b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -286,6 +284,65 @@ namespace MecuryProduct.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.CompanyDrivers", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<int?>("company_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("driver_id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("company_id");
+
+                    b.HasIndex("driver_id");
+
+                    b.ToTable("CompanyDrivers");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.CompanyEmployees", b =>
+                {
+                    b.Property<string>("employee_id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("company_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("employee_id", "company_id");
+
+                    b.HasIndex("company_id");
+
+                    b.ToTable("CompanyEmployees");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.CompanyManager", b =>
+                {
+                    b.Property<string>("manager_id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("company_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("manager_id", "company_id");
+
+                    b.HasIndex("company_id");
+
+                    b.ToTable("CompanyManagers");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.CompanyModel", b =>
                 {
                     b.Property<int>("Id")
@@ -294,16 +351,11 @@ namespace MecuryProduct.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ManagerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ManagerId");
 
                     b.ToTable("Companies");
                 });
@@ -6642,16 +6694,6 @@ namespace MecuryProduct.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MecuryProduct.Data.ApplicationUser", b =>
-                {
-                    b.HasOne("MecuryProduct.Data.CompanyModel", "Company")
-                        .WithMany("Employees")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.ClientNoAction);
-
-                    b.Navigation("Company");
-                });
-
             modelBuilder.Entity("MecuryProduct.Data.AuditLogModel", b =>
                 {
                     b.HasOne("MecuryProduct.Data.ApplicationUser", "user")
@@ -6693,14 +6735,59 @@ namespace MecuryProduct.Migrations
                     b.Navigation("driver");
                 });
 
-            modelBuilder.Entity("MecuryProduct.Data.CompanyModel", b =>
+            modelBuilder.Entity("MecuryProduct.Data.CompanyDrivers", b =>
                 {
-                    b.HasOne("MecuryProduct.Data.ApplicationUser", "Manager")
-                        .WithMany("companies")
-                        .HasForeignKey("ManagerId")
+                    b.HasOne("MecuryProduct.Data.CompanyModel", "company")
+                        .WithMany("CompanyDrivers")
+                        .HasForeignKey("company_id")
                         .OnDelete(DeleteBehavior.ClientNoAction);
 
-                    b.Navigation("Manager");
+                    b.HasOne("MecuryProduct.Data.ApplicationUser", "driver")
+                        .WithMany("CompanyDrivers")
+                        .HasForeignKey("driver_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.Navigation("company");
+
+                    b.Navigation("driver");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.CompanyEmployees", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.CompanyModel", "company")
+                        .WithMany("CompanyEmployees")
+                        .HasForeignKey("company_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
+                    b.HasOne("MecuryProduct.Data.ApplicationUser", "employee")
+                        .WithMany("CompanyEmployees")
+                        .HasForeignKey("employee_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
+                    b.Navigation("company");
+
+                    b.Navigation("employee");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.CompanyManager", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.CompanyModel", "company")
+                        .WithMany("CompanyManagers")
+                        .HasForeignKey("company_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
+                    b.HasOne("MecuryProduct.Data.ApplicationUser", "manager")
+                        .WithMany("CompanyManagers")
+                        .HasForeignKey("manager_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
+                    b.Navigation("company");
+
+                    b.Navigation("manager");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.CustomerModel", b =>
@@ -6865,9 +6952,13 @@ namespace MecuryProduct.Migrations
 
             modelBuilder.Entity("MecuryProduct.Data.ApplicationUser", b =>
                 {
-                    b.Navigation("cars");
+                    b.Navigation("CompanyDrivers");
 
-                    b.Navigation("companies");
+                    b.Navigation("CompanyEmployees");
+
+                    b.Navigation("CompanyManagers");
+
+                    b.Navigation("cars");
 
                     b.Navigation("customers");
 
@@ -6891,9 +6982,13 @@ namespace MecuryProduct.Migrations
                 {
                     b.Navigation("Cars");
 
-                    b.Navigation("Customers");
+                    b.Navigation("CompanyDrivers");
 
-                    b.Navigation("Employees");
+                    b.Navigation("CompanyEmployees");
+
+                    b.Navigation("CompanyManagers");
+
+                    b.Navigation("Customers");
 
                     b.Navigation("Products");
 

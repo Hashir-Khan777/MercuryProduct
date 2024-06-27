@@ -36,12 +36,10 @@ namespace MecuryProduct.Components.Employee.Pages
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject]
         private CompanyService CompanyService { get; set; }
-        [Inject]
-        private UserService UserService { get; set; }
 
         protected override void OnInitialized()
         {
-            companies = CompanyService.GetCompanies();
+            SetUserId();
         }
 
         /// <summary>
@@ -53,7 +51,6 @@ namespace MecuryProduct.Components.Employee.Pages
         /// </remarks>
         public void CreateStateForm()
         {
-            SetUserId();
             NoteService.AddNote(new NoteModel { created_by_id = user_id, sf_id = state_form.Id, note = note, created_at = DateTime.UtcNow, updated_at = DateTime.UtcNow });
             NavigationManager.NavigateTo("/employee/inventory");
         }
@@ -92,9 +89,8 @@ namespace MecuryProduct.Components.Employee.Pages
 
                 if (userId is not null)
                 {
-                    int? companyId = UserService.GetUserById(userId)?.CompanyId;
                     user_id = userId;
-                    state_form.CompanyId = companyId;
+                    companies = CompanyService.GetCompaniesByEmployeeId(userId);
                 }
             }
         }

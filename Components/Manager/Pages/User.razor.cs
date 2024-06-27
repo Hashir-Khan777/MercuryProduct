@@ -41,7 +41,7 @@ namespace MecuryProduct.Components.Manager.Pages
             if (deleteUser != null && deleteUser == true)
             {
                 UserService.DeleteUser(user);
-                users = UserService.GetAllUsers();
+                SetUserId();
                 StateHasChanged();
             }
         }

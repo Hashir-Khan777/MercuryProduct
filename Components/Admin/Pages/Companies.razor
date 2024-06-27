@@ -21,7 +21,10 @@
         <RadzenDataGridColumn Property="Name" Title="Company Name" />
         <RadzenDataGridColumn Title="Manager">
             <Template Context="item">
-                @item.Manager?.UserName
+                @foreach (var comp in item.CompanyManagers)
+                {
+                    <span>@comp.manager.UserName</span>
+                }
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Actions" Width="300px">

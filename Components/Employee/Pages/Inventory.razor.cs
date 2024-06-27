@@ -29,8 +29,6 @@ namespace MecuryProduct.Components.Employee.Pages
         [Inject]
         private StateFormService StateFormService { get; set; }
         [Inject]
-        private UserService UserService { get; set; }
-        [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
         /// <summary>
@@ -61,8 +59,7 @@ namespace MecuryProduct.Components.Employee.Pages
 
                 if (userId is not null)
                 {
-                    int? companyId = UserService.GetUserById(userId)?.CompanyId;
-                    cars = CarService.GetCarsByCompanyId(companyId).ToList().FindAll(c => c.status.ToLower() == "bought");
+                    cars = CarService.GetCarsByEmployeeId(userId).ToList().FindAll(c => c.status.ToLower() == "bought");
                 }
             }
         }
@@ -84,8 +81,7 @@ namespace MecuryProduct.Components.Employee.Pages
 
                 if (userId is not null)
                 {
-                    int? companyId = UserService.GetUserById(userId)?.CompanyId;
-                    stateForms = StateFormService.GetByCompanyId(companyId).ToList();
+                    stateForms = StateFormService.GetByEmployeeId(userId).ToList();
                 }
             }
         }

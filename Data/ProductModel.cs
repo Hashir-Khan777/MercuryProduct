@@ -2,6 +2,7 @@
 
 namespace MecuryProduct.Data
 {
+    /// Returns a copy of the model with all fields populated. Does not copy the data
     public class ProductModel
     {
         public int Id { get; set; }

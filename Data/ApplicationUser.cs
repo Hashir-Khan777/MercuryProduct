@@ -10,12 +10,14 @@ namespace MecuryProduct.Data
 
         public string password { get; set; } = string.Empty;
         
-        public int? CompanyId { get; set; }
-        
         public List<string> oldThreePasswords { get; set; } = new List<string>();
-        
-        public CompanyModel? Company { get; set; }
-        
+
+        public List<string>? permissions { get; set; } = new List<string>();
+
+        public List<CompanyEmployees>? CompanyEmployees { get; set; }
+
+        public List<CompanyDrivers>? CompanyDrivers { get; set; }
+
         public List<CarModel>? cars { get; set; }
         
         public List<CarModel>? driver_cars { get; set; }
@@ -24,7 +26,7 @@ namespace MecuryProduct.Data
         
         public List<CustomerModel>? customers { get; set; }
 
-        public List<CompanyModel>? companies { get; set; }
+        public List<CompanyManager>? CompanyManagers { get; set; }
 
         public List<AuditLogModel>? logs { get; set; }
 

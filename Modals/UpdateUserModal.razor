@@ -49,8 +49,8 @@
             @if (Input.Role == "Employee" || Input.Role == "Driver")
             {
                 <div class="form-floating mb-3">
-                    <RadzenDropDown class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                                    FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@Input.CompanyId"
+                    <RadzenDropDown Multiple class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                    FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@selected_companies"
                                     Data="@companies" TextProperty="Name" ValueProperty="Id" Style="width: 100%;" Name="Model" />
                     <label for="role">Company<span style="color: red;">*</span></label>
                     <ValidationMessage For="() => Input.CompanyId" class="text-danger" />
@@ -68,6 +68,7 @@
     private string previous_role = string.Empty;
     private bool isEmailConfirmed;
     public List<CompanyModel> companies = new List<CompanyModel>();
+    public List<int?> selected_companies = new List<int?>();
 
     [Parameter]
     public string UserId { get; set; }
@@ -96,7 +97,21 @@
         Input.NewPassword = user.password;
         Input.Role = role;
         previous_role = role;
-        Input.CompanyId = user.CompanyId ?? 0;
+
+        if (role == "Employee")
+        {
+            foreach (var company in user.CompanyEmployees)
+            {
+                selected_companies.Add(company.company_id);
+            }
+        }
+        else if (role == "Driver")
+        {
+            foreach (var company in user.CompanyDrivers)
+            {
+                selected_companies.Add(company.company_id);
+            }
+        }
     }
 
     public async void GetCompanyByUserId()
@@ -116,6 +131,10 @@
                 {
                     companies = CompanyService.GetCompaniesByManagerId(userId);
                 }
+                else if (role == "Employee")
+                {
+                    companies = CompanyService.GetCompaniesByEmployeeId(userId);
+                }
                 else
                 {
                     companies = CompanyService.GetCompanies();
@@ -132,7 +151,30 @@
         var code = await UserManager.GeneratePasswordResetTokenAsync(user);
         var result = await UserManager.ResetPasswordAsync(user, code, Input.NewPassword);
         await UserManager.ReplaceClaimAsync(user, new Claim("Role", previous_role), new Claim("Role", Input.Role));
-        user.CompanyId = Input.CompanyId;
+        if (Input.Role != "Manager")
+        {
+            foreach (var company in selected_companies)
+            {
+                if (Input.Role == "Driver")
+                {
+                    UserService.SetCompanyDriver(new CompanyDrivers { company_id = company, driver_id = userId });
+                    var tobedeleted = companies.Where(m => !selected_companies.Contains(m.Id));
+                    foreach (var item in tobedeleted)
+                    {
+                        UserService.DeleteCompanyDriver(new CompanyDrivers { company_id = item.Id, driver_id = userId });
+                    }
+                }
+                else if (Input.Role == "Employee")
+                {
+                    UserService.SetCompanyEmployees(new CompanyEmployees { company_id = company, employee_id = userId });
+                    var tobedeleted = companies.Where(m => !selected_companies.Contains(m.Id));
+                    foreach (var item in tobedeleted)
+                    {
+                        UserService.DeleteCompanyEmployees(new CompanyEmployees { company_id = item.Id, employee_id = userId });
+                    }
+                }
+            }
+        }
         UserService.UpdateUser(user);
         dialogService.Close();
     }

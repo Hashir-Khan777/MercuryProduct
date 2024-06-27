@@ -54,8 +54,8 @@
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
             </div>
             <div class="form-floating mb-3">
-                <RadzenDropDown class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                                FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@Input.CompanyId"
+                <RadzenDropDown Multiple class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@selected_companies"
                                 Data="@companies" TextProperty="Name" ValueProperty="Id" Style="width: 100%;" Name="Model" />
                 <label for="role">Company<span style="color: red;">*</span></label>
                 <ValidationMessage For="() => Input.CompanyId" class="text-danger" />
@@ -69,6 +69,7 @@
     private IEnumerable<IdentityError>? identityErrors;
 
     public List<CompanyModel> companies = new List<CompanyModel>();
+    public List<int> selected_companies = new List<int>();
 
     [SupplyParameterFromForm]
     private InputModel Input { get; set; } = new();
@@ -126,7 +127,11 @@
         UserService.SetDriverId(userId);
         UserService.SetOldThreePasswords(userId, Input.Password);
 
-        user.CompanyId = Input.CompanyId;
+        foreach (var company in selected_companies)
+        {
+            UserService.SetCompanyDriver(new CompanyDrivers { company_id = company, driver_id = userId });
+        }
+
         UserService.UpdateUser(user);
 
         NavigationManager.NavigateTo("/admin/drivers");

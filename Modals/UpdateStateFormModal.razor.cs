@@ -2,6 +2,7 @@
 using MecuryProduct.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using System.Data;
 using System.Security.Claims;
 
 namespace MecuryProduct.Modals
@@ -63,6 +64,10 @@ namespace MecuryProduct.Modals
                     if (user_role == "Manager")
                     {
                         companies = CompanyService.GetCompaniesByManagerId(userId);
+                    }
+                    else if (user_role == "Employee")
+                    {
+                        companies = CompanyService.GetCompaniesByEmployeeId(userId);
                     }
                     else
                     {

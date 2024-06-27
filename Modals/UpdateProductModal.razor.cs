@@ -67,6 +67,10 @@ namespace MecuryProduct.Modals
                     {
                         companies = CompanyService.GetCompaniesByManagerId(userId);
                     }
+                    else if (role == "Employee")
+                    {
+                        companies = CompanyService.GetCompaniesByEmployeeId(userId);
+                    }
                     else
                     {
                         companies = CompanyService.GetCompanies();

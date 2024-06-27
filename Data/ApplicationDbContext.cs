@@ -24,6 +24,9 @@ namespace MecuryProduct.Data
         public DbSet<CompanyModel> Companies { get; set; }
         public DbSet<ProductModel> Products { get; set; }
         public DbSet<AuditLogModel> Logs { get; set; }
+        public DbSet<CompanyManager> CompanyManagers { get; set; }
+        public DbSet<CompanyEmployees> CompanyEmployees { get; set; }
+        public DbSet<CompanyDrivers> CompanyDrivers { get; set; }
 
         private void AuditChanges()
         {
@@ -165,10 +168,46 @@ namespace MecuryProduct.Data
             // Feature: Create a multitenant architecture for multi role user like admin, manager, employee and driver
             // Fix: Create a company model and assign company with a sub admin (Manager) and employees
 
-            builder.Entity<CompanyModel>()
-                .HasMany(c => c.Employees)
-                .WithOne(e => e.Company)
-                .HasForeignKey(e => e.CompanyId)
+            builder.Entity<CompanyManager>()
+                .HasKey(pc => new { pc.manager_id, pc.company_id });
+            
+            builder.Entity<CompanyEmployees>()
+                .HasKey(pc => new { pc.employee_id, pc.company_id });
+
+            builder.Entity<CompanyManager>()
+                .HasOne(c => c.manager)
+                .WithMany(e => e.CompanyManagers)
+                .HasForeignKey(e => e.manager_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<CompanyManager>()
+                .HasOne(c => c.company)
+                .WithMany(e => e.CompanyManagers)
+                .HasForeignKey(e => e.company_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<CompanyEmployees>()
+                .HasOne(c => c.employee)
+                .WithMany(e => e.CompanyEmployees)
+                .HasForeignKey(e => e.employee_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<CompanyEmployees>()
+                .HasOne(c => c.company)
+                .WithMany(e => e.CompanyEmployees)
+                .HasForeignKey(e => e.company_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<CompanyDrivers>()
+                .HasOne(c => c.driver)
+                .WithMany(e => e.CompanyDrivers)
+                .HasForeignKey(e => e.driver_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<CompanyDrivers>()
+                .HasOne(c => c.company)
+                .WithMany(e => e.CompanyDrivers)
+                .HasForeignKey(e => e.company_id)
                 .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<CompanyModel>()
@@ -193,12 +232,6 @@ namespace MecuryProduct.Data
                 .HasMany(c => c.Products)
                 .WithOne(e => e.company)
                 .HasForeignKey(e => e.company_id)
-                .OnDelete(DeleteBehavior.ClientNoAction);
-
-            builder.Entity<CompanyModel>()
-                .HasOne(c => c.Manager)
-                .WithMany(e => e.companies)
-                .HasForeignKey(e => e.ManagerId)
                 .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<AuditLogModel>()

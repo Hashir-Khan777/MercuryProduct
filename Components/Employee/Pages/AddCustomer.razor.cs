@@ -61,8 +61,6 @@ namespace MecuryProduct.Components.Employee.Pages
         private HelperService HelperService { get; set; }
         [Inject]
         private CompanyService CompanyService { get; set; }
-        [Inject]
-        private UserService UserService { get; set; }
 
         /// <summary>
         /// Initializes the component and retrieves the customer data from the session service.
@@ -75,8 +73,6 @@ namespace MecuryProduct.Components.Employee.Pages
         {
             SetUserId();
             var result = await SessionService.Get<CustomerModel>("customer_form");
-
-            companies = CompanyService.GetCompanies();
 
             if (result != null)
             {
@@ -215,9 +211,8 @@ namespace MecuryProduct.Components.Employee.Pages
 
                 if (userId is not null)
                 {
-                    int? companyId = UserService.GetUserById(userId)?.CompanyId;
                     customer.created_by_id = userId;
-                    customer.CompanyId = companyId;
+                    companies = CompanyService.GetCompaniesByEmployeeId(userId);
                 }
             }
         }

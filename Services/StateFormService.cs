@@ -60,7 +60,22 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.StateForm.Where(s => s.Company.ManagerId == ManagerId).Include(s => s.doc).Include(s => s.Company).ToList();
+                return db.StateForm.Include(s => s.doc).Include(s => s.Company).ThenInclude(c => c.CompanyManagers).Where(s => s.Company.CompanyManagers.Any(x => x.manager_id == ManagerId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<StateFormModel>? GetByEmployeeId(string EmployeeId)
+        {
+            try
+            {
+                return db.StateForm.Include(s => s.doc).Include(s => s.Company).ThenInclude(c => c.CompanyManagers).Where(s => s.Company.CompanyEmployees.Any(x => x.employee_id == EmployeeId)).ToList();
             }
             catch (Exception ex)
             {

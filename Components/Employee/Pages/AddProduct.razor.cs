@@ -9,6 +9,7 @@ namespace MecuryProduct.Components.Employee.Pages
 {
     public partial class AddProduct
     {
+        /// Create a new instance of ProductModel and its sub - models. This is used to determine which fields are affected
         public ProductModel product = new ProductModel();
         public List<string> departments = new List<string>
         {
@@ -27,6 +28,7 @@ namespace MecuryProduct.Components.Employee.Pages
         public List<CompanyModel> companies = new List<CompanyModel>();
         public List<DocModel> productImages = new List<DocModel>();
 
+        /// Gets the instance that is used to access the cache. This is the public API
         [Inject]
         private SessionService SessionService { get; set; }
         [Inject]
@@ -38,36 +40,37 @@ namespace MecuryProduct.Components.Employee.Pages
         [Inject]
         private NavigationManager NavigationManager { get; set; }
         [Inject]
-        private UserService UserService { get; set; }
-        [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
+        /// Called when [ initialized ]. Initializes the instance by getting the product from the session if it exists
         protected override async void OnInitialized()
         {
             var result = await SessionService.Get<ProductModel>("product_form");
 
             SetUserId();
 
-            companies = CompanyService.GetCompanies();
-
             var session_vehicleImages = await SessionService.Get<List<DocModel>>("product_images");
 
+            /// Set product product images for the vehicle
             if (session_vehicleImages is not null)
             {
                 productImages = session_vehicleImages;
             }
 
+            /// Set the product of the result.
             if (result != null)
             {
                 product = result;
             }
         }
 
+        /// Creates a new product and navigates to the product view. This method is called when the user clicks the create
         public async void CreateProduct()
         {
             product.created_at = DateTime.UtcNow;
             product.updated_at = DateTime.UtcNow;
             ProductService.AddProduct(product);
+            /// Add all the product images to the collection
             if (productImages.Count() > 0)
             {
                 foreach (var item in productImages)
@@ -81,17 +84,24 @@ namespace MecuryProduct.Components.Employee.Pages
             NavigationManager.NavigateTo("/employee/products");
         }
 
+        /// Sets the in session. This is called when the user clicks the submit button in the form to save the
         public async void SetInSession()
         {
             await SessionService.Set("product_form", JsonSerializer.Serialize(product));
         }
 
+        /// Deletes the specified document from the list of documents. This is useful when you want to remove a document from the list and don't want to show the image that was used to create it.
+        /// 
+        /// @param doc - The document to delete from the list of documents
         public void DeleteDoc(DocModel doc)
         {
             productImages.Remove(doc);
             StateHasChanged();
         }
 
+        /// Adds or updates product images. This is called when files are uploaded to the web server. The file name is used to generate a file path and the path is stored in wwwroot / uploads
+        /// 
+        /// @param e - The instance containing the event data
         public async void changeProductImages(Radzen.UploadChangeEventArgs e)
         {
             string directory = Directory.GetCurrentDirectory();
@@ -122,20 +132,22 @@ namespace MecuryProduct.Components.Employee.Pages
             }
         }
 
+        /// Sets the user id from the user claim. This is used to create companies and products based on the
         public async void SetUserId()
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
 
+            /// This method is called by the user when the user is authenticated.
             if (user.Identity is not null && user.Identity.IsAuthenticated)
             {
                 var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
+                /// Set the user id of the product
                 if (userId is not null)
                 {
-                    int? companyId = UserService.GetUserById(userId)?.CompanyId;
                     product.created_by_id = userId;
-                    product.company_id = companyId;
+                    companies = CompanyService.GetCompaniesByEmployeeId(userId);
                 }
             }
         }

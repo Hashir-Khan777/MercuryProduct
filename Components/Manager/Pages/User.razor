@@ -37,16 +37,26 @@
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Company">
             <Template Context="item">
-                @if (GetUserClaim(item.Id) == "Manager")
+                @if (item.CompanyManagers.Count() > 0)
                 {
-                    @foreach (var comp in item.companies)
+                    @foreach (var comp in item.CompanyManagers)
                     {
-                        <span>@comp.Name</span> 
+                        <span>@comp.company.Name</span>
                     }
                 }
-                else
+                else if (item.CompanyEmployees.Count() > 0)
                 {
-                    <p>@item.Company?.Name</p>
+                    @foreach (var comp in item.CompanyEmployees)
+                    {
+                        <span>@comp.company.Name</span>
+                    }
+                }
+                else if (item.CompanyDrivers.Count() > 0)
+                {
+                    @foreach (var comp in item.CompanyDrivers)
+                    {
+                        <span>@comp.company.Name</span>
+                    }
                 }
             </Template>
         </RadzenDataGridColumn>

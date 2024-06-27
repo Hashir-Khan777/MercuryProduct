@@ -74,7 +74,22 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Customers.Where(c => c.Company.ManagerId == ManagerId).Include(c => c.created_by).Include(c => c.cars).Include(c => c.Company).OrderByDescending(c => c.created_at).ToList();
+                return db.Customers.Include(c => c.created_by).Include(c => c.cars).Include(c => c.Company).ThenInclude(c => c.CompanyManagers).Where(c => c.Company.CompanyManagers.Any(x => x.manager_id == ManagerId)).OrderByDescending(c => c.created_at).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<CustomerModel>? GetCustomersByEmployeeId(string EmployeeId)
+        {
+            try
+            {
+                return db.Customers.Include(c => c.created_by).Include(c => c.cars).Include(c => c.Company).ThenInclude(c => c.CompanyManagers).Where(c => c.Company.CompanyEmployees.Any(x => x.employee_id == EmployeeId)).OrderByDescending(c => c.created_at).ToList();
             }
             catch (Exception ex)
             {

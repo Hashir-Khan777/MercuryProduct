@@ -22,7 +22,7 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Companies.Include(c => c.Manager).ToList();
+                return db.Companies.Include(c => c.CompanyManagers).ThenInclude(c => c.manager).ToList();
             }
             catch (Exception ex)
             {
@@ -37,7 +37,22 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Companies.Where(c => c.ManagerId == ManagerId).Include(c => c.Manager).ToList();
+                return db.Companies.Include(c => c.CompanyManagers).ThenInclude(c => c.manager).Where(c => c.CompanyManagers.Any(x => x.manager_id == ManagerId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<CompanyModel>? GetCompaniesByEmployeeId(string EmployeeId)
+        {
+            try
+            {
+                return db.Companies.Include(c => c.CompanyManagers).ThenInclude(c => c.manager).Where(c => c.CompanyEmployees.Any(x => x.employee_id == EmployeeId)).ToList();
             }
             catch (Exception ex)
             {
@@ -69,6 +84,44 @@ namespace MecuryProduct.Services
             {
                 db.Companies.Add(company);
                 db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+            }
+        }
+
+        public void AddManager(CompanyManager company_manager)
+        {
+            try
+            {
+                var alreadyExists = db.CompanyManagers.Any(x => x.company_id == company_manager.company_id && x.manager_id == company_manager.manager_id);
+                if (!alreadyExists)
+                {
+                    db.CompanyManagers.Add(company_manager);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+            }
+        }
+
+        public void DeleteManager(CompanyManager company_manager)
+        {
+            try
+            {
+                var alreadyExists = db.CompanyManagers.FirstOrDefault(x => x.company_id == company_manager.company_id && x.manager_id == company_manager.manager_id);
+                if (alreadyExists is not null)
+                {
+                    db.CompanyManagers.Remove(alreadyExists);
+                    db.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

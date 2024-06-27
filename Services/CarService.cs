@@ -128,7 +128,7 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Cars.Where(c => c.Company.ManagerId == ManagerId).OrderByDescending(c => c.created_at).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.docs).Include(c => c.Company).ToList();
+                return db.Cars.Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.docs).Include(c => c.Company).ThenInclude(c => c.CompanyManagers).Where(c => c.Company.CompanyManagers.Any(cm => cm.manager_id == ManagerId)).OrderByDescending(c => c.created_at).ToList();
             }
             catch (Exception ex)
             {
@@ -139,11 +139,11 @@ namespace MecuryProduct.Services
             }
         }
 
-        public List<CarModel>? GetCarsByCompanyId(int? CompanyId)
+        public List<CarModel>? GetCarsByEmployeeId(string EmployeeId)
         {
             try
             {
-                return db.Cars.Where(c => c.CompanyId == CompanyId).OrderByDescending(c => c.created_at).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.docs).Include(c => c.Company).ToList();
+                return db.Cars.Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.docs).Include(c => c.Company).ThenInclude(c => c.CompanyManagers).Where(c => c.Company.CompanyEmployees.Any(cm => cm.employee_id == EmployeeId)).OrderByDescending(c => c.created_at).ToList();
             }
             catch (Exception ex)
             {

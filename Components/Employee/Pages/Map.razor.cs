@@ -38,8 +38,6 @@ namespace MecuryProduct.Components.Employee.Pages
         private IJSRuntime JS { get; set; }
         [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
-        [Inject]
-        private UserService UserService { get; set; }
 
         /// <summary>
         /// Method called after the component has been rendered.
@@ -107,8 +105,7 @@ namespace MecuryProduct.Components.Employee.Pages
 
                 if (userId is not null)
                 {
-                    int? companyId = UserService.GetUserById(userId)?.CompanyId;
-                    customers = CustomerService.GetCustomersByCompanyId(companyId).ToList();
+                    customers = CustomerService.GetCustomersByEmployeeId(userId).ToList();
                 }
             }
         }

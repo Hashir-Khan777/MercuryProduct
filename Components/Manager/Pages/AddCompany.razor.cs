@@ -12,6 +12,8 @@ namespace MecuryProduct.Components.Manager.Pages
     {
         public CompanyModel company = new CompanyModel();
         public List<ApplicationUser> managers = new List<ApplicationUser>();
+        public List<string> selected_managers = new List<string>();
+        public string user_id = string.Empty;
 
         [Inject]
         private CompanyService CompanyService { get; set; }
@@ -26,8 +28,8 @@ namespace MecuryProduct.Components.Manager.Pages
 
         protected override async void OnInitialized()
         {
-            GetManagers();
             SetUserId();
+            GetManagers();
 
             var result = await SessionService.Get<CompanyModel>("company_form");
 
@@ -40,6 +42,10 @@ namespace MecuryProduct.Components.Manager.Pages
         public void CreateCompany(CompanyModel company)
         {
             CompanyService.AddCompany(company);
+            foreach (var manager in selected_managers)
+            {
+                CompanyService.AddManager(new CompanyManager { company_id = company.Id, manager_id = manager });
+            }
             NavigationManager.NavigateTo("/manager/companies");
         }
 
@@ -52,9 +58,11 @@ namespace MecuryProduct.Components.Manager.Pages
             {
                 var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
+                user_id = userId;
+
                 if (userId is not null)
                 {
-                    company.ManagerId = userId;
+                    selected_managers.Add(userId);
                 }
             }
         }
@@ -66,7 +74,14 @@ namespace MecuryProduct.Components.Manager.Pages
 
         public void GetManagers()
         {
-            managers = UserService.GetUsersByClaim("Role", "Manager");
+            var result = UserService.GetUsersByClaim("Role", "Manager");
+            foreach (var item in result)
+            {
+                if (item.Id != user_id)
+                {
+                    managers.Add(item);
+                }
+            }
         }
     }
 }

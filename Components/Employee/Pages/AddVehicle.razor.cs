@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.StaticFiles;
 using Radzen;
-using System.ComponentModel.Design;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -108,8 +107,6 @@ namespace MecuryProduct.Components.Employee.Pages
         private DocService DocService { get; set; }
         [Inject]
         private CompanyService CompanyService { get; set; }
-        [Inject]
-        private UserService UserService { get; set; }
 
         /// <summary>
         /// Initializes the view model by retrieving necessary data from session and services.
@@ -127,8 +124,6 @@ namespace MecuryProduct.Components.Employee.Pages
             SetUserId();
             GetMakes();
             GetYears();
-
-            companies = CompanyService.GetCompanies();
 
             var result = await SessionService.Get<CarModel>("car_form");
             var session_doc = await SessionService.Get<DocModel>("doc");
@@ -276,11 +271,10 @@ namespace MecuryProduct.Components.Employee.Pages
 
                 if (userId is not null)
                 {
-                    var userById = UserService.GetUserById(userId);
                     car.created_by_id = userId;
-                    car.CompanyId = userById?.CompanyId;
-                    drivers = DriverService.GetUsersByClaimByCompanyId("Role", "Driver", userById.CompanyId);
-                    customers = CustomerService.GetCustomersByCompanyId(userById.CompanyId);
+                    companies = CompanyService.GetCompaniesByEmployeeId(userId);
+                    customers = CustomerService.GetCustomersByEmployeeId(userId);
+                    drivers = DriverService.GetUsersByClaimByEmployeeId("Role", "Driver", userId);
                 }
             }
         }

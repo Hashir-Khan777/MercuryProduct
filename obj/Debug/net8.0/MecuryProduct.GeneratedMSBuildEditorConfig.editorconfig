@@ -278,6 +278,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEcml2ZXJcU2hhcmVkXERyaXZlck5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddCompany.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRDb21wYW55LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddCustomer.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRDdXN0b21lci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -294,12 +298,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRTdGF0ZUZvcm0ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddUser.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRVc2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddVehicle.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRWZWhpY2xlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Calendar.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xDYWxlbmRhci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Companies.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xDb21wYW5pZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Customer.razor]
@@ -324,6 +336,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Products.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xQcm9kdWN0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/User.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xVc2VyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Vehicles.razor]

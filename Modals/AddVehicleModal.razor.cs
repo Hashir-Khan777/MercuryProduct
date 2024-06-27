@@ -177,7 +177,7 @@ namespace MecuryProduct.Modals
                     else if (role == "Employee")
                     {
                         var userById = DriverService.GetUserById(userId);
-                        drivers = DriverService.GetUsersByClaimByCompanyId("Role", "Driver", userById.CompanyId);
+                        //drivers = DriverService.GetUsersByClaimByCompanyId("Role", "Driver", userById.CompanyId);
                     }
                     else
                     {

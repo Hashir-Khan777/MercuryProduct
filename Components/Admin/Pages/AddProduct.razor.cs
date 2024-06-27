@@ -9,6 +9,7 @@ namespace MecuryProduct.Components.Admin.Pages
 {
     public partial class AddProduct
     {
+        /// Create a new instance of ProductModel and its sub - models. This is used to determine which fields are affected
         public ProductModel product = new ProductModel();
         public List<string> departments = new List<string>
         {
@@ -40,6 +41,7 @@ namespace MecuryProduct.Components.Admin.Pages
         [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
+        /// @brief Called when [ initialized ]. Initializes the instance by getting the data from
         protected override async void OnInitialized()
         {
             var result = await SessionService.Get<ProductModel>("product_form");
@@ -49,22 +51,26 @@ namespace MecuryProduct.Components.Admin.Pages
 
             var session_vehicleImages = await SessionService.Get<List<DocModel>>("product_images");
 
+            /// Set product product images for the vehicle
             if (session_vehicleImages is not null)
             {
                 productImages = session_vehicleImages;
             }
 
+            /// Set the product of the result.
             if (result != null)
             {
                 product = result;
             }
         }
 
+        /// @brief Creates and navigates to the product page after setting the created_at and updated
         public async void CreateProduct()
         {
             product.created_at = DateTime.UtcNow;
             product.updated_at = DateTime.UtcNow;
             ProductService.AddProduct(product);
+            /// Add all the product images to the collection
             if (productImages.Count() > 0)
             {
                 foreach (var item in productImages)
@@ -78,17 +84,24 @@ namespace MecuryProduct.Components.Admin.Pages
             NavigationManager.NavigateTo("/admin/products");
         }
 
+        /// Sets the in session. This is called when the user clicks the submit button
         public async void SetInSession()
         {
             await SessionService.Set("product_form", JsonSerializer.Serialize(product));
         }
 
+        /// Deletes the specified document from the list of documents. This is useful when you want to remove a document from the list and don't want to show the image that was used to create it.
+        /// 
+        /// @param doc - The document to delete from the list of documents
         public void DeleteDoc(DocModel doc)
         {
             productImages.Remove(doc);
             StateHasChanged();
         }
 
+        /// Adds or updates product images. This is called when files are uploaded to the web server
+        /// 
+        /// @param e - The instance containing the event data
         public async void changeProductImages(Radzen.UploadChangeEventArgs e)
         {
             string directory = Directory.GetCurrentDirectory();
@@ -119,15 +132,18 @@ namespace MecuryProduct.Components.Admin.Pages
             }
         }
 
+        /// Sets the user ID if logged in and the user is authenticated. This is used to create the
         public async void SetUserId()
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
 
+            /// If the user is authenticated set product. created_by_id to product. created_by_id
             if (user.Identity is not null && user.Identity.IsAuthenticated)
             {
                 var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
+                /// Set the user id of the product created by this user
                 if (userId is not null)
                 {
                     product.created_by_id = userId;

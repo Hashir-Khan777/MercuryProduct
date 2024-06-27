@@ -9,6 +9,7 @@ namespace MecuryProduct.Components.Admin.Pages
     {
         public CompanyModel company = new CompanyModel();
         public List<ApplicationUser> managers = new List<ApplicationUser>();
+        public List<string> selected_managers = new List<string>();
 
         [Inject]
         private CompanyService CompanyService { get; set; }
@@ -34,6 +35,10 @@ namespace MecuryProduct.Components.Admin.Pages
         public void CreateCompany(CompanyModel company)
         {
             CompanyService.AddCompany(company);
+            foreach (var manager in selected_managers)
+            {
+                CompanyService.AddManager(new CompanyManager { company_id = company.Id, manager_id = manager });
+            }
             NavigationManager.NavigateTo("/admin/companies");
         }
 

@@ -32,11 +32,26 @@ namespace MecuryProduct.Services
             }
         }
 
-        public List<ProductModel>? GetProductsByManagerId(string UserId)
+        public List<ProductModel>? GetProductsByManagerId(string ManagerId)
         {
             try
             {
-                return db.Products.Where(p => p.company.ManagerId == UserId).Include("created_by").Include("images").ToList();
+                return db.Products.Include(c => c.company).ThenInclude(c => c.CompanyManagers).Where(p => p.company.CompanyManagers.Any(x => x.manager_id == ManagerId)).Include("created_by").Include("images").ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<ProductModel>? GetProductsByEmployeeId(string EmployeeId)
+        {
+            try
+            {
+                return db.Products.Include(c => c.company).ThenInclude(c => c.CompanyManagers).Where(p => p.company.CompanyEmployees.Any(x => x.employee_id == EmployeeId)).Include("created_by").Include("images").ToList();
             }
             catch (Exception ex)
             {

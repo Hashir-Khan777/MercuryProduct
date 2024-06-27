@@ -11,6 +11,7 @@ namespace MecuryProduct.Modals
         [Parameter] public int CompId { get; set; }
         public CompanyModel company = new CompanyModel();
         public List<ApplicationUser> managers = new List<ApplicationUser>();
+        public List<string> selected_managers = new List<string>();
         public string user_role = string.Empty;
 
         [Inject]
@@ -29,11 +30,24 @@ namespace MecuryProduct.Modals
         public void GetCompanyById()
         {
             company = CompanyService.GetCompanyById(CompId);
+            foreach (var item in company.CompanyManagers)
+            {
+                selected_managers.Add(item.manager_id);
+            }
         }
 
         public void UpdateCompany(CompanyModel company)
         {
             CompanyService.Update(company);
+            foreach (var manager in selected_managers)
+            {
+                CompanyService.AddManager(new CompanyManager { company_id = company.Id, manager_id = manager });
+            }
+            var tobedeleted = managers.Where(m => !selected_managers.Contains(m.Id));
+            foreach (var item in tobedeleted)
+            {
+                CompanyService.DeleteManager(new CompanyManager { company_id = company.Id, manager_id = item.Id });
+            }
             dialogService.Close();
         }
 
@@ -55,10 +69,10 @@ namespace MecuryProduct.Modals
                 {
                     var role = UserService.GetUserClaimByUserId(userId);
                     user_role = role;
-                    if (role == "Manager")
-                    {
-                        company.ManagerId = userId;
-                    }
+                    //if (role == "Manager")
+                    //{
+                    //    company.ManagerId = userId;
+                    //}
                 }
             }
         }
