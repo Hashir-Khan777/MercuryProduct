@@ -31,5 +31,7 @@ namespace MecuryProduct.Data
         public List<AuditLogModel>? logs { get; set; }
 
         public List<ProductModel>? products { get; set; }
+
+        public List<InvoiceModel>? invoices { get; set; }
     }
 }

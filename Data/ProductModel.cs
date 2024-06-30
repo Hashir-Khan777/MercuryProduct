@@ -42,5 +42,7 @@ namespace MecuryProduct.Data
         public ApplicationUser? created_by { get; set; }
 
         public CompanyModel? company { get; set; }
+
+        public List<ProductInvoice>? productInvoice { get; set; }
     }
 }

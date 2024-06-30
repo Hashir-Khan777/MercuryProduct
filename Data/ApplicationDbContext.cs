@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -23,10 +24,12 @@ namespace MecuryProduct.Data
         public DbSet<MasterYearTable> MasterYearTable { get; set; }
         public DbSet<CompanyModel> Companies { get; set; }
         public DbSet<ProductModel> Products { get; set; }
+        public DbSet<InvoiceModel> Invoices { get; set; }
         public DbSet<AuditLogModel> Logs { get; set; }
         public DbSet<CompanyManager> CompanyManagers { get; set; }
         public DbSet<CompanyEmployees> CompanyEmployees { get; set; }
         public DbSet<CompanyDrivers> CompanyDrivers { get; set; }
+        public DbSet<ProductInvoice> ProductInvoices { get; set; }
 
         private void AuditChanges()
         {
@@ -81,7 +84,7 @@ namespace MecuryProduct.Data
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override async void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
@@ -164,6 +167,36 @@ namespace MecuryProduct.Data
                 .HasForeignKey(d => d.created_by_id)
                 .OnDelete(DeleteBehavior.ClientNoAction);
 
+            builder.Entity<InvoiceModel>()
+                .HasOne(c => c.created_by)
+                .WithMany(m => m.invoices)
+                .HasForeignKey(d => d.created_by_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<InvoiceModel>()
+                .HasOne(c => c.customer)
+                .WithMany(m => m.invoices)
+                .HasForeignKey(d => d.customer_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<InvoiceModel>()
+                .HasOne(c => c.company)
+                .WithMany(m => m.Invoices)
+                .HasForeignKey(d => d.company_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<ProductInvoice>()
+                .HasOne(c => c.product)
+                .WithMany(e => e.productInvoice)
+                .HasForeignKey(e => e.product_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<ProductInvoice>()
+                .HasOne(c => c.invoice)
+                .WithMany(e => e.productInvoice)
+                .HasForeignKey(e => e.invoice_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
             // PP-55: multitenant application architecture.
             // Feature: Create a multitenant architecture for multi role user like admin, manager, employee and driver
             // Fix: Create a company model and assign company with a sub admin (Manager) and employees
@@ -173,6 +206,12 @@ namespace MecuryProduct.Data
             
             builder.Entity<CompanyEmployees>()
                 .HasKey(pc => new { pc.employee_id, pc.company_id });
+
+            builder.Entity<CompanyDrivers>()
+                .HasKey(pc => new { pc.driver_id, pc.company_id });
+
+            builder.Entity<ProductInvoice>()
+                .HasKey(pc => new { pc.invoice_id, pc.product_id });
 
             builder.Entity<CompanyManager>()
                 .HasOne(c => c.manager)

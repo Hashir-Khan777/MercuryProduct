@@ -2,7 +2,7 @@
 {
     public class CompanyEmployees
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string? employee_id { get; set; }
 

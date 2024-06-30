@@ -72,6 +72,16 @@
                     <ValidationMessage For="() => Input.CompanyId" class="text-danger" />
                 </div>
             }
+            @if (Input.Role == "Employee")
+            {
+                <div class="form-floating mb-3">
+                    <RadzenDropDown Multiple class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                    FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@selected_permissions"
+                                    Data="@permissions" Style="width: 100%;" Name="Model" />
+                    <label for="role">Permissions<span style="color: red;">*</span></label>
+                    <ValidationMessage For="() => selected_permissions" class="text-danger" />
+                </div>
+            }
             <button type="submit" class="w-100 btn btn-lg btn-primary">Add User</button>
         </EditForm>
     </div>
@@ -88,6 +98,21 @@
 
     public List<CompanyModel> companies = new List<CompanyModel>();
     public List<int> selected_companies = new List<int>();
+    public List<string> permissions = new List<string>
+    {
+        "User Module",
+        "Customer Module",
+        "Vehicle Module",
+        "Driver Module",
+        "Calendar & Map Module",
+        "Inventory Module",
+        "state Form Module",
+        "Production Module",
+        "Company Module",
+        "Product Module",
+        "Cashier Module"
+    };
+    public List<string> selected_permissions = new List<string>();
 
     private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
 
@@ -150,6 +175,8 @@
                 }
             }
         }
+        user.permissions = selected_permissions;
+
         UserService.UpdateUser(user);
 
         NavigationManager.NavigateTo("/admin/users");

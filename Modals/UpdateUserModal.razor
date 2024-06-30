@@ -7,7 +7,6 @@
 @using Microsoft.AspNetCore.WebUtilities
 @using MecuryProduct.Data
 @using System.Security.Claims
-@using MecuryProduct.Components.Admin.Shared
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
@@ -56,6 +55,16 @@
                     <ValidationMessage For="() => Input.CompanyId" class="text-danger" />
                 </div>
             }
+            @if (Input.Role == "Employee")
+            {
+                <div class="form-floating mb-3">
+                    <RadzenDropDown Multiple class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                    FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@selected_permissions"
+                                    Data="@permissions" Style="width: 100%;" Name="Model" />
+                    <label for="role">Permissions<span style="color: red;">*</span></label>
+                    <ValidationMessage For="() => selected_permissions" class="text-danger" />
+                </div>
+            }
             <button type="submit" class="w-100 btn btn-lg btn-primary">Update</button>
         </EditForm>
     </div>
@@ -69,6 +78,21 @@
     private bool isEmailConfirmed;
     public List<CompanyModel> companies = new List<CompanyModel>();
     public List<int?> selected_companies = new List<int?>();
+    public List<string> permissions = new List<string>
+    {
+        "User Module",
+        "Customer Module",
+        "Vehicle Module",
+        "Driver Module",
+        "Calendar & Map Module",
+        "Inventory Module",
+        "state Form Module",
+        "Production Module",
+        "Company Module",
+        "Product Module",
+        "Cashier Module"
+    };
+    public List<string> selected_permissions = new List<string>();
 
     [Parameter]
     public string UserId { get; set; }
@@ -100,6 +124,10 @@
 
         if (role == "Employee")
         {
+            foreach (var permission in user.permissions)
+            {
+                selected_permissions.Add(permission);
+            }
             foreach (var company in user.CompanyEmployees)
             {
                 selected_companies.Add(company.company_id);
@@ -158,20 +186,42 @@
                 if (Input.Role == "Driver")
                 {
                     UserService.SetCompanyDriver(new CompanyDrivers { company_id = company, driver_id = userId });
-                    var tobedeleted = companies.Where(m => !selected_companies.Contains(m.Id));
-                    foreach (var item in tobedeleted)
-                    {
-                        UserService.DeleteCompanyDriver(new CompanyDrivers { company_id = item.Id, driver_id = userId });
-                    }
                 }
                 else if (Input.Role == "Employee")
                 {
                     UserService.SetCompanyEmployees(new CompanyEmployees { company_id = company, employee_id = userId });
-                    var tobedeleted = companies.Where(m => !selected_companies.Contains(m.Id));
-                    foreach (var item in tobedeleted)
+                }
+            }
+            foreach (var permission in selected_permissions)
+            {
+                if (Input.Role == "Employee")
+                {
+                    if (!user.permissions.Contains(permission))
                     {
-                        UserService.DeleteCompanyEmployees(new CompanyEmployees { company_id = item.Id, employee_id = userId });
+                        user.permissions.Add(permission);
                     }
+                }
+            }
+            if (Input.Role == "Employee")
+            {
+                var tobedeleted = companies.Where(m => !selected_companies.Contains(m.Id));
+                foreach (var item in tobedeleted)
+                {
+                    UserService.DeleteCompanyEmployees(new CompanyEmployees { company_id = item.Id, employee_id = userId });
+                }
+
+                var tobedeletedpermissions = permissions.Where(m => !selected_permissions.Contains(m));
+                foreach (var item in tobedeletedpermissions)
+                {
+                    user.permissions.Remove(item);
+                }
+            }
+            else if (Input.Role == "Driver")
+            {
+                var tobedeleted = companies.Where(m => !selected_companies.Contains(m.Id));
+                foreach (var item in tobedeleted)
+                {
+                    UserService.DeleteCompanyDriver(new CompanyDrivers { company_id = item.Id, driver_id = userId });
                 }
             }
         }

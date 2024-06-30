@@ -2,7 +2,7 @@
 {
     public class CompanyManager
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string? manager_id { get; set; }
 

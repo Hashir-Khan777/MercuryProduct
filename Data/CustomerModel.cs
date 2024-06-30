@@ -71,5 +71,7 @@ namespace MecuryProduct.Data
         public List<CarModel>? cars { get; set; }
 
         public List<NoteModel>? notes { get; set; }
+
+        public List<InvoiceModel>? invoices { get; set; }
     }
 }

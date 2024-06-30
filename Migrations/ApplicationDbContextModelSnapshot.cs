@@ -286,23 +286,18 @@ namespace MecuryProduct.Migrations
 
             modelBuilder.Entity("MecuryProduct.Data.CompanyDrivers", b =>
                 {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+                    b.Property<string>("driver_id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("company_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("driver_id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("driver_id", "company_id");
 
                     b.HasIndex("company_id");
-
-                    b.HasIndex("driver_id");
 
                     b.ToTable("CompanyDrivers");
                 });
@@ -315,7 +310,7 @@ namespace MecuryProduct.Migrations
                     b.Property<int?>("company_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("employee_id", "company_id");
@@ -333,7 +328,7 @@ namespace MecuryProduct.Migrations
                     b.Property<int?>("company_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("manager_id", "company_id");
@@ -512,6 +507,46 @@ namespace MecuryProduct.Migrations
                     b.HasIndex("veh_id");
 
                     b.ToTable("Docs");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.InvoiceModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("company_id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("created_by_id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("customer_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("company_id");
+
+                    b.HasIndex("created_by_id");
+
+                    b.HasIndex("customer_id");
+
+                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.MasterProductionTable", b =>
@@ -6474,6 +6509,24 @@ namespace MecuryProduct.Migrations
                     b.ToTable("Notes");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.ProductInvoice", b =>
+                {
+                    b.Property<int?>("invoice_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("product_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("invoice_id", "product_id");
+
+                    b.HasIndex("product_id");
+
+                    b.ToTable("ProductInvoices");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.ProductModel", b =>
                 {
                     b.Property<int>("Id")
@@ -6740,12 +6793,14 @@ namespace MecuryProduct.Migrations
                     b.HasOne("MecuryProduct.Data.CompanyModel", "company")
                         .WithMany("CompanyDrivers")
                         .HasForeignKey("company_id")
-                        .OnDelete(DeleteBehavior.ClientNoAction);
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
 
                     b.HasOne("MecuryProduct.Data.ApplicationUser", "driver")
                         .WithMany("CompanyDrivers")
                         .HasForeignKey("driver_id")
-                        .OnDelete(DeleteBehavior.ClientNoAction);
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
 
                     b.Navigation("company");
 
@@ -6831,6 +6886,30 @@ namespace MecuryProduct.Migrations
                     b.Navigation("state_form");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.InvoiceModel", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.CompanyModel", "company")
+                        .WithMany("Invoices")
+                        .HasForeignKey("company_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.HasOne("MecuryProduct.Data.ApplicationUser", "created_by")
+                        .WithMany("invoices")
+                        .HasForeignKey("created_by_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.HasOne("MecuryProduct.Data.CustomerModel", "customer")
+                        .WithMany("invoices")
+                        .HasForeignKey("customer_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.Navigation("company");
+
+                    b.Navigation("created_by");
+
+                    b.Navigation("customer");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.NoteModel", b =>
                 {
                     b.HasOne("MecuryProduct.Data.CustomerModel", null)
@@ -6870,6 +6949,25 @@ namespace MecuryProduct.Migrations
                     b.Navigation("state_form");
 
                     b.Navigation("vehicle");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.ProductInvoice", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.InvoiceModel", "invoice")
+                        .WithMany("productInvoice")
+                        .HasForeignKey("invoice_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
+                    b.HasOne("MecuryProduct.Data.ProductModel", "product")
+                        .WithMany("productInvoice")
+                        .HasForeignKey("product_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
+                    b.Navigation("invoice");
+
+                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.ProductModel", b =>
@@ -6964,6 +7062,8 @@ namespace MecuryProduct.Migrations
 
                     b.Navigation("driver_cars");
 
+                    b.Navigation("invoices");
+
                     b.Navigation("logs");
 
                     b.Navigation("notes");
@@ -6990,6 +7090,8 @@ namespace MecuryProduct.Migrations
 
                     b.Navigation("Customers");
 
+                    b.Navigation("Invoices");
+
                     b.Navigation("Products");
 
                     b.Navigation("StateForms");
@@ -6999,6 +7101,8 @@ namespace MecuryProduct.Migrations
                 {
                     b.Navigation("cars");
 
+                    b.Navigation("invoices");
+
                     b.Navigation("notes");
                 });
 
@@ -7007,9 +7111,16 @@ namespace MecuryProduct.Migrations
                     b.Navigation("note");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.InvoiceModel", b =>
+                {
+                    b.Navigation("productInvoice");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.ProductModel", b =>
                 {
                     b.Navigation("images");
+
+                    b.Navigation("productInvoice");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.StateFormModel", b =>

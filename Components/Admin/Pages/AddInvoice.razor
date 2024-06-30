@@ -1,0 +1,61 @@
+﻿@page "/admin/addinvoice"
+
+<PageTitle>Add Invoice</PageTitle>
+
+<style>
+    .multi-upload .rz-fileupload-content {
+        display: none !important;
+    }
+</style>
+
+<a onclick="history.back();">
+    <RadzenButton Variant="Variant.Flat" Style="margin-bottom: 20px;">
+        <RadzenIcon Icon="arrow_back" />
+    </RadzenButton>
+</a>
+
+<h3>Add Invoice</h3>
+
+<RadzenTemplateForm TItem="InvoiceModel" Data=@invoice Submit="@CreateInvoice">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Quantity" Component="CompanyName" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="invoice.quantity" Name="CompanyName" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="CompanyName" Text="Quantity is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Price" Component="Price" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="invoice.price" Name="Price" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="Price" Text="Price is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Company" Component="DropDownBindValue"
+                         Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" Change="SetInSession" @bind-Value="@invoice.company_id" Data="@companies"
+                            Name="Company" Style="width: 100%" TextProperty="Name" ValueProperty="Id" />
+            <RadzenRequiredValidator Component="Company" Text="Company is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Customer" Component="DropDownBindValue"
+                         Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" Change="SetInSession" @bind-Value="@invoice.customer_id" Data="@customers"
+                            Name="Customer" Style="width: 100%" TextProperty="search" ValueProperty="Id" />
+            <RadzenRequiredValidator Component="Customer" Text="Customer is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Products" Component="DropDownBindValue"
+                         Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown Multiple FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" Change="SetInSession" @bind-Value="@selected_products" Data="@products"
+                            Name="Products" Style="width: 100%" TextProperty="product_name" ValueProperty="Id" />
+            <RadzenRequiredValidator Component="Products" Text="Products are required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit">Add Invoice</RadzenButton>
+</RadzenTemplateForm>

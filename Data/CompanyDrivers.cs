@@ -2,7 +2,7 @@
 {
     public class CompanyDrivers
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string? driver_id { get; set; }
 

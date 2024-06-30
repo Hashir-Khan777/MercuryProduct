@@ -46,6 +46,7 @@ builder.Services.AddScoped<HelperService>();
 builder.Services.AddScoped<CompanyService>();
 builder.Services.AddScoped<LogService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<InvoiceService>();
 builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 
 /* `builder.Services.AddHttpClient<ApiService>();` is registering the `ApiService` class with the
