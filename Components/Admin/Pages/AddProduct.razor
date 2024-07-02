@@ -24,10 +24,10 @@
             <RadzenRequiredValidator Component="CompanyName" Text="Product name is required" />
         </RadzenColumn>
         <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
-            <RadzenLabel Text="Select Department" Component="DropDownBindValue"
+            <RadzenLabel Text="Select Category" Component="DropDownBindValue"
                          Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
-            <RadzenDropDown Change="SetInSession" @bind-Value="@product.department_name" Data="@departments"
-                            Name="NumberType" Style="width: 100%" />
+            <RadzenDropDown Change="SetInSession" @bind-Value="@product.CategoryId" Data="@categories"
+                            Name="NumberType" TextProperty="Name" ValueProperty="Id" Style="width: 100%" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" />
             <RadzenRequiredValidator Component="NumberType" Text="Department is required" />
         </RadzenColumn>
     </RadzenRow>

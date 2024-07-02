@@ -1,4 +1,10 @@
-﻿@inject NavigationManager NavigationManager
+﻿@using MecuryProduct.Data
+@using MecuryProduct.Services
+@using System.Security.Claims
+
+@inject NavigationManager NavigationManager
+@inject UserService UserService
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <RadzenHeader>
     <RadzenStack JustifyContent="JustifyContent.SpaceBetween" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
@@ -44,30 +50,66 @@
         <RadzenLink Path="/employee/dashboard">
             <RadzenPanelMenuItem Text="Dashboard" class="rz-color-black" />
         </RadzenLink>
-        <RadzenLink Path="/employee/users" Match="NavLinkMatch.All">
-            <RadzenPanelMenuItem Text="Users" class="rz-color-black" />
-        </RadzenLink>
-        <RadzenLink Path="/employee/customers" Match="NavLinkMatch.All">
-            <RadzenPanelMenuItem Text="Customers" class="rz-color-black" />
-        </RadzenLink>
-        <RadzenLink Path="/employee/vehicles" Match="NavLinkMatch.All">
-            <RadzenPanelMenuItem Text="Vehicles" class="rz-color-black" />
-        </RadzenLink>
-        <RadzenLink Path="/employee/drivers" Match="NavLinkMatch.All">
-            <RadzenPanelMenuItem Text="Drivers" class="rz-color-black" />
-        </RadzenLink>
-        <RadzenLink Path="/employee/calendar" Match="NavLinkMatch.All">
-            <RadzenPanelMenuItem Text="Calendar" class="rz-color-black" />
-        </RadzenLink>
-        <RadzenLink Path="/employee/inventory" Match="NavLinkMatch.All">
-            <RadzenPanelMenuItem Text="Inventory" class="rz-color-black" />
-        </RadzenLink>
-        <RadzenLink Path="/employee/companies" Match="NavLinkMatch.All">
-            <RadzenPanelMenuItem Text="Companies" class="rz-color-black" />
-        </RadzenLink>
-        <RadzenLink Path="/employee/products" Match="NavLinkMatch.All">
-            <RadzenPanelMenuItem Text="Products" class="rz-color-black" />
-        </RadzenLink>
+        @if (current_user?.permissions?.Contains("User Module") ?? false)
+        {
+            <RadzenLink Path="/employee/users" Match="NavLinkMatch.All">
+                <RadzenPanelMenuItem Text="Users" class="rz-color-black" />
+            </RadzenLink>
+        }
+        @if (current_user?.permissions?.Contains("Customer Module") ?? false)
+        {
+            <RadzenLink Path="/employee/customers" Match="NavLinkMatch.All">
+                <RadzenPanelMenuItem Text="Customers" class="rz-color-black" />
+            </RadzenLink>
+        }
+        @if (current_user?.permissions?.Contains("Vehicle Module") ?? false)
+        {
+            <RadzenLink Path="/employee/vehicles" Match="NavLinkMatch.All">
+                <RadzenPanelMenuItem Text="Vehicles" class="rz-color-black" />
+            </RadzenLink>
+        }
+        @if (current_user?.permissions?.Contains("Driver Module") ?? false)
+        {
+            <RadzenLink Path="/employee/drivers" Match="NavLinkMatch.All">
+                <RadzenPanelMenuItem Text="Drivers" class="rz-color-black" />
+            </RadzenLink>
+        }
+        @if (current_user?.permissions?.Contains("Calendar Module") ?? false)
+        {
+            <RadzenLink Path="/employee/calendar" Match="NavLinkMatch.All">
+                <RadzenPanelMenuItem Text="Calendar" class="rz-color-black" />
+            </RadzenLink>
+        }
+        @if (current_user?.permissions?.Contains("Inventory Module") ?? false)
+        {
+            <RadzenLink Path="/employee/inventory" Match="NavLinkMatch.All">
+                <RadzenPanelMenuItem Text="Inventory" class="rz-color-black" />
+            </RadzenLink>
+        }
+        @if (current_user?.permissions?.Contains("Company Module") ?? false)
+        {
+            <RadzenLink Path="/employee/companies" Match="NavLinkMatch.All">
+                <RadzenPanelMenuItem Text="Companies" class="rz-color-black" />
+            </RadzenLink>
+        }
+        @if (current_user?.permissions?.Contains("Product Module") ?? false)
+        {
+            <RadzenLink Path="/employee/products" Match="NavLinkMatch.All">
+                <RadzenPanelMenuItem Text="Products" class="rz-color-black" />
+            </RadzenLink>
+        }
+        @if (current_user?.permissions?.Contains("Category Module") ?? false)
+        {
+            <RadzenLink Path="/employee/category" Match="NavLinkMatch.All">
+                <RadzenPanelMenuItem Text="Categories" class="rz-color-black" />
+            </RadzenLink>
+        }
+        @if (current_user?.permissions?.Contains("Cashier Module") ?? false)
+        {
+            <RadzenLink Path="/employee/pos" Match="NavLinkMatch.All">
+                <RadzenPanelMenuItem Text="POS" class="rz-color-black" />
+            </RadzenLink>
+        }
     </RadzenPanelMenu>
 </RadzenSidebar>
 
@@ -75,11 +117,29 @@
     bool sidebar1Expanded = true;
 
     private string currentUrl = "";
+    public ApplicationUser current_user = new ApplicationUser();
 
     protected override void OnInitialized()
     {
+        GetUser();
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    public async void GetUser()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                current_user = UserService.GetUserById(userId);
+            }
+        }
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)

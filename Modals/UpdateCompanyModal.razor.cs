@@ -13,6 +13,7 @@ namespace MecuryProduct.Modals
         public List<ApplicationUser> managers = new List<ApplicationUser>();
         public List<string> selected_managers = new List<string>();
         public string user_role = string.Empty;
+        public string user_id = string.Empty;
 
         [Inject]
         private CompanyService CompanyService { get; set; }
@@ -23,6 +24,7 @@ namespace MecuryProduct.Modals
 
         protected override async void OnInitialized()
         {
+            SetUserId();
             GetManagers();
             GetCompanyById();
         }
@@ -53,7 +55,14 @@ namespace MecuryProduct.Modals
 
         public void GetManagers()
         {
-            managers = UserService.GetUsersByClaim("Role", "Manager");
+            if (user_role == "Manager")
+            {
+                managers = UserService.GetUsersByClaimByManagerId("Role", "Manager", user_id);
+            }
+            else
+            {
+                managers = UserService.GetUsersByClaim("Role", "Manager");
+            }
         }
 
         public async void SetUserId()
@@ -69,10 +78,7 @@ namespace MecuryProduct.Modals
                 {
                     var role = UserService.GetUserClaimByUserId(userId);
                     user_role = role;
-                    //if (role == "Manager")
-                    //{
-                    //    company.ManagerId = userId;
-                    //}
+                    user_id = userId;
                 }
             }
         }

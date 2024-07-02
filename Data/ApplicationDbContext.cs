@@ -24,6 +24,7 @@ namespace MecuryProduct.Data
         public DbSet<MasterYearTable> MasterYearTable { get; set; }
         public DbSet<CompanyModel> Companies { get; set; }
         public DbSet<ProductModel> Products { get; set; }
+        public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<InvoiceModel> Invoices { get; set; }
         public DbSet<AuditLogModel> Logs { get; set; }
         public DbSet<CompanyManager> CompanyManagers { get; set; }
@@ -165,6 +166,12 @@ namespace MecuryProduct.Data
                 .HasOne(c => c.created_by)
                 .WithMany(m => m.products)
                 .HasForeignKey(d => d.created_by_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<ProductModel>()
+                .HasOne(c => c.category)
+                .WithMany(m => m.Proucts)
+                .HasForeignKey(d => d.CategoryId)
                 .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.Entity<InvoiceModel>()

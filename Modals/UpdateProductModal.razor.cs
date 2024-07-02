@@ -12,13 +12,7 @@ namespace MecuryProduct.Modals
 
         public ProductModel product = new ProductModel();
         public string user_role = string.Empty;
-        public List<string> departments = new List<string>
-        {
-            "Department 1",
-            "Department 2",
-            "Department 3",
-            "Department 4",
-        };
+        public List<CategoryModel> categories = new List<CategoryModel>();
         public List<string> grades = new List<string>
         {
             "A",
@@ -30,11 +24,11 @@ namespace MecuryProduct.Modals
         public List<DocModel> productImages = new List<DocModel>();
 
         [Inject]
-        private SessionService SessionService { get; set; }
-        [Inject]
         private CompanyService CompanyService { get; set; }
         [Inject]
         private DocService DocService { get; set; }
+        [Inject]
+        private CategoryService CategoryService { get; set; }
         [Inject]
         private ProductService ProductService { get; set; }
         [Inject]
@@ -46,6 +40,7 @@ namespace MecuryProduct.Modals
         {
             product = ProductService.GetProductById(ProductId);
             productImages = product.images;
+            categories = CategoryService.GetCategories();
             GetCompanyByUserId();
         }
 

@@ -38,7 +38,10 @@
             <div class="form-floating mb-3">
                 <InputSelect @bind-Value="Input.Role" TValue="string" class="form-control" aria-required="true">
                     <option value="">Select Role</option>
-                    <option value="Manager">Manager</option>
+                    @if (current_user_role != "Employee")
+                    {
+                        <option value="Manager">Manager</option>
+                    }
                     <option value="Employee">Employee</option>
                     <option value="Driver">Driver</option>
                 </InputSelect>
@@ -86,10 +89,8 @@
         "Driver Module",
         "Calendar & Map Module",
         "Inventory Module",
-        "state Form Module",
-        "Production Module",
-        "Company Module",
         "Product Module",
+        "Category Module",
         "Cashier Module"
     };
     public List<string> selected_permissions = new List<string>();
@@ -102,6 +103,8 @@
 
     [SupplyParameterFromForm(FormName = "change-email")]
     private InputModel Input { get; set; } = new();
+
+    public string current_user_role = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -154,6 +157,7 @@
             if (userId is not null)
             {
                 var role = UserService.GetUserClaimByUserId(userId);
+                current_user_role = role;
 
                 if (role == "Manager")
                 {

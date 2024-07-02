@@ -62,7 +62,9 @@
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Action">
             <Template Context="item">
-                @if (user_id != item.Id)
+                @if (GetUserClaim(item.Id) != "Manager")
+                {
+                    @if (user_id != item.Id)
                 {
                     <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateUserModal(item.Id)">
                         <RadzenIcon Icon="edit" Style="font-size: 20px" />
@@ -84,6 +86,7 @@
                             <RadzenIcon Icon="login" Style="font-size: 20px" />
                         </RadzenButton>
                     </form>
+                }
                 }
             </Template>
         </RadzenDataGridColumn>

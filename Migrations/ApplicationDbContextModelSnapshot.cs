@@ -284,6 +284,29 @@ namespace MecuryProduct.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.CategoryModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.CompanyDrivers", b =>
                 {
                     b.Property<string>("driver_id")
@@ -6535,6 +6558,9 @@ namespace MecuryProduct.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("company_id")
                         .HasColumnType("int");
 
@@ -6555,10 +6581,6 @@ namespace MecuryProduct.Migrations
 
                     b.Property<int>("custom_price_4")
                         .HasColumnType("int");
-
-                    b.Property<string>("department_name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("product_description")
                         .IsRequired()
@@ -6582,6 +6604,8 @@ namespace MecuryProduct.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("company_id");
 
@@ -6972,6 +6996,11 @@ namespace MecuryProduct.Migrations
 
             modelBuilder.Entity("MecuryProduct.Data.ProductModel", b =>
                 {
+                    b.HasOne("MecuryProduct.Data.CategoryModel", "category")
+                        .WithMany("Proucts")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
                     b.HasOne("MecuryProduct.Data.CompanyModel", "company")
                         .WithMany("Products")
                         .HasForeignKey("company_id")
@@ -6981,6 +7010,8 @@ namespace MecuryProduct.Migrations
                         .WithMany("products")
                         .HasForeignKey("created_by_id")
                         .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.Navigation("category");
 
                     b.Navigation("company");
 
@@ -7076,6 +7107,11 @@ namespace MecuryProduct.Migrations
                     b.Navigation("docs");
 
                     b.Navigation("notes");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.CategoryModel", b =>
+                {
+                    b.Navigation("Proucts");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.CompanyModel", b =>

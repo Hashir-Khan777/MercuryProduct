@@ -55,6 +55,7 @@
             <div class="form-floating mb-3">
                 <InputSelect @bind-Value="Input.Role" TValue="string" class="form-control" aria-required="true">
                     <option value="">Select Role</option>
+                    <option value="Manager">Manager</option>
                     <option value="Employee">Employee</option>
                     <option value="Driver">Driver</option>
                 </InputSelect>
@@ -68,6 +69,16 @@
                 <label for="role">Company<span style="color: red;">*</span></label>
                 <ValidationMessage For="() => Input.CompanyId" class="text-danger" />
             </div>
+            @if (Input.Role == "Employee")
+            {
+                <div class="form-floating mb-3">
+                    <RadzenDropDown Multiple class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                    FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@selected_permissions"
+                                    Data="@permissions" Style="width: 100%;" Name="Model" />
+                    <label for="role">Permissions<span style="color: red;">*</span></label>
+                    <ValidationMessage For="() => selected_permissions" class="text-danger" />
+                </div>
+            }
             <button type="submit" class="w-100 btn btn-lg btn-primary">Add User</button>
         </EditForm>
     </div>
@@ -84,6 +95,19 @@
 
     public List<CompanyModel> companies = new List<CompanyModel>();
     public List<int> selected_companies = new List<int>();
+    public List<string> permissions = new List<string>
+    {
+        "User Module",
+        "Customer Module",
+        "Vehicle Module",
+        "Driver Module",
+        "Calendar & Map Module",
+        "Inventory Module",
+        "Product Module",
+        "Category Module",
+        "Cashier Module"
+    };
+    public List<string> selected_permissions = new List<string>();
 
     private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
 
@@ -162,6 +186,17 @@
                 }
             }
         }
+        else
+        {
+            foreach (var company in selected_companies)
+            {
+                if (Input.Role == "Manager")
+                {
+                    UserService.SetCompanyManager(new CompanyManager { company_id = company, manager_id = userId });
+                }
+            }
+        }
+        user.permissions = selected_permissions;
         UserService.UpdateUser(user);
 
         NavigationManager.NavigateTo("/manager/users");

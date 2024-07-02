@@ -11,13 +11,7 @@ namespace MecuryProduct.Components.Employee.Pages
     {
         /// Create a new instance of ProductModel and its sub - models. This is used to determine which fields are affected
         public ProductModel product = new ProductModel();
-        public List<string> departments = new List<string>
-        {
-            "Department 1",
-            "Department 2",
-            "Department 3",
-            "Department 4",
-        };
+        public List<CategoryModel> categories = new List<CategoryModel>();
         public List<string> grades = new List<string>
         {
             "A",
@@ -36,6 +30,8 @@ namespace MecuryProduct.Components.Employee.Pages
         [Inject]
         private DocService DocService { get; set; }
         [Inject]
+        private CategoryService CategoryService { get; set; }
+        [Inject]
         private ProductService ProductService { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
@@ -46,6 +42,7 @@ namespace MecuryProduct.Components.Employee.Pages
         protected override async void OnInitialized()
         {
             var result = await SessionService.Get<ProductModel>("product_form");
+            categories = CategoryService.GetCategories();
 
             SetUserId();
 

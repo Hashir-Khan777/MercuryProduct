@@ -7,8 +7,6 @@ namespace MecuryProduct.Data
     {
         public int Id { get; set; }
 
-        public string department_name { get; set; } = string.Empty;
-
         public string? created_by_id { get; set; } = string.Empty;
 
         public int? company_id { get; set; }
@@ -31,6 +29,8 @@ namespace MecuryProduct.Data
 
         public string product_grade { get; set; } = string.Empty;
 
+        public int? CategoryId { get; set; }
+
         public List<DocModel>? images { get; set; }
 
         [Required]
@@ -40,6 +40,8 @@ namespace MecuryProduct.Data
         public DateTime updated_at { get; set; }
 
         public ApplicationUser? created_by { get; set; }
+
+        public CategoryModel? category { get; set; }
 
         public CompanyModel? company { get; set; }
 

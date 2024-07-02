@@ -18,7 +18,7 @@
         <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
             <RadzenLabel Text="Select Department" Component="DropDownBindValue"
                          Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
-            <RadzenDropDown  @bind-Value="@product.department_name" Data="@departments"
+            <RadzenDropDown  @bind-Value="@product.CategoryId" Data="@categories"
                             Name="NumberType" Style="width: 100%" />
             <RadzenRequiredValidator Component="NumberType" Text="Department is required" />
         </RadzenColumn>

@@ -60,6 +60,44 @@ namespace MecuryProduct.Services
             }
         }
 
+        public void SetCompanyManager(CompanyManager CompanyManager)
+        {
+            try
+            {
+                var alreadyExists = db.CompanyManagers.Any(x => x.company_id == CompanyManager.company_id && x.manager_id == CompanyManager.manager_id);
+                if (!alreadyExists)
+                {
+                    db.CompanyManagers.Add(CompanyManager);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+            }
+        }
+
+        public void DeleteCompanyManager(CompanyManager CompanyManager)
+        {
+            try
+            {
+                var alreadyExists = db.CompanyManagers.Where(x => x.company_id == CompanyManager.company_id && x.manager_id == CompanyManager.manager_id);
+                if (alreadyExists is not null)
+                {
+                    db.CompanyManagers.Remove(CompanyManager);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+            }
+        }
+
         public void SetCompanyEmployees(CompanyEmployees CompanyEmployees)
         {
             try
