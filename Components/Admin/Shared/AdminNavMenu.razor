@@ -1,4 +1,7 @@
-﻿@inject NavigationManager NavigationManager
+﻿@using MecuryProduct.Modals
+
+@inject NavigationManager NavigationManager
+@inject DialogService DialogService
 
 <RadzenHeader>
     <RadzenStack JustifyContent="JustifyContent.SpaceBetween" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
@@ -9,10 +12,13 @@
         <AuthorizeView>
             <Authorized>
                 <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
-                    <div class="nav-item px-3">
+                    <div style="display: flex;" class="nav-item px-3 align-items-center justify-content-center">
                         <NavLink class="nav-link" href="help">
                             <RadzenIcon Icon="help" />
                         </NavLink>
+                        <RadzenButton Variant="Variant.Text" Click="OpenCartModal">
+                            <RadzenIcon Icon="shopping_cart" IconColor="#ffffff" Style="font-size: 20px;" />
+                        </RadzenButton>
                     </div>
                     <div class="nav-item px-3">
                         <NavLink class="nav-link" href="Account/Manage">
@@ -75,7 +81,7 @@
             <RadzenPanelMenuItem Text="POS" class="rz-color-black" />
         </RadzenLink>
         @* May be use later *@
-@*         <RadzenLink Path="/admin/invoices" Match="NavLinkMatch.All">
+     @* <RadzenLink Path="/admin/invoices" Match="NavLinkMatch.All">
             <RadzenPanelMenuItem Text="Invoices" class="rz-color-black" />
         </RadzenLink> *@
         <RadzenLink Path="/admin/logs" Match="NavLinkMatch.All">
@@ -109,6 +115,15 @@
     public void Dispose()
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+    public async void OpenCartModal()
+    {
+        await DialogService.OpenAsync<CartModal>("Cart",
+            new Dictionary<string, object>() {  },
+            new DialogOptions() { Width = "600px", Height = "100%", Left = "0", CloseDialogOnOverlayClick = true, Resizable = true, Draggable = true }
+        );
+        StateHasChanged();
     }
 
     private sealed class Route

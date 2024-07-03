@@ -21,7 +21,22 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Products.Include("created_by").Include("images").ToList();
+                return db.Products.Include(c => c.created_by).Include(c => c.category).Include(c => c.images).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<ProductModel>? FilterProducts(string search)
+        {
+            try
+            {
+                return db.Products.Where(x => x.product_name.ToLower().Contains(search) || x.category.Name.ToLower().Contains(search) || x.product_description.ToLower().Contains(search)).Include(c => c.created_by).Include(c => c.category).Include(c => c.images).ToList();
             }
             catch (Exception ex)
             {
@@ -36,7 +51,7 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Products.Include(c => c.company).ThenInclude(c => c.CompanyManagers).Where(p => p.company.CompanyManagers.Any(x => x.manager_id == ManagerId)).Include("created_by").Include("images").ToList();
+                return db.Products.Include(c => c.company).ThenInclude(c => c.CompanyManagers).Where(p => p.company.CompanyManagers.Any(x => x.manager_id == ManagerId)).Include(c => c.created_by).Include(c => c.category).Include(c => c.images).ToList();
             }
             catch (Exception ex)
             {
@@ -51,7 +66,7 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Products.Include(c => c.company).ThenInclude(c => c.CompanyManagers).Where(p => p.company.CompanyEmployees.Any(x => x.employee_id == EmployeeId)).Include("created_by").Include("images").ToList();
+                return db.Products.Include(c => c.company).ThenInclude(c => c.CompanyManagers).Where(p => p.company.CompanyEmployees.Any(x => x.employee_id == EmployeeId)).Include(c => c.created_by).Include(c => c.category).Include(c => c.images).ToList();
             }
             catch (Exception ex)
             {

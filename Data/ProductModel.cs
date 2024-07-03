@@ -13,6 +13,8 @@ namespace MecuryProduct.Data
 
         public int quantity { get; set; }
 
+        public int incartquantity { get; set; } = 0;
+
         public string product_name { get; set; } = string.Empty;
 
         public string product_description { get; set; } = string.Empty;

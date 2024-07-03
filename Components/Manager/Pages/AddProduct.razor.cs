@@ -78,6 +78,7 @@ namespace MecuryProduct.Components.Manager.Pages
                 productImages = new List<DocModel>();
             }
             await SessionService.Clear("product_form");
+            await SessionService.Clear("product_images");
             NavigationManager.NavigateTo("/manager/products");
         }
 

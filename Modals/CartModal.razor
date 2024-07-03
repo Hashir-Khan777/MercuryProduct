@@ -1,0 +1,32 @@
+﻿@page "/admin/cart"
+
+@if (products is not null && products.Count() > 0)
+{
+    <RadzenRow AlignItems="AlignItems.Start" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-py-sm-4">
+        @foreach (var product in products)
+        {
+            <RadzenColumn>
+                <RadzenCard Style="margin: 5px 0;" Class="rz-mx-auto">
+                    <RadzenStack Orientation="Orientation.Horizontal">
+                        <RadzenImage Path="@product?.images[0].short_path" Style="width: 200px; height: 200px; object-fit: cover;" />
+                        <RadzenStack>
+                            <RadzenText Style="margin: 10px 0; font-size: 20px; font-weight: bold;">@product.product_name</RadzenText>
+                            <RadzenText>Rs. @product.regular_price</RadzenText>
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center">
+                                <RadzenButton Click="() => ChangeQuantity(product.Id, true)">-</RadzenButton>
+                                <RadzenText>@(product.incartquantity + 1)</RadzenText>
+                            <RadzenButton Click="() => ChangeQuantity(product.Id, false)">+</RadzenButton>
+                            </RadzenStack>
+                        </RadzenStack>
+                        <RadzenStack Style="flex: 1" AlignItems="AlignItems.End" JustifyContent="JustifyContent.Start">
+                            <RadzenButton Click="() => RemoveFromCart(product)" Variant="Variant.Text">
+                                <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                            </RadzenButton>
+                        </RadzenStack>
+                    </RadzenStack>
+                </RadzenCard>
+            </RadzenColumn>
+        }
+        <RadzenButton>Proceed To Checkout</RadzenButton>
+    </RadzenRow>
+}

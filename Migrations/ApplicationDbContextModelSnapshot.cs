@@ -6582,6 +6582,9 @@ namespace MecuryProduct.Migrations
                     b.Property<int>("custom_price_4")
                         .HasColumnType("int");
 
+                    b.Property<int>("incartquantity")
+                        .HasColumnType("int");
+
                     b.Property<string>("product_description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
