@@ -1,12 +1,102 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\Zini Tecnologies Projects\\MecuryProduct\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\components\\admin\\pages\\pos.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:components\\admin\\pages\\pos.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\components\\admin\\pages\\pos.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:components\\admin\\pages\\pos.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\components\\admin\\pages\\products.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:components\\admin\\pages\\products.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\components\\admin\\pages\\products.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:components\\admin\\pages\\products.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|e:\\zini tecnologies projects\\mecuryproduct\\services\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{85A1571C-8BDF-40E6-8359-26654E4BDDC9}|MecuryProduct.csproj|solutionrelative:services\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Products.razor.cs",
+              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\Products.razor.cs",
+              "RelativeDocumentMoniker": "Components\\Admin\\Pages\\Products.razor.cs",
+              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\Products.razor.cs",
+              "RelativeToolTip": "Components\\Admin\\Pages\\Products.razor.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAwwBoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-24T10:38:16.509Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Products.razor",
+              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\Products.razor",
+              "RelativeDocumentMoniker": "Components\\Admin\\Pages\\Products.razor",
+              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\Products.razor",
+              "RelativeToolTip": "Components\\Admin\\Pages\\Products.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-24T10:38:06.93Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "POS.razor",
+              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\POS.razor",
+              "RelativeDocumentMoniker": "Components\\Admin\\Pages\\POS.razor",
+              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\POS.razor",
+              "RelativeToolTip": "Components\\Admin\\Pages\\POS.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-24T10:22:41.458Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "POS.razor.cs",
+              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\POS.razor.cs",
+              "RelativeDocumentMoniker": "Components\\Admin\\Pages\\POS.razor.cs",
+              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Components\\Admin\\Pages\\POS.razor.cs",
+              "RelativeToolTip": "Components\\Admin\\Pages\\POS.razor.cs",
+              "ViewState": "AQIAABQAAAAwAAAAAAAwwAwAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-24T10:22:39.242Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProductService.cs",
+              "DocumentMoniker": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Services\\ProductService.cs",
+              "RelativeDocumentMoniker": "Services\\ProductService.cs",
+              "ToolTip": "E:\\Zini Tecnologies Projects\\MecuryProduct\\Services\\ProductService.cs",
+              "RelativeToolTip": "Services\\ProductService.cs",
+              "ViewState": "AQIAACQAAAAAQDMzMzPTvyYAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-24T10:23:09.065Z"
+            }
+          ]
+        },
         {
           "DockedHeight": 200,
           "SelectedChildIndex": -1,

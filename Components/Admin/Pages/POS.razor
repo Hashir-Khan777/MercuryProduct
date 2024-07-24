@@ -2,9 +2,18 @@
 
 <PageTitle>POS</PageTitle>
 
-<RadzenFormField Text="Search Products" Style="width: 100%;">
-    <RadzenTextBox Style="width: 100%;" Change="FilterProducts" />
-</RadzenFormField>
+<RadzenStack Orientation="Orientation.Horizontal" Gap="10px">
+    <RadzenFormField Text="Search Products" Style="width: 100%;" Variant="Variant.Outlined">
+        <Start>
+            <RadzenIcon Icon="search" />
+        </Start>
+        <ChildContent>
+            <RadzenTextBox Style="width: 100%;" @bind-Value="search" />
+        </ChildContent>
+    </RadzenFormField>
+    <RadzenButton Click="FilterProducts">Search</RadzenButton>
+</RadzenStack>
+
 @if (products.Count() > 0)
 {
     <RadzenRow AlignItems="AlignItems.Start" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-py-sm-4">
@@ -22,4 +31,7 @@
             </RadzenColumn>
         }
     </RadzenRow>
+    <RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Style="width: 100%;">
+        <RadzenButton Click="LoadMore">Load More</RadzenButton>
+    </RadzenStack>
 }

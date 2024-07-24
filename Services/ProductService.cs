@@ -32,6 +32,21 @@ namespace MecuryProduct.Services
             }
         }
 
+        public List<ProductModel>? GetProductsPagination(int page)
+        {
+            try
+            {
+                return db.Products.Take(page * 30).Include(c => c.created_by).Include(c => c.category).Include(c => c.images).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
         public List<ProductModel>? FilterProducts(string search)
         {
             try

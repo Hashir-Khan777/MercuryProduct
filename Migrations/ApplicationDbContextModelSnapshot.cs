@@ -6532,6 +6532,50 @@ namespace MecuryProduct.Migrations
                     b.ToTable("Notes");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.PaymentModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("changeAmount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("customerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("discount")
+                        .HasColumnType("int");
+
+                    b.Property<double>("itemsAmount")
+                        .HasColumnType("float");
+
+                    b.Property<int>("paidAmount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("paymentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("products")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("taxAmount")
+                        .HasColumnType("int");
+
+                    b.Property<double>("totalAmount")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("customerId");
+
+                    b.ToTable("Payments");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.ProductInvoice", b =>
                 {
                     b.Property<int?>("invoice_id")
@@ -6570,16 +6614,19 @@ namespace MecuryProduct.Migrations
                     b.Property<string>("created_by_id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("custom_price_1")
-                        .HasColumnType("int");
+                    b.Property<double>("custom_price_1")
+                        .HasColumnType("float");
 
-                    b.Property<int>("custom_price_2")
-                        .HasColumnType("int");
+                    b.Property<double>("custom_price_2")
+                        .HasColumnType("float");
 
-                    b.Property<int>("custom_price_3")
-                        .HasColumnType("int");
+                    b.Property<double>("custom_price_3")
+                        .HasColumnType("float");
 
-                    b.Property<int>("custom_price_4")
+                    b.Property<double>("custom_price_4")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("discount")
                         .HasColumnType("int");
 
                     b.Property<int>("incartquantity")
@@ -6600,11 +6647,14 @@ namespace MecuryProduct.Migrations
                     b.Property<int>("quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("regular_price")
-                        .HasColumnType("int");
+                    b.Property<double>("regular_price")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("updated_at")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("vat")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -6978,6 +7028,16 @@ namespace MecuryProduct.Migrations
                     b.Navigation("vehicle");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.PaymentModel", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.CustomerModel", "customer")
+                        .WithMany("payments")
+                        .HasForeignKey("customerId")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.Navigation("customer");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.ProductInvoice", b =>
                 {
                     b.HasOne("MecuryProduct.Data.InvoiceModel", "invoice")
@@ -7143,6 +7203,8 @@ namespace MecuryProduct.Migrations
                     b.Navigation("invoices");
 
                     b.Navigation("notes");
+
+                    b.Navigation("payments");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.DocModel", b =>

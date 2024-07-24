@@ -1,0 +1,103 @@
+﻿@page "/admin/payment"
+
+@inject Radzen.DialogService dialogService
+
+<RadzenTemplateForm TItem="PaymentModel" Data=@payment Submit="@AddPayment">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+            <RadzenDataGrid Data="@products"
+                            AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                            AllowSorting="true">
+                <Columns>
+                    <RadzenDataGridColumn Title="Id">
+                        <Template Context="item">
+                            M-PROD-@item.Id
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Property="product_name" Title="Name" />
+                    <RadzenDataGridColumn Property="regular_price" Title="Unit Price" />
+                    <RadzenDataGridColumn Title="Quantity">
+                        <Template Context="item">
+                            <RadzenNumeric Change="UpdatePyment" TValue="int" Min="1" Max="item.quantity" @bind-Value="item.incartquantity" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="VAT">
+                        <Template Context="item">
+                            <RadzenNumeric Change="UpdatePyment" TValue="int" Min="1" @bind-Value="item.vat" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Discount (%)">
+                        <Template Context="item">
+                            <RadzenNumeric Change="UpdatePyment" TValue="int?" @bind-Value="item.discount" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Total">
+                        <Template Context="item">
+                            <RadzenText>@(((item.regular_price * item.incartquantity) + item.vat) - (((item.regular_price * item.incartquantity) + item.vat) / 100 * item.discount))</RadzenText>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Customer" Component="Model" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@payment.customerId"
+                            Data="@customers" TextProperty="search" ValueProperty="Id" Style="width: 100%;" Name="Model" />
+            <RadzenRequiredValidator Component="Model" Text="Customer is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Payment Type" Component="Type" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@payment.paymentType"
+                            Data="@payment_types" Style="width: 100%;" Name="Type" />
+            <RadzenRequiredValidator Component="Type" Text="Payment Type is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Paid Amount" Component="PaidAmouunt" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenNumeric Change="UpdatePyment" TValue="int" Style="width: 100%;" @bind-Value="payment.paidAmount" Name="PaidAmouunt" />
+            <RadzenRequiredValidator Component="PaidAmouunt" Text="Paid Amount is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Change Amount" Component="ChangeAmouunt" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenNumeric Change="UpdatePyment" TValue="int" Style="width: 100%;" @bind-Value="payment.changeAmount" Name="ChangeAmouunt" />
+            <RadzenRequiredValidator Component="ChangeAmouunt" Text="Change Amount is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.End" JustifyContent="JustifyContent.End">
+        <div>
+            <RadzenText Style="font-size: 18px; font-weight: bold;">Summary</RadzenText>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Items Amount:</RadzenText>
+                <RadzenText>Rs. @itemsAmount</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Tax Amount:</RadzenText>
+                <RadzenText>Rs. @taxAmount</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Discount (%):</RadzenText>
+                <RadzenText>@(discountAmount)%</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Total Amount:</RadzenText>
+                <RadzenText>Rs. @totalAmount</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Paid Amount:</RadzenText>
+                <RadzenText>Rs. @payment.paidAmount</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Change Amount:</RadzenText>
+                <RadzenText>Rs. @payment.changeAmount</RadzenText>
+            </RadzenStack>
+        </div>
+    </RadzenStack>
+    <RadzenStack Style="margin-top: 10px;" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End">
+        <RadzenButton ButtonType="ButtonType.Submit">Save</RadzenButton>
+    </RadzenStack>
+</RadzenTemplateForm>

@@ -10,6 +10,8 @@ namespace MecuryProduct.Modals
     public partial class CartModal
     {
         public List<ProductModel> products = new List<ProductModel>();
+        public double subTotal = 0;
+        public double grandTotal = 0;
 
         [Inject]
         public SessionService SessionService { get; set; }
@@ -23,30 +25,62 @@ namespace MecuryProduct.Modals
             base.OnInitialized();
 
             products = await SessionService.Get<List<ProductModel>>("cart");
+
+            if (products is not null && products.Count() > 0)
+            {
+                foreach (var product in products)
+                {
+                    subTotal += product.incartquantity * product.regular_price;
+                    grandTotal += (product.incartquantity * product.regular_price) + product.vat;
+                }
+            }
         }
 
-        public void ChangeQuantity(int prodId, bool decriment)
+        public async void UpdateCart()
         {
-            if (decriment)
+            var options = new JsonSerializerOptions
             {
-                if ((products.Find(x => x.Id == prodId).incartquantity + 1) > 1)
-                {
-                    products.Find(x => x.Id == prodId).incartquantity -= 1;
-                    ProductService.UpdateProduct(products.Find(x => x.Id == prodId));
-                    ProductModel product = products.Find(x => x.Id == prodId);
-                    ProductService.UpdateProduct(product);
-                }
-            }
-            else
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+            await SessionService.Set("cart", JsonSerializer.Serialize(products, options));
+
+            products = await SessionService.Get<List<ProductModel>>("cart");
+            subTotal = 0;
+            grandTotal = 0;
+
+            foreach (var product in products)
             {
-                var cart_product = products.Find(x => x.Id == prodId);
-                if ((cart_product.incartquantity + 1) < cart_product.quantity)
-                {
-                    products.Find(x => x.Id == prodId).incartquantity += 1;
-                    ProductModel product = products.Find(x => x.Id == prodId);
-                    ProductService.UpdateProduct(product);
-                }
+                subTotal += product.incartquantity * product.regular_price;
+                grandTotal += (product.incartquantity * product.regular_price) + product.vat;
             }
+
+            StateHasChanged();
+        }
+
+        public async void clearCart()
+        {
+            await SessionService.Clear("cart");
+            StateHasChanged();
+            dialogService.Close();
+        }
+
+        public async void checkout()
+        {
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+            List<PaymentProductModel> paymnent_products = new List<PaymentProductModel>();
+            var cart_products = await SessionService.Get<List<ProductModel>>("cart");
+            await SessionService.Set("payment", JsonSerializer.Serialize(cart_products, options));
+            clearCart();
+            await DialogService.OpenAsync<PaymentModal>("Add Payment",
+                new Dictionary<string, object>() {},
+                new DialogOptions() { Width = "70%", Height = "90%", Resizable = true, Draggable = true }
+            );
+            StateHasChanged();
         }
 
         public async void RemoveFromCart(ProductModel product)

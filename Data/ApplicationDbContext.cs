@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -27,6 +26,7 @@ namespace MecuryProduct.Data
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<InvoiceModel> Invoices { get; set; }
         public DbSet<AuditLogModel> Logs { get; set; }
+        public DbSet<PaymentModel> Payments { get; set; }
         public DbSet<CompanyManager> CompanyManagers { get; set; }
         public DbSet<CompanyEmployees> CompanyEmployees { get; set; }
         public DbSet<CompanyDrivers> CompanyDrivers { get; set; }
@@ -284,6 +284,12 @@ namespace MecuryProduct.Data
                 .HasOne(c => c.user)
                 .WithMany(e => e.logs)
                 .HasForeignKey(e => e.user_id)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<PaymentModel>()
+                .HasOne(c => c.customer)
+                .WithMany(e => e.payments)
+                .HasForeignKey(e => e.customerId)
                 .OnDelete(DeleteBehavior.ClientNoAction);
 
             /* The code below is using Entity Framework Core to seed data into database tables named "MasterProductionTable", "MasterVehicleTable" and "MasterYearTable", It is adding multiple rows of data with different columns. Each row represents a record in the database table with the specified properties. This seeding process is typically done to populate the database with initial data when the application is first run or when the database is created. */

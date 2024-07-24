@@ -1,5 +1,7 @@
 ﻿@page "/admin/cart"
 
+@inject Radzen.DialogService dialogService
+
 @if (products is not null && products.Count() > 0)
 {
     <RadzenRow AlignItems="AlignItems.Start" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-py-sm-4">
@@ -12,10 +14,13 @@
                         <RadzenStack>
                             <RadzenText Style="margin: 10px 0; font-size: 20px; font-weight: bold;">@product.product_name</RadzenText>
                             <RadzenText>Rs. @product.regular_price</RadzenText>
-                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center">
-                                <RadzenButton Click="() => ChangeQuantity(product.Id, true)">-</RadzenButton>
-                                <RadzenText>@(product.incartquantity + 1)</RadzenText>
-                            <RadzenButton Click="() => ChangeQuantity(product.Id, false)">+</RadzenButton>
+                            <RadzenStack Orientation="Orientation.Horizontal">
+                                <RadzenLabel>Quantity</RadzenLabel>
+                                <RadzenNumeric Min="1" Max="product.quantity" TValue="int" @bind-Value="product.incartquantity" Change="UpdateCart" />
+                            </RadzenStack>
+                            <RadzenStack Orientation="Orientation.Horizontal">
+                                <RadzenLabel>Vat</RadzenLabel>
+                                <RadzenNumeric Min="1" TValue="int" @bind-Value="product.vat" Change="UpdateCart" />
                             </RadzenStack>
                         </RadzenStack>
                         <RadzenStack Style="flex: 1" AlignItems="AlignItems.End" JustifyContent="JustifyContent.Start">
@@ -27,6 +32,19 @@
                 </RadzenCard>
             </RadzenColumn>
         }
-        <RadzenButton>Proceed To Checkout</RadzenButton>
+        <RadzenStack Style="width: 100%;" Orientation="Orientation.Vertical" JustifyContent="JustifyContent.End" AlignItems="AlignItems.Center">
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText>Sub total: </RadzenText>
+                <RadzenText>Rs. @subTotal</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText>Grand total: </RadzenText>
+                <RadzenText>Rs. @grandTotal</RadzenText>
+            </RadzenStack>
+        </RadzenStack>
+        <RadzenStack Style="width: 100%;" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center">
+            <RadzenButton Click="clearCart">Clear Cart</RadzenButton>
+            <RadzenButton Click="checkout">Proceed To Checkout</RadzenButton>
+        </RadzenStack>
     </RadzenRow>
 }

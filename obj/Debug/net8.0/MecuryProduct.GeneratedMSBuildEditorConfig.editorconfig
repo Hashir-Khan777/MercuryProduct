@@ -246,6 +246,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xNYXAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Payments.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xQYXltZW50cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/POS.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xQT1MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -508,6 +512,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/Zini Tecnologies Projects/MecuryProduct/Modals/ImageModal.razor]
 build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXEltYWdlTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/PaymentModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFBheW1lbnRNb2RhbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Zini Tecnologies Projects/MecuryProduct/Modals/ShowCustomerVehiclesModal.razor]

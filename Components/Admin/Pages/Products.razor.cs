@@ -10,6 +10,7 @@ namespace MecuryProduct.Components.Admin.Pages
     {
         /// Sets the class variables to a new instance of the class. This is used to create the list
         public List<ProductModel> products = new List<ProductModel>();
+        int page = 1;
 
         [Inject]
         public ProductService ProductService { get; set; }
@@ -21,7 +22,14 @@ namespace MecuryProduct.Components.Admin.Pages
         {
             base.OnInitialized();
 
-            products = ProductService.GetProducts();
+            products = ProductService.GetProductsPagination(page);
+        }
+
+        public void LoadMore()
+        {
+            ++page;
+            products = ProductService.GetProductsPagination(page);
+            StateHasChanged();
         }
 
         /// Opens the update product modal. Used to update a product's name or description

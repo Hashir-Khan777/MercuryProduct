@@ -77,6 +77,11 @@
     </RadzenRow>
     <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="multi-upload rz-py-sm-4">
         <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="VAT" Component="VAT" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="product.vat" Name="VAT" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="VAT" Text="VAT is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
             <RadzenLabel>Product Pictures</RadzenLabel> <span style="color: red;">*</span>
             <RadzenUpload Auto="true" Multiple Change="changeProductImages" class="w-100"
                           InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />

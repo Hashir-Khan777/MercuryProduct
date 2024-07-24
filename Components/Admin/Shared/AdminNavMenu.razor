@@ -1,6 +1,7 @@
 ﻿@using MecuryProduct.Modals
 
 @inject NavigationManager NavigationManager
+@inject SessionService SessionService
 @inject DialogService DialogService
 
 <RadzenHeader>
@@ -19,6 +20,7 @@
                         <RadzenButton Variant="Variant.Text" Click="OpenCartModal">
                             <RadzenIcon Icon="shopping_cart" IconColor="#ffffff" Style="font-size: 20px;" />
                         </RadzenButton>
+                        <p style="color: #fff;">@cartCount</p>
                     </div>
                     <div class="nav-item px-3">
                         <NavLink class="nav-link" href="Account/Manage">
@@ -80,6 +82,9 @@
         <RadzenLink Path="/admin/pos" Match="NavLinkMatch.All">
             <RadzenPanelMenuItem Text="POS" class="rz-color-black" />
         </RadzenLink>
+        <RadzenLink Path="/admin/payments" Match="NavLinkMatch.All">
+            <RadzenPanelMenuItem Text="Paymnets" class="rz-color-black" />
+        </RadzenLink>
         @* May be use later *@
      @* <RadzenLink Path="/admin/invoices" Match="NavLinkMatch.All">
             <RadzenPanelMenuItem Text="Invoices" class="rz-color-black" />
@@ -92,6 +97,8 @@
 
 @code {
     bool sidebar1Expanded = true;
+    int cartCount = 0;
+
     private List<Route> routes = new List<Route>()
     {
         new Route { Label = "Dashboard", Path = "admin/dashboard" },
@@ -100,10 +107,14 @@
 
     private string currentUrl = "";
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
+
+        var products = await SessionService.Get<List<ProductModel>>("cart") ?? new List<ProductModel>();
+
+        cartCount = products.Count();
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)

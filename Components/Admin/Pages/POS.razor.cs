@@ -9,22 +9,33 @@ namespace MecuryProduct.Components.Admin.Pages
     public partial class POS
     {
         public List<ProductModel> products = new List<ProductModel>();
+        int page = 1;
+        string search = "";
 
         [Inject]
         public ProductService ProductService { get; set; }
         [Inject]
         public SessionService SessionService { get; set; }
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
-            products = ProductService.GetProducts();
+            products = ProductService.GetProductsPagination(page);
         }
 
-        public void FilterProducts(string search)
+        public void FilterProducts()
         {
             products = ProductService.FilterProducts(search.ToLower());
+            StateHasChanged();
+        }
+
+        public void LoadMore()
+        {
+            ++page;
+            products = ProductService.GetProductsPagination(page);
             StateHasChanged();
         }
 
@@ -54,6 +65,8 @@ namespace MecuryProduct.Components.Admin.Pages
                 };
                 await SessionService.Set("cart", JsonSerializer.Serialize(products, options));
             }
+            StateHasChanged();
+            NavigationManager.Refresh(true);
         }
     }
 }
