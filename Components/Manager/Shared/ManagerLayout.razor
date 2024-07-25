@@ -6,6 +6,19 @@
 <RadzenLayout>
     <ManagerNavMenu />
     <RadzenBody>
+        <RadzenBreadCrumb>
+            @foreach (var item in currentUrl.Split('/'))
+            {
+                if (currentUrl.Split('/')[0] == item)
+                {
+                    <RadzenBreadCrumbItem Text="@item" />
+                }
+                else
+                {
+                    <RadzenBreadCrumbItem Path="@item" Text="@item" />
+                }
+            }
+        </RadzenBreadCrumb>
         <div class="rz-p-4">
             @Body
         </div>
