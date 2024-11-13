@@ -1,0 +1,113 @@
+﻿@page "/admin/comment/dialog/{VehId}/{SfId}"
+
+@inject Radzen.DialogService dialogService
+
+<style>
+    .multi-upload .rz-fileupload-content {
+        display: none !important;
+    }
+</style>
+
+@* PP-79: create note functionality like vehicles in state form
+Bug: Admin is not able to add comments on state form
+Fix: I used the same modal for state form and add condition on SfId *@
+@* PP-77: Set the UI of docs in inventory like notes
+Bug: Vehicle docs UI is not same as the comments modal
+Fix: I used the same modal for both scenerios and add condition for Docs *@
+<RadzenStack Gap="1rem" Orientation="Orientation.Vertical" JustifyContent="JustifyContent.SpaceBetween"
+    Style="height: 100%;">
+    @* PP-61: add timestamp field and display vehicle details in comments modal
+    Feature: Show vehicle details
+    Fix: Add text component from radzen and render the vehicle details *@
+    @if (SfId == null && Docs == false)
+    {
+        <RadzenText>@car.car_year @car.car_make @car.car_model</RadzenText>
+    }
+
+    <RadzenTemplateForm TItem="NoteModel" Data=@note Submit="@AddNote">
+        @if (Docs)
+        {
+            <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="multi-upload rz-py-sm-4">
+                <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+                    <RadzenLabel>Doc</RadzenLabel> <span style="color: red;">*</span>
+                    <RadzenUpload Change="changeDocs" @bind-value="car.docs" Style="width: 100%;"
+                        InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
+                    <RadzenRequiredValidator Text="Doc is required" />
+                    @foreach (var file in docs)
+                    {
+                        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
+                            JustifyContent="JustifyContent.SpaceBetween">
+                            <RadzenText>@file.file_name</RadzenText>
+                            <RadzenButton Click="@(() => DeleteDoc(file))" Variant="Variant.Flat">
+                                <RadzenIcon Icon="close" />
+                            </RadzenButton>
+                        </RadzenStack>
+                    }
+                </RadzenColumn>
+            </RadzenRow>
+        }
+        @* PP-78: admin can also add note when adding documents in inventory
+        Bug: Admin is not able to add note when adding document
+        Fix: I added an input for note when Docs condition is true else it works as comments on vehicle *@
+        @if (Docs)
+        {
+            <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+                <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+                    <RadzenFormField Text="Note" Variant="Variant.Flat" Style="width: 100%;">
+                        <RadzenTextArea @bind-Value="note.note" Style="width: 100%;" />
+                    </RadzenFormField>
+                </RadzenColumn>
+            </RadzenRow>
+        }
+        else
+        {
+            <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+                <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+                    <RadzenFormField Text="Note" Variant="Variant.Flat" Style="width: 100%;">
+                        <RadzenTextArea Name="Note" @bind-Value="note.note" Style="width: 100%;" />
+                    </RadzenFormField>
+                    <RadzenRequiredValidator Component="Note" Text="Note is required" />
+                </RadzenColumn>
+            </RadzenRow>
+        }
+        <RadzenButton ButtonType="ButtonType.Submit">Add Note</RadzenButton>
+    </RadzenTemplateForm>
+
+    @if (Docs)
+    {
+        <RadzenDataGrid Data="@docs" AllowVirtualization="true" Style="height:400px" AllowFiltering="true"
+            FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+            LogicalFilterOperator="LogicalFilterOperator.Or" AllowSorting="true">
+            <Columns>
+                <RadzenDataGridColumn Property="note.note.note" Title="Note" />
+                <RadzenDataGridColumn Title="Doc">
+                    <Template Context="item">
+                        <RadzenLink Path="@item.short_path" Target="_doc">@item.file_name</RadzenLink>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="Created By">
+                    <Template Context="item">
+                        @item.note?.created_at
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Property="created_at" Title="Created At" />
+            </Columns>
+        </RadzenDataGrid>
+    }
+    else
+    {
+        <RadzenDataGrid Data="@notes" AllowVirtualization="true" Style="height:400px" AllowFiltering="true"
+            FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+            LogicalFilterOperator="LogicalFilterOperator.Or" AllowSorting="true">
+            <Columns>
+                <RadzenDataGridColumn Property="note" Title="Note" />
+                <RadzenDataGridColumn Title="Created By">
+                    <Template Context="item">
+                        @item.created_by?.UserName
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Property="created_at" Title="Created At" />
+            </Columns>
+        </RadzenDataGrid>
+    }
+</RadzenStack>

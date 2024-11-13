@@ -1,0 +1,45 @@
+﻿@page "/manager/drivers"
+
+<PageTitle>Drivers</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenText TextStyle="TextStyle.H4">Drivers</RadzenText>
+    <RadzenLink Path="/manager/adddriver">
+        <RadzenButton>Add</RadzenButton>
+    </RadzenLink>
+</RadzenStack>
+
+<RadzenDataGrid TItem="ApplicationUser" Data="@drivers" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                M-DRV-@item.driverId
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="Name" Title="User Name" />
+        <RadzenDataGridColumn Title="Vehicles">
+            <Template Context="item">
+                <span style="cursor: pointer; color: #4340D2;" @onclick="() => OpenShowVehiclesModal(item.Id)">@item?.driver_cars?.Count()</span>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Company">
+            <Template Context="item">
+                @foreach (var comp in item.CompanyDrivers)
+                {
+                    <span>@comp.company.Name</span>
+                }
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Action">
+            <Template Context="item">
+                <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateDriverModal(item.Id)">
+                    <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                </RadzenButton>
+                <RadzenButton Variant="Variant.Text" Click="() => DeleteUser(item)">
+                    <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                </RadzenButton>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

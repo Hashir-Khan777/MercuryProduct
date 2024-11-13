@@ -1,0 +1,53 @@
+﻿@page "/admin/addstateform"
+
+<style>
+    .multi-upload .rz-fileupload-content {
+        display: none !important;
+    }
+</style>
+
+<PageTitle>Add State Form</PageTitle>
+
+<a onclick="history.back();">
+    <RadzenButton Variant="Variant.Flat" Style="margin-bottom: 20px;">
+        <RadzenIcon Icon="arrow_back" />
+    </RadzenButton>
+</a>
+
+<h3>Add State Form</h3>
+
+<RadzenTemplateForm TItem="StateFormModel" Data=@state_form Submit="@CreateStateForm">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="multi-upload rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel>Envelope</RadzenLabel> <span style="color: red;">*</span>
+            <RadzenUpload Change="changeDocs" @bind-value="state_form.doc" Style="width: 770px;" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
+            <RadzenRequiredValidator Text="Envelope is required" />
+            @foreach (var file in envImages)
+            {
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+                    <RadzenText>@file.file_name</RadzenText>
+                    <RadzenButton Click="@(() => DeleteDoc(file))" Variant="Variant.Flat"><RadzenIcon Icon="close" /></RadzenButton>
+                </RadzenStack>
+            }
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenFormField Text="Note" Variant="Variant.Flat" Style="width: 770px;">
+                <RadzenTextArea @bind-Value="note" Style="width: 100%" />
+            </RadzenFormField>
+        </RadzenColumn>
+    </RadzenRow>
+@*     <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Company" Component="DropDownBindValue"
+                         Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@state_form.CompanyId" Data="@companies"
+                            Name="NumberType" Style="width: 100%" TextProperty="Name" ValueProperty="Id" />
+            <RadzenRequiredValidator Component="NumberType" Text="Company is required" />
+        </RadzenColumn>
+    </RadzenRow> *@
+    <RadzenButton ButtonType="ButtonType.Submit">Add State Form</RadzenButton>
+</RadzenTemplateForm>
+

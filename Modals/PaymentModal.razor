@@ -1,0 +1,137 @@
+﻿@page "/admin/abc/payment"
+
+@inject Radzen.DialogService dialogService
+
+<RadzenTemplateForm TItem="PaymentModel" Data=@payment Submit="@AddPayment">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+            <RadzenDataGrid Data="@products">
+                <Columns>
+                    <RadzenDataGridColumn Title="Id">
+                        <Template Context="item">
+                            M-PROD-@item.Id
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Property="product_name" Title="Name" />
+                    <RadzenDataGridColumn Title="Unit Price">
+                        <Template Context="item">
+                            @if (item.special)
+                            {
+                                <RadzenText TextStyle="TextStyle.Body2">$@(item.special_price.ToString("0.00"))</RadzenText>
+                            }
+                            else
+                            {
+                                <RadzenText TextStyle="TextStyle.Body2">$@(GetPrice(item).ToString("0.00"))</RadzenText>
+                            }
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Quantity">
+                        <Template Context="item">
+                            <RadzenNumeric Change="UpdatePyment" TValue="int" Min="1" Max="item.quantity" @bind-Value="item.incartquantity" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Tax">
+                        <Template Context="item">
+                            <RadzenText>$@((((GetPrice(item) * (localization.tax_1_value + localization.tax_2_value + localization.tax_3_value + localization.tax_4_value)) / 100) * item.incartquantity).ToString("0.00"))</RadzenText>
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Discount (%)">
+                        <Template Context="item">
+                            <RadzenNumeric Change="UpdatePyment" TValue="int?" @bind-Value="item.discount" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Total">
+                        <Template Context="item">
+                            <RadzenText>$@(GetAmount(item).ToString("0.00"))</RadzenText>
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Action(s)">
+                        <Template Context="item">
+                            <RadzenButton Click="() => RemoveFromCart(item)" Variant="Variant.Text">
+                                <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                            </RadzenButton>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center">
+                <div>
+                    <RadzenLabel Text="Customer" Component="Model" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+                </div>
+                <RadzenButton Click="AddCustomer" Variant="Variant.Text">Add Customer</RadzenButton>
+            </RadzenStack>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@payment.customerId"
+                            Data="@customers" TextProperty="search" ValueProperty="Id" Style="width: 100%;" Name="Model" />
+            <RadzenRequiredValidator Component="Model" Text="Customer is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Payment Type" Component="Type" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@payment.paymentType"
+                            Data="@payment_types" Style="width: 100%;" Name="Type" />
+            <RadzenRequiredValidator Component="Type" Text="Payment Type is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Paid Amount" Component="PaidAmouunt" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenNumeric Change="UpdatePyment" TValue="int" Style="width: 100%;" @bind-Value="payment.paidAmount" Name="PaidAmouunt" />
+            <RadzenRequiredValidator Component="PaidAmouunt" Text="Paid Amount is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Cart Level Discount (%)" Component="ChangeAmouunt" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenNumeric Change="UpdatePyment" TValue="int" Style="width: 100%;" @bind-Value="payment.cartDiscount" Name="ChangeAmouunt" />
+        </RadzenColumn>
+    </RadzenRow>
+@*     <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+            <RadzenLabel Text="Company" Component="CompanyModel" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@payment.company_id"
+                            Data="@companies" TextProperty="Name" ValueProperty="Id" Style="width: 100%;" Name="CompanyModel" />
+            <RadzenRequiredValidator Component="CompanyModel" Text="Company is required" />
+        </RadzenColumn>
+    </RadzenRow> *@
+    <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.End" JustifyContent="JustifyContent.End">
+        <div>
+            <RadzenText Style="font-size: 18px; font-weight: bold;">Summary</RadzenText>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Items Amount:</RadzenText>
+                <RadzenText>$@itemsAmount.ToString("0.00")</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Tax (@(taxAmount)%):</RadzenText>
+                <RadzenText>$@(((itemsAmount * taxAmount) / 100).ToString("0.00"))</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Items Level Discount (%):</RadzenText>
+                <RadzenText>@(discountAmount)%</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Cart Level Discount (%):</RadzenText>
+                <RadzenText>@(payment.cartDiscount)%</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Total Amount:</RadzenText>
+                <RadzenText>$@totalAmount.ToString("0.00")</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Paid Amount:</RadzenText>
+                <RadzenText>$@payment.paidAmount.ToString("0.00")</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Change Amount:</RadzenText>
+                <RadzenText>$@payment.changeAmount.ToString("0.00")</RadzenText>
+            </RadzenStack>
+        </div>
+    </RadzenStack>
+    <RadzenStack Style="margin-top: 10px;" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End">
+        <RadzenButton ButtonType="ButtonType.Submit">Save</RadzenButton>
+        <RadzenButton Click="GeneratePDF">Save And Generate PDF</RadzenButton>
+    </RadzenStack>
+</RadzenTemplateForm>

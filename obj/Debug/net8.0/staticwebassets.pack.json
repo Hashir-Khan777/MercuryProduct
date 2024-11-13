@@ -1,0 +1,589 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\MecuryProduct.bundle.scp.css",
+      "PackagePath": "staticwebassets\\MecuryProduct.bundle.scp.css"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\externalbinaries\\TeamViewer_Setup_x64.exe",
+      "PackagePath": "staticwebassets\\externalbinaries\\TeamViewer_Setup_x64.exe"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\js\\map.js",
+      "PackagePath": "staticwebassets\\js\\map.js"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\companylogo-20240912121252493-flashsale.jpg",
+      "PackagePath": "staticwebassets\\uploads\\companylogo-20240912121252493-flashsale.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\companylogo-20240912121539383-flashsale.jpg",
+      "PackagePath": "staticwebassets\\uploads\\companylogo-20240912121539383-flashsale.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\companylogo-20240912121629125-Blessed friday GS-1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\companylogo-20240912121629125-Blessed friday GS-1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\companylogo-20240917060948817-globalshoppingspotjpeglogo.jpg",
+      "PackagePath": "staticwebassets\\uploads\\companylogo-20240917060948817-globalshoppingspotjpeglogo.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240815221308419-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240815221308419-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240815222345153-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240815222345153-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240815222737259-Blessed friday GS-1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240815222737259-Blessed friday GS-1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240815222917139-Blessed friday GS-1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240815222917139-Blessed friday GS-1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240820102017010-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240820102017010-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240820102700217-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240820102700217-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240820103329123-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240820103329123-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240820103612600-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240820103612600-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240820105142614-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240820105142614-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240820105533320-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240820105533320-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240821062234920-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240821062234920-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240821062738957-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240821062738957-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240821100236193-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240821100236193-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240821100532655-globalshoppingspotsellercenterappicon.png",
+      "PackagePath": "staticwebassets\\uploads\\default-20240821100532655-globalshoppingspotsellercenterappicon.png"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240821101516134-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240821101516134-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240821103108529-Blessed friday GS-1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240821103108529-Blessed friday GS-1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240821104309013-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240821104309013-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240821121220472-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240821121220472-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240829030729527-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240829030729527-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240831215819844-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240831215819844-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901090254890-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901090254890-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901093539515-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901093539515-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901095636680-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901095636680-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901102650986-onlyligo.png",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901102650986-onlyligo.png"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901103618538-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901103618538-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901110812750-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901110812750-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901113620756-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901113620756-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901121455455-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901121455455-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901132718925-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901132718925-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901151425031-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901151425031-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901204520497-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901204520497-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901214223710-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901214223710-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901214653389-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901214653389-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901214750487-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901214750487-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901214756667-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901214756667-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901215256025-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901215256025-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240901215636333-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240901215636333-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902030426129-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902030426129-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902040113727-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902040113727-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902184931671-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902184931671-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902185804985-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902185804985-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902185906379-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902185906379-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902190409184-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902190409184-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902190436201-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902190436201-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902191224340-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902191224340-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902191247808-16-percent-off-global.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902191247808-16-percent-off-global.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902191409408-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902191409408-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902191424419-globalshoppingspotjpeglogo.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902191424419-globalshoppingspotjpeglogo.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902191622183-flashsale.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902191622183-flashsale.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902192239641-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902192239641-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902192313153-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902192313153-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902192337360-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902192337360-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902192444741-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902192444741-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902192720227-globalshoppingspotuserappicon.png",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902192720227-globalshoppingspotuserappicon.png"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902195434328-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902195434328-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902200049273-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902200049273-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902200422504-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902200422504-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902200600709-globalshoppingspotjpeglogo.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902200600709-globalshoppingspotjpeglogo.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240902200833751-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240902200833751-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240903163927618-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240903163927618-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240910121859767-16-percent-off-global.jpg",
+      "PackagePath": "staticwebassets\\uploads\\default-20240910121859767-16-percent-off-global.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\env-1-env-20240620041906545-Advancing into Analytics From Excel to Python.pdf",
+      "PackagePath": "staticwebassets\\uploads\\env-1-env-20240620041906545-Advancing into Analytics From Excel to Python.pdf"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\env-1-env-20240910063525124-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\env-1-env-20240910063525124-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\env-2-env-20240620041925022-Beginning Django .pdf",
+      "PackagePath": "staticwebassets\\uploads\\env-2-env-20240620041925022-Beginning Django .pdf"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625105043659-16-percent-off-global.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625105043659-16-percent-off-global.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625105043797-Blessed friday GS-1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625105043797-Blessed friday GS-1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625105043852-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625105043852-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625110405908-globalshoppingspotsellercenterappicon.png",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625110405908-globalshoppingspotsellercenterappicon.png"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625110405986-globalshoppingspotuserappicon.png",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625110405986-globalshoppingspotuserappicon.png"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625110406023-globalshoppingspotwhite.png",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625110406023-globalshoppingspotwhite.png"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625110406059-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625110406059-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625110406141-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625110406141-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625110406307-onlyligo.png",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625110406307-onlyligo.png"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625110406514-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625110406514-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625173417126-banner2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625173417126-banner2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625173417351-banner3.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625173417351-banner3.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625173417396-blog1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625173417396-blog1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625173417425-blogs.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625173417425-blogs.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625174126599-banner2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625174126599-banner2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625174126765-banner3.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625174126765-banner3.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625174126812-blog1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625174126812-blog1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625174126840-blogs.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625174126840-blogs.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625175559519-client2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625175559519-client2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625175559625-client3.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625175559625-client3.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625175559652-contact.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625175559652-contact.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625175559724-contactHeader.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625175559724-contactHeader.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625182821021-mission.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625182821021-mission.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625182821129-mobappdev.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625182821129-mobappdev.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625182821167-mobileappservice.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625182821167-mobileappservice.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240625182821230-offers.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240625182821230-offers.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240630130422699-banner2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240630130422699-banner2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240630130422814-banner3.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240630130422814-banner3.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240630130422851-blog1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240630130422851-blog1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240630130422872-blogs.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240630130422872-blogs.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240630130422911-brandmanagement.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240630130422911-brandmanagement.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240701051702234-16-percent-off-global.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240701051702234-16-percent-off-global.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240701051702368-Blessed friday GS-1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240701051702368-Blessed friday GS-1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240701051702422-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240701051702422-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240702211949279-banner2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240702211949279-banner2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240702211949449-banner3.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240702211949449-banner3.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240702211949489-blog1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240702211949489-blog1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240702211949531-blogs.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240702211949531-blogs.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240702212106434-digitalmarketing.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240702212106434-digitalmarketing.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240702212106502-digitalservice.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240702212106502-digitalservice.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240702212106546-graphicDesigning.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240702212106546-graphicDesigning.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240703034001095-16-percent-off-global.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240703034001095-16-percent-off-global.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240703034001181-Blessed friday GS-1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240703034001181-Blessed friday GS-1.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240717202437864-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240717202437864-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240717215747305-16-percent-off-global.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240717215747305-16-percent-off-global.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240718032324503-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240718032324503-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240718082805655-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240718082805655-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240718090632045-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240718090632045-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240718111610531-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240718111610531-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240718144217407-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240718144217407-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240721205318641-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240721205318641-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240722083410060-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240722083410060-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240722102028891-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240722102028891-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240805212231531-globalshoppingspotuserappicon.png",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240805212231531-globalshoppingspotuserappicon.png"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240813125158422-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240813125158422-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240820105208101-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240820105208101-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240820105940613-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240820105940613-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240901093453726-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240901093453726-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20240901103545510-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-0-product-20240901103545510-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-product-20240625112740114-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-product-20240625112740114-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-product-20240903164003732-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-product-20240903164003732-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-vehicle-20240908202223118-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-vehicle-20240908202223118-Orange Yellow Sale 12.12 Minimal Facebook Post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-vin-20240908202218704-Introducing bargaining feature.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-1-vin-20240908202218704-Introducing bargaining feature.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-2-vehicle-20240924052243614-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-2-vehicle-20240924052243614-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-2-vin-20240924052234037-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-2-vin-20240924052234037-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-5-product-20240723052602517-global-vender-post.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-5-product-20240723052602517-global-vender-post.jpg"
+    },
+    {
+      "Id": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-7-product-20240731035301019-Blessed Friday-2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stk-7-product-20240731035301019-Blessed Friday-2.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.MecuryProduct.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.MecuryProduct.props",
+      "PackagePath": "build\\MecuryProduct.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.MecuryProduct.props",
+      "PackagePath": "buildMultiTargeting\\MecuryProduct.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.MecuryProduct.props",
+      "PackagePath": "buildTransitive\\MecuryProduct.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

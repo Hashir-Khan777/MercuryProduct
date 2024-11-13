@@ -1,0 +1,655 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = MecuryProduct
+build_property.RootNamespace = MecuryProduct
+build_property.ProjectDir = E:\Zini Tecnologies Projects\MecuryProduct\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = E:\Zini Tecnologies Projects\MecuryProduct
+build_property._RazorSourceGeneratorDebug = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/AccessDenied.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXEFjY2Vzc0RlbmllZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/ConfirmEmail.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXENvbmZpcm1FbWFpbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/ConfirmEmailChange.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXENvbmZpcm1FbWFpbENoYW5nZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/ExternalLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXEV4dGVybmFsTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/ForgotPassword.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXEZvcmdvdFBhc3N3b3JkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/ForgotPasswordConfirmation.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXEZvcmdvdFBhc3N3b3JkQ29uZmlybWF0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/InvalidPasswordReset.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXEludmFsaWRQYXNzd29yZFJlc2V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/InvalidUser.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXEludmFsaWRVc2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Lockout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXExvY2tvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXExvZ2luLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/LoginWith2fa.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXExvZ2luV2l0aDJmYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/LoginWithRecoveryCode.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXExvZ2luV2l0aFJlY292ZXJ5Q29kZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/ChangePassword.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxDaGFuZ2VQYXNzd29yZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/DeletePersonalData.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxEZWxldGVQZXJzb25hbERhdGEucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/Disable2fa.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxEaXNhYmxlMmZhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/Email.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxFbWFpbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/EnableAuthenticator.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxFbmFibGVBdXRoZW50aWNhdG9yLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/ExternalLogins.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxFeHRlcm5hbExvZ2lucy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/GenerateRecoveryCodes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxHZW5lcmF0ZVJlY292ZXJ5Q29kZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxJbmRleC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/PersonalData.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxQZXJzb25hbERhdGEucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/ResetAuthenticator.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxSZXNldEF1dGhlbnRpY2F0b3IucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/SetPassword.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxTZXRQYXNzd29yZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/TwoFactorAuthentication.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxUd29GYWN0b3JBdXRoZW50aWNhdGlvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Manage/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXFJlZ2lzdGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/RegisterConfirmation.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXFJlZ2lzdGVyQ29uZmlybWF0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/ResendEmailConfirmation.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXFJlc2VuZEVtYWlsQ29uZmlybWF0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/ResetPassword.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXFJlc2V0UGFzc3dvcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/ResetPasswordConfirmation.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXFJlc2V0UGFzc3dvcmRDb25maXJtYXRpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Pages/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXF9JbXBvcnRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Shared/AccountLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxBY2NvdW50TGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Shared/ExternalLoginPicker.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxFeHRlcm5hbExvZ2luUGlja2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Shared/ManageLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxNYW5hZ2VMYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Shared/ManageNavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxNYW5hZ2VOYXZNZW51LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Shared/RedirectToLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxSZWRpcmVjdFRvTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Shared/ShowRecoveryCodes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxTaG93UmVjb3ZlcnlDb2Rlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Account/Shared/StatusMessage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxTdGF0dXNNZXNzYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/AddCategory.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xBZGRDYXRlZ29yeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/AddCompany.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xBZGRDb21wYW55LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/AddCustomer.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xBZGRDdXN0b21lci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/AddDriver.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xBZGREcml2ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/AddInvoice.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xBZGRJbnZvaWNlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/AddProduct.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xBZGRQcm9kdWN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/AddStateForm.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xBZGRTdGF0ZUZvcm0ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/AddUser.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xBZGRVc2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/AddVehicle.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xBZGRWZWhpY2xlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/AuditLog.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xBdWRpdExvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Calendar.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xDYWxlbmRhci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/CartComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xDYXJ0Q29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Category.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xDYXRlZ29yeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Companies.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xDb21wYW5pZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Customer.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xDdXN0b21lci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xEYXNoYm9hcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Driver.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xEcml2ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Expense.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xFeHBlbnNlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Inventory.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xJbnZlbnRvcnkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Invoices.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xJbnZvaWNlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Localization.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xMb2NhbGl6YXRpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Map.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xNYXAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Payments.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xQYXltZW50cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/POS.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xQT1MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/PosCustomers.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xQb3NDdXN0b21lcnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Products.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xQcm9kdWN0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/User.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xVc2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/Vehicles.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xWZWhpY2xlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Pages/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxQYWdlc1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Shared/AdminLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxTaGFyZWRcQWRtaW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Admin/Shared/AdminNavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxTaGFyZWRcQWRtaW5OYXZNZW51LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/App.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Driver/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEcml2ZXJcUGFnZXNcRGFzaGJvYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Driver/Pages/Vehicles.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEcml2ZXJcUGFnZXNcVmVoaWNsZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Driver/Pages/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEcml2ZXJcUGFnZXNcX0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Driver/Shared/DriverLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEcml2ZXJcU2hhcmVkXERyaXZlckxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Driver/Shared/DriverNavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEcml2ZXJcU2hhcmVkXERyaXZlck5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddCategory.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRDYXRlZ29yeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddCompany.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRDb21wYW55LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddCustomer.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRDdXN0b21lci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddDriver.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGREcml2ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddProduct.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRQcm9kdWN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddStateForm.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRTdGF0ZUZvcm0ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddUser.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRVc2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/AddVehicle.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xBZGRWZWhpY2xlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Calendar.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xDYWxlbmRhci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/CartComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xDYXJ0Q29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Companies.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xDb21wYW5pZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Customer.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xDdXN0b21lci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xEYXNoYm9hcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Driver.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xEcml2ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Expense.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xFeHBlbnNlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Inventory.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xJbnZlbnRvcnkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Localization.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xMb2NhbGl6YXRpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Map.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xNYXAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Payments.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xQYXltZW50cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/POS.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xQT1MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/PosCustomers.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xQb3NDdXN0b21lcnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Products.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xQcm9kdWN0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/User.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xVc2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Vehicles.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xWZWhpY2xlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Shared/EmployeeLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxTaGFyZWRcRW1wbG95ZWVMYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Shared/EmployeeNavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxTaGFyZWRcRW1wbG95ZWVOYXZNZW51LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/AddCategory.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXEFkZENhdGVnb3J5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/AddCompany.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXEFkZENvbXBhbnkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/AddCustomer.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXEFkZEN1c3RvbWVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/AddDriver.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXEFkZERyaXZlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/AddProduct.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXEFkZFByb2R1Y3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/AddStateForm.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXEFkZFN0YXRlRm9ybS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/AddUser.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXEFkZFVzZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/AddVehicle.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXEFkZFZlaGljbGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Calendar.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXENhbGVuZGFyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/CartComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXENhcnRDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Companies.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXENvbXBhbmllcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Customer.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXEN1c3RvbWVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXERhc2hib2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Driver.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXERyaXZlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Expense.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXEV4cGVuc2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Inventory.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXEludmVudG9yeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Localization.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXExvY2FsaXphdGlvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Map.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXE1hcC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Payments.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXFBheW1lbnRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/POS.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXFBPUy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/PosCustomers.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXFBvc0N1c3RvbWVycy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Products.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXFByb2R1Y3RzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/User.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXFVzZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Vehicles.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXFZlaGljbGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXF9JbXBvcnRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Shared/ManagerLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFNoYXJlZFxNYW5hZ2VyTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Shared/ManagerNavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFNoYXJlZFxNYW5hZ2VyTmF2TWVudS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Pages/Error.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Pages/Help.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIZWxwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/AddCustomerModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXEFkZEN1c3RvbWVyTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/AddExpenseModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXEFkZEV4cGVuc2VNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/AddPosCustomer.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXEFkZFBvc0N1c3RvbWVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/AddVehicleModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXEFkZFZlaGljbGVNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/BulkEditModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXEJ1bGtFZGl0TW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/CartModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXENhcnRNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/CashFlowPdf.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXENhc2hGbG93UGRmLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/ImageModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXEltYWdlTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/PaymentModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFBheW1lbnRNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/PDFModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFBERk1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/ShowCustomerVehiclesModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFNob3dDdXN0b21lclZlaGljbGVzTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/UpdateCategoryModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFVwZGF0ZUNhdGVnb3J5TW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/UpdateCompanyModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFVwZGF0ZUNvbXBhbnlNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/UpdateCustomerModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFVwZGF0ZUN1c3RvbWVyTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/UpdateDriverModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFVwZGF0ZURyaXZlck1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/UpdatePosCustomer.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFVwZGF0ZVBvc0N1c3RvbWVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/UpdateProductModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFVwZGF0ZVByb2R1Y3RNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/UpdateStateFormModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFVwZGF0ZVN0YXRlRm9ybU1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/UpdateUserModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFVwZGF0ZVVzZXJNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/UpdateVehicleModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFVwZGF0ZVZlaGljbGVNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/VehicleCommentModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFZlaGljbGVDb21tZW50TW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/ViewPaymentModal.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFZpZXdQYXltZW50TW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/ViewSalesHistory.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXFZpZXdTYWxlc0hpc3RvcnkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Modals/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXF9JbXBvcnRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-0yisewq3vw

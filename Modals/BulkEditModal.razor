@@ -1,0 +1,28 @@
+﻿@page "/admin/bulkedit/{Cars}"
+
+@inject Radzen.DialogService dialogService
+
+<RadzenTemplateForm TItem="BulkEditCarModel" Data="EditCarModel" Submit="UpdateCars">
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Prod Status" Component="ProdStatus" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown @bind-Value="@EditCarModel.selected_status" Data="@prod_status" Style="width: 100%; max-width: 400px;" Name="ProdStatus" />
+            <RadzenRequiredValidator Component="ProdStatus" Text="Prod Status is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Section" Component="Section" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown Change="@((args) => GetAllRowsBySection(args.ToString()))" @bind-Value="@EditCarModel.selected_section" Data="@sections" Style="width: 100%; max-width: 400px;" Name="Section" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Row" Component="Row" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown @bind-Value="@EditCarModel.selected_row" Data="@rows" Style="width: 100%; max-width: 400px;" Name="Row" />
+            @if (EditCarModel.selected_section != null)
+            {
+                <RadzenRequiredValidator Component="Row" Text="Row is required" />
+            }
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit" Style="margin-top: 20px;">Update</RadzenButton>
+</RadzenTemplateForm>

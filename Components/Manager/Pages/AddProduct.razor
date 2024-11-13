@@ -1,0 +1,111 @@
+﻿@page "/manager/addproduct"
+
+<PageTitle>Add Product</PageTitle>
+
+<style>
+    .multi-upload .rz-fileupload-content {
+        display: none !important;
+    }
+</style>
+
+<a onclick="history.back();">
+    <RadzenButton Variant="Variant.Flat" Style="margin-bottom: 20px;">
+        <RadzenIcon Icon="arrow_back" />
+    </RadzenButton>
+</a>
+
+<h3>Add Product</h3>
+
+<RadzenTemplateForm TItem="ProductModel" Data=@product Submit="@CreateProduct">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Product Name" Component="CompanyName" /> <span style="color: red;">*</span>
+            <RadzenTextBox @bind-Value="product.product_name" Name="CompanyName" Style="width: 100%;" Change="SetInSession" />
+            <RadzenRequiredValidator Component="CompanyName" Text="Product name is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Select Department" Component="DropDownBindValue"
+                         Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown Change="SetInSession" @bind-Value="@product.CategoryId" Data="@categories"
+                            Name="NumberType" TextProperty="Name" ValueProperty="Id" Style="width: 100%" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" />
+            <RadzenRequiredValidator Component="NumberType" Text="Department is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Product Grade" Component="ProductGrade" /> <span style="color: red;">*</span>
+            <RadzenDropDown Change="SetInSession" @bind-Value="@product.product_grade" Data="@grades"
+                            Name="ProductGrade" Style="width: 100%" />
+            <RadzenRequiredValidator Component="ProductGrade" Text="Product grade is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Regular Price" Component="RegularPrice" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="product.regular_price" Name="RegularPrice" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="RegularPrice" Text="Regular price is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Custome Price 1" Component="CustomPrice1" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="product.custom_price_1" Name="CustomPrice1" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="CustomPrice1" Text="Custom price 1 is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Custome Price 2" Component="CustomPrice2" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="product.custom_price_2" Name="CustomPrice2" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="CustomPrice2" Text="Custom price 2 is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Custome Price 3" Component="CustomPrice3" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="product.custom_price_3" Name="CustomPrice3" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="CustomPrice3" Text="Custom price 3 is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Custome Price 4" Component="CustomPrice4" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="product.custom_price_4" Name="CustomPrice4" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="CustomPrice4" Text="Custom price 4 is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Quantity" Component="Quantity" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="product.quantity" Name="Quantity" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="Quantity" Text="Quantity is required" />
+        </RadzenColumn>
+@*         <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Company" Component="DropDownBindValue"
+                         Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" Change="SetInSession" @bind-Value="@product.company_id" Data="@companies"
+                            Name="Company" Style="width: 100%" TextProperty="Name" ValueProperty="Id" />
+            <RadzenRequiredValidator Component="Company" Text="Company is required" />
+        </RadzenColumn> *@
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="multi-upload rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel>Product Pictures</RadzenLabel> <span style="color: red;">*</span>
+            <RadzenUpload Auto="true" Multiple Change="changeProductImages" class="w-100"
+                          InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
+            @foreach (var file in productImages)
+            {
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
+                             JustifyContent="JustifyContent.SpaceBetween">
+                    <RadzenImage Style="width: 100px; margin-bottom: 10px;" Path="@file.short_path" />
+                    <RadzenButton Click="@(() => DeleteDoc(file))" Variant="Variant.Flat">
+                        <RadzenIcon Icon="close" />
+                    </RadzenButton>
+                </RadzenStack>
+            }
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="12" SizeLG="6">
+            <RadzenLabel Text="Product Description" Component="ProductDescription" /> <span style="color: red;">*</span>
+            <RadzenTextArea @bind-Value="product.product_description" Name="ProductDescription" Style="width: 100%;" Change="SetInSession" />
+            <RadzenRequiredValidator Component="ProductDescription" Text="Product description is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit">Add Product</RadzenButton>
+</RadzenTemplateForm>

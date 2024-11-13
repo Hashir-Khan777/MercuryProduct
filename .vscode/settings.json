@@ -1,0 +1,7 @@
+{
+  "docwriter.progress.trackClasses": true,
+  "docwriter.progress.trackTypes": true,
+  "docwriter.progress.trackFunctions": true,
+  "docify.translateService.docstringFormat": "JavaDoc",
+  "docify.commentService.docstringFormat": "JavaDoc"
+}

@@ -1,0 +1,84 @@
+﻿@page "/employee/pos"
+
+<PageTitle>POS</PageTitle>
+
+<style>
+    .overline {
+        text-decoration: line-through !important;
+    }
+</style>
+
+<RadzenStack Orientation="Orientation.Horizontal" Gap="10px">
+    <RadzenFormField Text="Search Products" Style="width: 100%;" Variant="Variant.Outlined">
+        <Start>
+            <RadzenIcon Icon="search" />
+        </Start>
+        <ChildContent>
+            <RadzenDropDown Change="ChangeSearch" TValue="ProductModel" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" Data=@products TextProperty="product_name" AllowClear="true" Style="width: 100%" Name="DropDownFiltering" />
+        </ChildContent>
+    </RadzenFormField>
+</RadzenStack>
+
+<RadzenRow>
+    <RadzenColumn Size="12" SizeLG="6">
+        <RadzenText Style="margin-top: 10px; font-weight: 600; font-size: 20px;">Products</RadzenText>
+        @if (categories.Count() > 0)
+        {
+            <RadzenAccordion>
+                <Items>
+                    @foreach (var cat in categories)
+                    {
+                        @if (GetProductsByCategory(cat.Id).Count() > 0) {
+                            <RadzenAccordionItem Text="@cat.Name" Icon="account_balance_wallet" CollapseTitle="Collapse orders."
+                                             ExpandTitle="Expand orders." CollapseAriaLabel="Collapse the order details."
+                                             ExpandAriaLabel="Expand the order details.">
+                            @if (GetProductsByCategory(cat.Id).Count() > 0)
+                            {
+                                <RadzenDataList WrapItems AllowPaging Data="GetProductsByCategory(cat.Id)" TItem="ProductModel" PageSize="5" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
+                                    <Template Context="product">
+                                        <RadzenCard Variant="Variant.Outlined" class="rz-p-0" Style="width: 100%; height: 100px; overflow: hidden; padding-right: 10px;">
+                                            <RadzenRow Gap="5" AlignItems="AlignItems.Center">
+                                                <RadzenColumn Size="3" SizeMD="3" SizeLG="3">
+                                                    @if (product.images?.Count() > 0)
+                                                    {
+                                                        <RadzenImage Path="@(product.images[0].short_path)" Style="width: 100px; height: 100px;" AlternateText="community" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <RadzenImage Path="@(GetLocalization(product.company_id).defaultProductImage)" Style="width: 100px; height: 100px;" AlternateText="community" />
+                                                    }
+                                                </RadzenColumn>
+                                                <RadzenColumn Size="6" SizeMD="6" SizeLG="6">
+                                                    @if (product.special)
+                                                    {
+                                                        <RadzenBadge BadgeStyle="BadgeStyle.Warning" Text="Special" />
+                                                    }
+                                                    <RadzenText Style="margin: 5px 0;" TextStyle="TextStyle.H6" TagName="TagName.H5" class="rz-mb-0">@(product.product_name)</RadzenText>
+                                                    <RadzenStack Gap="4" Style="width: 100%;" Orientation="Orientation.Horizontal">
+                                                        <RadzenText class="@(product.special ? "overline" : null)" TextStyle="TextStyle.Body2">$@(GetPrice(product).ToString("0.00"))</RadzenText>
+                                                        @if (product.special)
+                                                        {
+                                                            <RadzenText TextStyle="TextStyle.Body2">$@(product.special_price.ToString("0.00"))</RadzenText>
+                                                        }
+                                                    </RadzenStack>
+                                                </RadzenColumn>
+                                                <RadzenColumn Size="3" SizeMD="3" SizeLG="3">
+                                                    <RadzenButton Click="@(() => AddToCart(product))" Text="Add To Cart" Style="width: 100%" />
+                                                </RadzenColumn>
+                                            </RadzenRow>
+                                        </RadzenCard>
+                                    </Template>
+                                </RadzenDataList>
+                            }
+                        </RadzenAccordionItem>
+                        }
+                    }
+                </Items>
+            </RadzenAccordion>
+        }
+    </RadzenColumn>
+    <RadzenColumn Size="12" SizeLG="6">
+        <RadzenText Style="margin-top: 10px; font-weight: 600; font-size: 20px;">Cart</RadzenText>
+        <CartComponent />
+    </RadzenColumn>
+</RadzenRow>

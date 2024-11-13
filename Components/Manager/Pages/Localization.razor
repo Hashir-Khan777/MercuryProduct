@@ -1,0 +1,93 @@
+﻿@page "/manager/localization"
+
+<PageTitle>Localization</PageTitle>
+
+<style>
+    .multi-upload .rz-fileupload-content {
+        display: none !important;
+    }
+</style>
+
+<h3>Localization</h3>
+
+<RadzenTemplateForm TItem="LocalizationModel" Data=@localization Submit="@SaveLocalization">
+    <RadzenStack Orientation="Orientation.Vertical" class="rz-p-sm-12">
+        <RadzenLabel Text="Select Company" Component="DropDownBindValue" />
+        <RadzenDropDown TextProperty="Name" ValueProperty="Id" TValue="int" Change="@((args) => ChangeCompany(args))" @bind-Value=@default_company Data=@companies Style="width: 100%; max-width: 400px;" Name="DropDownBindValue" />
+    </RadzenStack>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4 multi-upload">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel>Copany Logo</RadzenLabel> <span style="color: red;">*</span>
+            <RadzenUpload Auto="true" Change="changeCompanyLogo" class="w-100"
+                          InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+                <RadzenText>@localization.companyLogo</RadzenText>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Tax 1 Label" Component="bentonCountyTax" /> <span style="color: red;">*</span>
+            <RadzenTextBox @bind-Value="localization.tax_1_label" Name="bentonCountyTax" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="bentonCountyTax" Text="Tax 1 label is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Tax 1 Value" Component="cityOfRogersTax" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="localization.tax_1_value" Name="cityOfRogersTax" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="cityOfRogersTax" Text="Tax 1 value is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Tax 2 Label" Component="bentonCountyTax" /> <span style="color: red;">*</span>
+            <RadzenTextBox @bind-Value="localization.tax_2_label" Name="bentonCountyTax" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="bentonCountyTax" Text="Tax 2 label is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Tax 2 Value" Component="cityOfRogersTax" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="localization.tax_2_value" Name="cityOfRogersTax" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="cityOfRogersTax" Text="Tax 2 value is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Tax 3 Label" Component="bentonCountyTax" /> <span style="color: red;">*</span>
+            <RadzenTextBox @bind-Value="localization.tax_3_label" Name="bentonCountyTax" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="bentonCountyTax" Text="Tax 3 label is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Tax 3 Value" Component="cityOfRogersTax" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="localization.tax_3_value" Name="cityOfRogersTax" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="cityOfRogersTax" Text="Tax 3 value is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Tax 4 Label" Component="bentonCountyTax" /> <span style="color: red;">*</span>
+            <RadzenTextBox @bind-Value="localization.tax_4_label" Name="bentonCountyTax" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="bentonCountyTax" Text="Tax 4 label is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Tax 4 Value" Component="cityOfRogersTax" /> <span style="color: red;">*</span>
+            <RadzenNumeric @bind-Value="localization.tax_4_value" Name="cityOfRogersTax" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="cityOfRogersTax" Text="Tax 4 value is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4 multi-upload">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Select Price" Component="DropDownBindValue" /> <span style="color: red;">*</span>
+            <RadzenDropDown @bind-Value="localization.showPrice" Data=@showPrices Style="width: 100%" Name="DropDownBindValue" />
+            <RadzenRequiredValidator Component="DropDownBindValue" Text="Show price is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel>Default Product Picture</RadzenLabel> <span style="color: red;">*</span>
+            <RadzenUpload Auto="true" Change="changeProductImage" class="w-100"
+                          InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
+
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+                <RadzenText>@localization.defaultProductImage</RadzenText>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit">Save Settings</RadzenButton>
+</RadzenTemplateForm>

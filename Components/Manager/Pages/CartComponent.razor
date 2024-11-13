@@ -1,0 +1,80 @@
+﻿@if (products is not null && products.Count() > 0)
+{
+    <RadzenRow AlignItems="AlignItems.Start" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenDataGrid Data="@products"
+                        AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                        AllowSorting="true">
+            <Columns>
+                <RadzenDataGridColumn Property="product_name" Title="Name" />
+                <RadzenDataGridColumn Title="Unit Price">
+                    <Template Context="item">
+                        <RadzenText TextStyle="TextStyle.Body2">$@(item.special ? item.special_price.ToString("0.00") : GetPrice(item).ToString("0.00"))</RadzenText>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="Quantity">
+                    <Template Context="item">
+                        <RadzenNumeric Change="UpdateCart" TValue="int" Min="1" Max="item.quantity" @bind-Value="item.incartquantity" />
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="Tax">
+                    <Template Context="item">
+                        <RadzenText>$@(((GetPrice(item) * (localization.tax_1_value + localization.tax_2_value + localization.tax_3_value + localization.tax_4_value) / 100) * item.incartquantity).ToString("0.00"))</RadzenText>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="Action(s)">
+                    <Template Context="item">
+                        <RadzenButton Click="() => RemoveFromCart(item)" Variant="Variant.Text">
+                            <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                        </RadzenButton>
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+        <RadzenStack Style="width: 100%;" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center">
+            <RadzenButton Click="clearCart">Clear Cart</RadzenButton>
+            <RadzenButton Click="checkout">Proceed To Checkout</RadzenButton>
+        </RadzenStack>
+        <RadzenStack Style="width: 100%;" Orientation="Orientation.Vertical">
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText>Sub total: </RadzenText>
+                <RadzenText>$@(subTotal.ToString("0.00"))</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText>Tax (@(taxTotal.ToString("0.00"))%): </RadzenText>
+                <RadzenText>$@(((subTotal * taxTotal) / 100).ToString("0.00"))</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText>Grand total: </RadzenText>
+                <RadzenText>$@(grandTotal.ToString("0.00"))</RadzenText>
+            </RadzenStack>
+        </RadzenStack>
+        @*         @foreach (var product in products)
+    {
+    <RadzenColumn>
+    <RadzenCard Style="margin: 5px 0;" Class="rz-mx-auto">
+    <RadzenStack Orientation="Orientation.Horizontal">
+    <RadzenImage Path="@product?.images[0].short_path" Style="width: 200px; height: 200px; object-fit: cover;" />
+    <RadzenStack>
+    <RadzenText Style="margin: 10px 0; font-size: 20px; font-weight: bold;">@product.product_name</RadzenText>
+    <RadzenText>Rs. @product.regular_price</RadzenText>
+    <RadzenStack Orientation="Orientation.Horizontal">
+    <RadzenLabel>Sales Tax</RadzenLabel>
+    <RadzenNumeric Min="1" TValue="int" @bind-Value="product.vat" Change="UpdateCart" />
+    </RadzenStack>
+    <RadzenStack Orientation="Orientation.Horizontal">
+    <RadzenLabel>Quantity</RadzenLabel>
+    <RadzenNumeric Min="1" Max="product.quantity" TValue="int" @bind-Value="product.incartquantity" Change="UpdateCart" />
+    </RadzenStack>
+    </RadzenStack>
+    <RadzenStack Style="flex: 1" AlignItems="AlignItems.End" JustifyContent="JustifyContent.Start">
+    <RadzenButton Click="() => RemoveFromCart(product)" Variant="Variant.Text">
+    <RadzenIcon Icon="delete" Style="font-size: 20px" />
+    </RadzenButton>
+    </RadzenStack>
+    </RadzenStack>
+    </RadzenCard>
+    </RadzenColumn>
+    }
+    *@
+    </RadzenRow>
+}

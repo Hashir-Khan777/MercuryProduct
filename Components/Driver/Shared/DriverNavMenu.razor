@@ -1,0 +1,85 @@
+﻿@inject NavigationManager NavigationManager
+
+<RadzenHeader>
+    <RadzenStack JustifyContent="JustifyContent.SpaceBetween" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="@(() => sidebar1Expanded = !sidebar1Expanded)" />
+            <RadzenLabel Text="Header" />
+        </RadzenStack>
+        <AuthorizeView>
+            <Authorized>
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="help">
+                            <RadzenIcon Icon="help" />
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Account/Manage">
+                            <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <form action="Account/Logout" method="post">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                            <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Secondary">
+                                <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+                            </RadzenButton>
+                        </form>
+                    </div>
+                </RadzenStack>
+            </Authorized>
+            <NotAuthorized>
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+                    <RadzenLink Path="/account/login">Login</RadzenLink>
+                    <RadzenLink Path="/account/register">Register</RadzenLink>
+                </RadzenStack>
+            </NotAuthorized>
+        </AuthorizeView>
+    </RadzenStack>
+</RadzenHeader>
+<RadzenSidebar @bind-Expanded="@sidebar1Expanded">
+    <RadzenPanelMenu>
+        <RadzenLink Path="/driver/dashboard">
+            <RadzenPanelMenuItem Text="Dashboard" class="rz-color-black" />
+        </RadzenLink>
+        <RadzenLink Path="/driver/vehicles" Match="NavLinkMatch.All">
+            <RadzenPanelMenuItem Text="Vehicles" class="rz-color-black" />
+        </RadzenLink>
+    </RadzenPanelMenu>
+</RadzenSidebar>
+
+@code {
+    bool sidebar1Expanded = true;
+    private List<Route> routes = new List<Route>()
+    {
+        new Route { Label = "Dashboard", Path = "admin/dashboard" },
+        new Route { Label = "Drivers", Path = "admin/drivers" },
+    };
+
+    private string currentUrl = "";
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+    private sealed class Route
+    {
+        public string Label { get; set; } = string.Empty;
+        public string Path { get; set; } = string.Empty;
+    }
+}

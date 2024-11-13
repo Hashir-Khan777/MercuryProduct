@@ -1,0 +1,230 @@
+﻿@using MecuryProduct.Data
+@using MecuryProduct.Services
+@using System.Security.Claims
+
+@inject NavigationManager NavigationManager
+@inject UserService UserService
+@inject CompanyService CompanyService
+@inject SessionService SessionService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<style>
+    .rz-header {
+        background-color: @(routes.Find(x => x.Path == currentUrl)?.Color) !important;
+    }
+</style>
+
+<RadzenHeader>
+    <RadzenStack JustifyContent="JustifyContent.SpaceBetween" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="@(() => sidebar1Expanded = !sidebar1Expanded)" />
+            <RadzenLabel Text="Header" />
+        </RadzenStack>
+        <AuthorizeView>
+            <Authorized>
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="help">
+                            <RadzenIcon Icon="help" />
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Account/Manage">
+                            <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <form action="Account/Logout" method="post">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                            <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Secondary">
+                                <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+                            </RadzenButton>
+                        </form>
+                    </div>
+                </RadzenStack>
+            </Authorized>
+            <NotAuthorized>
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+                    <RadzenLink Path="/account/login">Login</RadzenLink>
+                    <RadzenLink Path="/account/register">Register</RadzenLink>
+                </RadzenStack>
+            </NotAuthorized>
+        </AuthorizeView>
+    </RadzenStack>
+</RadzenHeader>
+<RadzenSidebar @bind-Expanded="@sidebar1Expanded">
+    <RadzenPanelMenu>
+        <RadzenPanelMenu Multiple>
+            <RadzenPanelMenuItem Text="Dashboard" Path="/employee/dashboard" class="rz-color-black" />
+            <RadzenPanelMenuItem Text="LMS (Lead Management System)" class="rz-color-black">
+                @if (current_user?.permissions?.Contains("User Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="Users" Path="/employee/users" class="rz-color-black" />
+                }
+                @if (current_user?.permissions?.Contains("Customer Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="Customers" Path="/employee/customers" class="rz-color-black" />
+                }
+                @if (current_user?.permissions?.Contains("Vehicle Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="Vehicles" Path="/employee/vehicles" class="rz-color-black" />
+                }
+                @if (current_user?.permissions?.Contains("Driver Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="Drivers" Path="/employee/drivers" class="rz-color-black" />
+                }
+                @if (current_user?.permissions?.Contains("Calendar Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="Calendar" Path="/employee/calendar" class="rz-color-black" />
+                }
+                @if (current_user?.permissions?.Contains("Inventory Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="Inventory" Path="/employee/inventory" class="rz-color-black" />
+                }
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Administration" class="rz-color-black">
+                @if (current_user?.permissions?.Contains("Localization Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="Localization" Path="/employee/localization" class="rz-color-black" />
+                }
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="POS (Point Of Sale)" class="rz-color-black">
+                @if (current_user?.permissions?.Contains("Cashier Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="POS" Path="/employee/pos" class="rz-color-black" />
+                }
+                @if (current_user?.permissions?.Contains("Cashier Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="Customers" Path="/employee/poscustomers" class="rz-color-black" />
+                }
+                @if (current_user?.permissions?.Contains("Product Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="Products" Path="/employee/products" class="rz-color-black" />
+                }
+                @if (current_user?.permissions?.Contains("Sales Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="Sales" Path="/employee/sales" class="rz-color-black" />
+                }
+                @if (current_user?.permissions?.Contains("Sales Module") ?? false)
+                {
+                    <RadzenPanelMenuItem Text="Cash Flow" Path="/employee/cashflow" class="rz-color-black" />
+                }
+            </RadzenPanelMenuItem>
+            @* May be use later *@
+            @* <RadzenLink Path="/employee/invoices" Match="NavLinkMatch.All">
+            <RadzenPanelMenuItem Text="Invoices" class="rz-color-black" />
+            </RadzenLink> *@
+        </RadzenPanelMenu>
+    </RadzenPanelMenu>
+</RadzenSidebar>
+
+@code {
+    bool sidebar1Expanded = true;
+
+    private string currentUrl = "";
+    public List<CompanyModel> companies = new List<CompanyModel>();
+    public ApplicationUser current_user = new ApplicationUser();
+    public int default_company;
+    public string current_user_id = string.Empty;
+
+    private List<Route> routes = new List<Route>()
+    {
+        new Route { Color = "#3F79D1", Path = "employeedashboard" },    // Soft Blue
+        new Route { Color = "#4CAF50", Path = "employeeusers" },        // Green
+        new Route { Color = "#FF7043", Path = "employeecustomers" },    // Soft Orange
+        new Route { Color = "#8E44AD", Path = "employeevehicles" },     // Purple
+        new Route { Color = "#F57C00", Path = "employeedrivers" },      // Dark Orange
+        new Route { Color = "#FF5722", Path = "employeecalendar" },     // Deep Red-Orange
+        new Route { Color = "#795548", Path = "employeeinventory" },    // Brown
+        new Route { Color = "#009688", Path = "employeecompanies" },    // Teal
+        new Route { Color = "#391FBB", Path = "employeelocalization" }, // Indigo
+        new Route { Color = "#D32F2F", Path = "employeeproducts" },     // Deep Red
+        new Route { Color = "#388E3C", Path = "employeecategories" },   // Dark Green
+        new Route { Color = "#8E44AD", Path = "employeepos" },          // Soft Purple
+        new Route { Color = "#6C5B7B", Path = "employeesales" },        // Muted Violet
+        new Route { Color = "#0288D1", Path = "employeelogs" },         // Teal Blue
+        new Route { Color = "#00796B", Path = "employeecashflow" },     // Deep Teal
+    };
+
+    protected override async void OnInitialized()
+    {
+        GetUser();
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+        SetUserId();
+        companies = CompanyService.GetCompaniesByEmployeeId(current_user_id);
+
+        var company_in_session = await SessionService.Get<int?>("company");
+
+        if (company_in_session is not null)
+        {
+            default_company = (int)company_in_session;
+        }
+        else
+        {
+            if (companies is not null)
+            {
+                await SessionService.Set("company", companies[0].Id.ToString());
+                default_company = companies[0].Id;
+            }
+        }
+    }
+
+    public async void ChangeCompany(CompanyModel item)
+    {
+        await SessionService.Set("company", item.Id.ToString());
+        default_company = item.Id;
+        NavigationManager.Refresh(true);
+        StateHasChanged();
+    }
+
+    public async void SetUserId()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                current_user_id = userId;
+            }
+        }
+    }
+
+    public async void GetUser()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                current_user = UserService.GetUserById(userId);
+            }
+        }
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+    private sealed class Route
+    {
+        public string Color { get; set; } = string.Empty;
+        public string Path { get; set; } = string.Empty;
+    }
+}

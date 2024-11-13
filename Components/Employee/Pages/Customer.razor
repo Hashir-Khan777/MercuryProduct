@@ -1,0 +1,54 @@
+﻿@page "/employee/customers"
+
+@rendermode InteractiveServer
+
+<PageTitle>Customers</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenText TextStyle="TextStyle.H4">Customers</RadzenText>
+    <RadzenLink Path="/employee/addcustomer">
+        <RadzenButton>Add</RadzenButton>
+    </RadzenLink>
+</RadzenStack>
+
+<RadzenDataGrid Data="@customers"
+                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                M-CUS-@item.Id
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="cfname" Title="First Name" />
+        <RadzenDataGridColumn Property="clname" Title="Last Name" />
+        <RadzenDataGridColumn Property="email" Title="Email" />
+        <RadzenDataGridColumn Property="cphone_number" Title="Phone Number" />
+@*         <RadzenDataGridColumn Title="Company">
+            <Template Context="item">
+                @item.Company?.Name
+            </Template>
+        </RadzenDataGridColumn> *@
+        <RadzenDataGridColumn Title="Created By">
+            <Template Context="item">
+                @item.created_by?.UserName
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Vehicles">
+            <Template Context="item">
+                <span style="cursor: pointer; color: #4340D2;" @onclick="() => OpenShowVehiclesModal(item.Id)">@item?.cars?.Count()</span>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Actions" Width="300px">
+            <Template Context="item">
+                <RadzenButton Click="() => OpenAddVehicleModal(item.Id)">Add Vehicle</RadzenButton>
+                <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateCustomerModal(item.Id)">
+                    <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                </RadzenButton>
+                <RadzenButton Variant="Variant.Text" Click="() => DeleteCustomer(item)">
+                    <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                </RadzenButton>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

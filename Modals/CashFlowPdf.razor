@@ -1,0 +1,114 @@
+﻿@page "/admin/cashflowpdf"
+
+@inject Radzen.DialogService dialogService
+
+<div @ref="@ItemToExport">
+    <RadzenText Style="font-weight: bold; font-size: 20px;">Expense</RadzenText>
+    <RadzenDataGrid Data="@expenses">
+        <Columns>
+            <RadzenDataGridColumn Title="Type" Property="type" />
+            <RadzenDataGridColumn Title="Amount">
+                <Template Context="item">
+                    $@item.amount
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="Payment Type" Property="payment_type" />
+            <RadzenDataGridColumn Title="Seller">
+                <Template Context="item">
+                    @item.customer?.cfname @item.customer?.clname
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="Created By">
+                <Template Context="item">
+                    @item.created_by?.Email
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="Created At">
+                <Template Context="item">
+                    @item.created_at.ToLocalTime()
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+    <RadzenText Style="font-weight: bold; font-size: 20px; margin-top: 20px;">Income</RadzenText>
+    <RadzenText>Total Income: $@GetTotalIncome().ToString("0.00")</RadzenText>
+    <RadzenText>Total Taxes: $@GetTotalTaxesInDollars().ToString("0.00") (@GetTotalTaxes()%)</RadzenText>
+    <RadzenText>Net Income: $@GetNetIncome().ToString("0.00")</RadzenText>
+    <RadzenDataGrid Data="@categories">
+        <Columns>
+            <RadzenDataGridColumn Title="Category" Property="Name" />
+            <RadzenDataGridColumn Title="Items Sold">
+                <Template Context="item">
+                    @GetItemsSoldByCategory(item.Id)
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="Items Returned">
+                <Template Context="item">
+                    @GetItemsReturnedByCategory(item.Id)
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="Revenue">
+                <Template Context="item">
+                    $@GetRevenueByCategory(item.Id).ToString("0.00")
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="@(localization.tax_1_label)">
+                <Template Context="item">
+                    $@GetAnyTaxByCategory(item.Id, "tax_1_value").ToString("0.00")
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="@(localization.tax_2_label)">
+                <Template Context="item">
+                    $@GetAnyTaxByCategory(item.Id, "tax_2_value").ToString("0.00")
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="@(localization.tax_3_label)">
+                <Template Context="item">
+                    $@GetAnyTaxByCategory(item.Id, "tax_3_value").ToString("0.00")
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="@(localization.tax_4_label)">
+                <Template Context="item">
+                    $@GetAnyTaxByCategory(item.Id, "tax_4_value").ToString("0.00")
+                </Template>
+            </RadzenDataGridColumn>
+            @*                     <RadzenDataGridColumn Title="Sales Tax">
+            <Template Context="item">
+            $@GetTaxByCategory(item.Id).ToString("0.00")
+            </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="Benton County Tax">
+            <Template Context="item">
+            $@GetAnyTaxByCategory(item.Id, "bentonCountyTax").ToString("0.00")
+            </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="City Of Rogers Tax">
+            <Template Context="item">
+            $@GetAnyTaxByCategory(item.Id, "cityOfRogersTax").ToString("0.00")
+            </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="EPA Fees Tax">
+            <Template Context="item">
+            $@GetAnyTaxByCategory(item.Id, "epaFeesTax").ToString("0.00")
+            </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="State Of Arkansa Tax">
+            <Template Context="item">
+            $@GetAnyTaxByCategory(item.Id, "stateOfArkansaTax").ToString("0.00")
+            </Template>
+            </RadzenDataGridColumn> *@
+            <RadzenDataGridColumn Title="Discount (%)">
+                <Template Context="item">
+                    @GetDiscountByCategory(item.Id)%
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+    <RadzenText Style="font-weight: bold; font-size: 20px; margin-top: 20px;">Profit & Loss</RadzenText>
+    <RadzenText>Net Income: $@GetNetIncome().ToString("0.00")</RadzenText>
+    <RadzenText>Total Expense: $@GetTotalExpense().ToString("0.00")</RadzenText>
+    <RadzenText>Profit & Loss: $@((@GetNetIncome() - @GetTotalExpense()).ToString("0.00"))</RadzenText>
+</div>
+<RadzenStack Style="margin-top: 10px;" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End">
+    <RadzenButton Click="save">Save PDF</RadzenButton>
+</RadzenStack>

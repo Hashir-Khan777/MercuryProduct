@@ -1,0 +1,36 @@
+﻿@page "/admin/updatestateform/{SfId}"
+
+<style>
+    .multi-upload .rz-fileupload-content {
+        display: none !important;
+    }
+</style>
+
+@inject Radzen.DialogService dialogService
+
+<RadzenTemplateForm TItem="StateFormModel" Data=@state_form Submit="@UpdateStateForm">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="multi-upload rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+            <RadzenLabel Component="UploadDoc">Envelope</RadzenLabel> <span style="color: red;">*</span>
+            <RadzenUpload Name="UploadDoc" Change="changeDocs" @bind-value="state_form.doc" Style="width: 100%;" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
+            @foreach (var file in envImages)
+            {
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+                    <RadzenText>@file.file_name</RadzenText>
+                    <RadzenButton Click="@(() => DeleteDoc(file))" Variant="Variant.Flat"><RadzenIcon Icon="close" /></RadzenButton>
+                </RadzenStack>
+            }
+        </RadzenColumn>
+    </RadzenRow>
+@*     <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+            <RadzenLabel Text="Company" Component="NumberType"
+                            Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@state_form.CompanyId" Data="@companies"
+                            Name="NumberType" Style="width: 100%" TextProperty="Name" ValueProperty="Id" />
+            <RadzenRequiredValidator Component="NumberType" Text="Company is required" />
+        </RadzenColumn>
+    </RadzenRow> *@
+    <RadzenButton ButtonType="ButtonType.Submit">Update State Form</RadzenButton>
+</RadzenTemplateForm>

@@ -1,0 +1,44 @@
+﻿@page "/"
+
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
+
+<PageTitle>Home</PageTitle>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null)
+        {
+            if (user.Identity.IsAuthenticated)
+            {
+                if (user.Claims is not null)
+                {
+                    foreach (var claim in user.Claims.Where(c => c.Type == "Role"))
+                    {
+                        if (claim.Value == "Admin")
+                        {
+                            NavigationManager.NavigateTo("/admin/dashboard");
+                        }
+                        else if (claim.Value == "Driver")
+                        {
+                            NavigationManager.NavigateTo("/driver/dashboard");
+                        }
+                        else if (claim.Value == "Manager")
+                        {
+                            NavigationManager.NavigateTo("/manager/dashboard");
+                        }
+                        else if (claim.Value == "Employee")
+                        {
+                            NavigationManager.NavigateTo("/employee/dashboard");
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

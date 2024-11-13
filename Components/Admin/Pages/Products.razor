@@ -1,0 +1,75 @@
+﻿@page "/admin/products"
+
+<PageTitle>Products</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenText TextStyle="TextStyle.H4">Products</RadzenText>
+    <RadzenLink Path="/admin/addproduct">
+        <RadzenButton>Add</RadzenButton>
+    </RadzenLink>
+</RadzenStack>
+
+<RadzenStack Orientation="Orientation.Horizontal" Gap="10px" Style="margin-bottom: 10px;">
+    <RadzenFormField Text="Search Products" Style="width: 100%;" Variant="Variant.Outlined">
+        <Start>
+            <RadzenIcon Icon="search" />
+        </Start>
+        <ChildContent>
+            <RadzenTextBox Change="SearchProducts" Data="@products" TextProperty="product_name" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" />
+        </ChildContent>
+    </RadzenFormField>
+</RadzenStack>
+
+<RadzenDataGrid Data="@products"
+                PageSize="10" AllowPaging="true"
+                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                M-PROD-@item.Id
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="product_name" Title="Product Name" />
+        <RadzenDataGridColumn Title="Regular Price">
+            <Template Context="item">
+                $@item.regular_price.ToString("0.00")
+            </Template>
+        </RadzenDataGridColumn>
+@*         <RadzenDataGridColumn Title="Custome Price 1">
+            <Template Context="item">
+                $@item.custom_price_1.ToString("0.00")
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Custome Price 2">
+            <Template Context="item">
+                $@item.custom_price_2.ToString("0.00")
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Custome Price 3">
+            <Template Context="item">
+                $@item.custom_price_3.ToString("0.00")
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Custome Price 4">
+            <Template Context="item">
+                $@item.custom_price_4.ToString("0.00")
+            </Template>
+        </RadzenDataGridColumn> *@
+        <RadzenDataGridColumn Title="Created By">
+            <Template Context="item">
+                @item.created_by?.UserName
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Actions" Width="300px">
+            <Template Context="item">
+                <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateProductModal(item.Id)">
+                    <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                </RadzenButton>
+                <RadzenButton Variant="Variant.Text" Click="() => DeleteProduct(item)">
+                    <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                </RadzenButton>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

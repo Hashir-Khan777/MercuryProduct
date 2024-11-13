@@ -1,0 +1,34 @@
+﻿@page "/admin/viewsaleshistory/{CusId}"
+
+<RadzenDataGrid Data="@payments"
+                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                M-SALE-@item.Id
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Products">
+            <Template Context="item">
+                <RadzenText>@GetProucts(item.products).Count()</RadzenText>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Tax (%)">
+            <Template Context="item">
+                <RadzenText>@(item.taxAmount.ToString("0.00"))%</RadzenText>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Total Amount">
+            <Template Context="item">
+                <RadzenText>$@(item.totalAmount.ToString("0.00"))</RadzenText>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Paymnet Type" Property="paymentType" />
+        <RadzenDataGridColumn Title="Created At">
+            <Template Context="item">
+                <RadzenText>@item.created_at.ToLocalTime()</RadzenText>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

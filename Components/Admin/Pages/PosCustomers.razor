@@ -1,0 +1,47 @@
+﻿@page "/admin/poscustomers"
+
+<PageTitle>POS Customers</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenText TextStyle="TextStyle.H4">POS Customers</RadzenText>
+    <RadzenButton Click="AddCustomer">Add</RadzenButton>
+</RadzenStack>
+
+<RadzenDataGrid Data="@pos_customers"
+                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                M-POS-CUS-@item.Id
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="cfname" Title="First Name" />
+        <RadzenDataGridColumn Property="clname" Title="Last Name" />
+        <RadzenDataGridColumn Title="Company">
+            <Template Context="item">
+                @item.Company?.Name
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Created By">
+            <Template Context="item">
+                @item.created_by?.UserName
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Sales History" Width="300px">
+            <Template Context="item">
+                <RadzenButton Click="() => ViewSalesHistory(item.Id)" Variant="Variant.Text">View</RadzenButton>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Actions" Width="300px">
+            <Template Context="item">
+                <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateCustomerModal(item.Id)">
+                    <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                </RadzenButton>
+                <RadzenButton Variant="Variant.Text" Click="() => DeleteCustomer(item)">
+                    <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                </RadzenButton>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

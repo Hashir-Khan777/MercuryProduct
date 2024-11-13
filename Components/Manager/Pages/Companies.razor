@@ -1,0 +1,42 @@
+﻿@page "/manager/companies"
+
+<PageTitle>Companies</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenText TextStyle="TextStyle.H4">Companies</RadzenText>
+    <RadzenLink Path="/manager/addcompany">
+        <RadzenButton>Add</RadzenButton>
+    </RadzenLink>
+</RadzenStack>
+
+<RadzenDataGrid Data="@companies"
+                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                M-COMP-@item.Id
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="Name" Title="Company Name" />
+        <RadzenDataGridColumn Property="caddress" Title="Company Address" />
+        <RadzenDataGridColumn Title="Manager">
+            <Template Context="item">
+                @foreach (var comp in item.CompanyManagers)
+                {
+                    <span>@comp.manager.UserName</span>
+                }
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Actions" Width="300px">
+            <Template Context="item">
+                <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateCompanyModal(item.Id)">
+                    <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                </RadzenButton>
+                <RadzenButton Variant="Variant.Text" Click="() => DeleteCompany(item)">
+                    <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                </RadzenButton>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

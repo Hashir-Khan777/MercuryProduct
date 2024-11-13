@@ -1,0 +1,54 @@
+﻿@using Microsoft.Extensions.Caching.Distributed
+@using System.Text.Json
+
+@inject IDistributedCache _cache
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/material-base.css">
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="MecuryProduct.styles.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" type="text/css" href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps.css" />
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps-web.min.js"></script>
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/services/services-web.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="js/map.js" defer></script>
+    <style>
+        .rz-grid-table-fixed {
+            table-layout: auto !important;
+        }
+    </style>
+    <HeadOutlet />
+</head>
+
+<body>
+    <Routes @rendermode="RenderModeForPage" />
+    <script src="_framework/blazor.web.js"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
+</body>
+
+</html>
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    private IComponentRenderMode? RenderModeForPage => HttpContext.Request.Path.StartsWithSegments("/Account") ? null : InteractiveServer;
+
+    protected override async void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var cookies = HttpContext.Request.Cookies;
+
+        await _cache.SetStringAsync("cookies", JsonSerializer.Serialize(cookies));
+    }
+}

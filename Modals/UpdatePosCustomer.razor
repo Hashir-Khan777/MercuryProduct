@@ -1,0 +1,64 @@
+﻿@page "/admin/updateposcustomer/{CusId}"
+
+@inject Radzen.DialogService dialogService
+
+<RadzenTemplateForm TItem="PosCustomerModel" Data=@customer Submit="@CreateCustomer">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="First Name" Component="FirstName" /> <span style="color: red;">*</span>
+            <RadzenTextBox @bind-Value="customer.cfname" Name="FirstName" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="FirstName" Text="First name is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Last Name" Component="LastName" /> <span style="color: red;">*</span>
+            <RadzenTextBox @bind-Value="customer.clname" Name="LastName" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="LastName" Text="Last name is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Email" Component="Email" />
+            <RadzenTextBox @bind-Value="customer.email" Name="Email" Style="width: 100%;" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Address" Component="Address" />
+            <RadzenAutoComplete Name="Address" Change=@OnChange @bind-Value=@customer.caddress
+                                Data="@relatedAddresses.Results" TextProperty="Address.FreeformAddress" LoadData=@searchAddress
+                                Style="width: 100%" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Zip Code" Component="ZipCode" />
+            <RadzenTextBox @bind-Value="customer.czip_code" Name="ZipCode" Style="width: 100%;" />
+            <RadzenRegexValidator Component="ZipCode" Text="ZIP code must be 5 digits" Pattern="\d{5}" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="City" Component="City" />
+            <RadzenTextBox @bind-Value="customer.ccity" Name="City" Style="width: 100%;" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Country" Component="Country" />
+            <RadzenTextBox @bind-Value="customer.ccountry" Name="Country" Style="width: 100%;" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="State" Component="State" />
+            <RadzenTextBox @bind-Value="customer.cstate" Name="State" Style="width: 100%;" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="12">
+            <RadzenLabel Text="Phone Number" Component="PhoneNumber" />
+            <RadzenNumeric @bind-Value="customer.cphone_number" Name="PhoneNumber" Style="width: 100%;" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Loyalty Member" Component="Check" /> <span style="color: red;">*</span>
+            <RadzenCheckBox @bind-Value="customer.loyalty_member" Name="Check" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit">Upadate Customer</RadzenButton>
+</RadzenTemplateForm>

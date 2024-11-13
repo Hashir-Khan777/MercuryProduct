@@ -1,0 +1,63 @@
+﻿@page "/employee/addcompany"
+
+<PageTitle>Add Company</PageTitle>
+
+<a onclick="history.back();">
+    <RadzenButton Variant="Variant.Flat" Style="margin-bottom: 20px;">
+        <RadzenIcon Icon="arrow_back" />
+    </RadzenButton>
+</a>
+
+<h3>Add Company</h3>
+
+<RadzenTemplateForm TItem="CompanyModel" Data=@company Submit="@CreateCompany">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Company Name" Component="CompanyName" />
+            <RadzenTextBox @bind-Value="company.Name" Name="CompanyName" Style="width: 100%;" Change="SetInSession" />
+            <RadzenRequiredValidator Component="CompanyName" Text="First name is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Manager" Component="Model" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenDropDown Multiple Change="SetInSession" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@selected_managers"
+                            Data="@managers" TextProperty="UserName" ValueProperty="Id" Style="width: 100%;" Name="Model" />
+            <RadzenRequiredValidator Component="Model" Text="Manager is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Address" Component="Address" /> <span style="color: red;">*</span>
+            <RadzenAutoComplete Name="Address" Change=@OnChange @bind-Value=@company.caddress
+                                Data="@relatedAddresses.Results" TextProperty="Address.FreeformAddress" LoadData=@searchAddress
+                                Style="width: 100%" />
+            <RadzenRequiredValidator Component="Address" Text="Address is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Zip Code" Component="ZipCode" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="company.czip_code" Name="ZipCode" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="ZipCode" Text="Zip Code is required" />
+            <RadzenRegexValidator Component="ZipCode" Text="ZIP code must be 5 digits" Pattern="\d{5}" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="City" Component="City" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="company.ccity" Name="City" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="City" Text="City is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Country" Component="Country" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="company.ccountry" Name="Country" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="Country" Text="Country is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="State" Component="State" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="company.cstate" Name="State" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="State" Text="State is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit">Add Company</RadzenButton>
+</RadzenTemplateForm>

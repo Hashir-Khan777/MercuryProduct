@@ -1,0 +1,141 @@
+﻿@page "/manager/addcustomer"
+
+@rendermode InteractiveServer
+
+<PageTitle>Add Customer</PageTitle>
+
+@* PP-101: add a go back button in add state form
+Bug: User can't go back from UI
+Fix: Add a go back button in all the forms *@
+<a onclick="history.back();">
+    <RadzenButton Variant="Variant.Flat" Style="margin-bottom: 20px;">
+        <RadzenIcon Icon="arrow_back" />
+    </RadzenButton>
+</a>
+
+<h3>Add Customer</h3>
+
+<RadzenTemplateForm TItem="CustomerModel" Data=@customer Submit="@CreateCustomer">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="First Name" Component="FirstName" />
+            @* PP-63: Add "*" sign in red color in required fields
+            Feature: Show field is required
+            Fix: Add a red color starik on every field of every form *@
+            <span style="color: red;">*</span>
+            @* PP-98: set formatting of form
+            Bug: Width of fields are not same
+            Fix: set width to 100% on every in application *@
+            <RadzenTextBox @bind-Value="customer.cfname" Name="FirstName" Style="width: 100%;" Change="SetInSession" />
+            <RadzenRequiredValidator Component="FirstName" Text="First name is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Last Name" Component="LastName" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="customer.clname" Name="LastName" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="LastName" Text="Last name is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Address" Component="Address" /> <span style="color: red;">*</span>
+            <RadzenAutoComplete Name="Address" Change=@OnChange @bind-Value=@customer.caddress
+                Data="@relatedAddresses.Results" TextProperty="Address.FreeformAddress" LoadData=@searchAddress
+                Style="width: 100%" />
+            <RadzenRequiredValidator Component="Address" Text="Address is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Zip Code" Component="ZipCode" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="customer.czip_code" Name="ZipCode" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="ZipCode" Text="Zip Code is required" />
+            <RadzenRegexValidator Component="ZipCode" Text="ZIP code must be 5 digits" Pattern="\d{5}" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="City" Component="City" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="customer.ccity" Name="City" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="City" Text="City is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Country" Component="Country" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="customer.ccountry" Name="Country" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="Country" Text="Country is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="State" Component="State" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="customer.cstate" Name="State" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="State" Text="State is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Phone Number" Component="PhoneNumber" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="customer.cphone_number" Name="PhoneNumber"
+                Style="width: 100%;" />
+            <RadzenRequiredValidator Component="PhoneNumber" Text="Phone number is required" />
+            @* PP-84: change regex in phone number
+            Bug: phone number should be 10 digit not 11
+            Fix: Update the regex statement form 11 digits to 10 digits *@
+            <RadzenRegexValidator Component="PhoneNumber" Text="Phone number must be 10 digits" Pattern="\d{10}" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Email" Component="Email" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="customer.email" Name="Email" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="Email" Text="Email is required" />
+            <RadzenRegexValidator Component="Email" Text="Email must be valid" Pattern="@email_regex" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Company Name" Component="CompanyName" /> <span style="color: red;">*</span>
+            <RadzenTextBox Change="SetInSession" @bind-Value="customer.company_name" Name="CompanyName"
+                Style="width: 100%;" />
+            <RadzenRequiredValidator Component="CompanyName" Text="Company name is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Customer Type" Component="DropDownBindValue"
+                Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown Change="SetInSession" @bind-Value="@customer.customer_type" Name="CustomerType"
+                Data="@customer_types" Style="width: 100%" />
+            <RadzenRequiredValidator Component="CustomerType" Text="Customer type is required" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Number Type" Component="DropDownBindValue"
+                Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown Change="SetInSession" @bind-Value="@customer.number_type" Data="@number_types"
+                Name="NumberType" Style="width: 100%" />
+            <RadzenRequiredValidator Component="NumberType" Text="Number type is required" />
+        </RadzenColumn>
+    </RadzenRow>
+@*     <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Company" Component="DropDownBindValue"
+                         Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" Change="SetInSession" @bind-Value="@customer.CompanyId" Data="@companies"
+                            Name="NumberType" Style="width: 100%" TextProperty="Name" ValueProperty="Id" />
+            <RadzenRequiredValidator Component="NumberType" Text="Company is required" />
+        </RadzenColumn>
+    </RadzenRow> *@
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenTextArea Placeholder="Customer Notes" Change="SetInSession" @bind-Value="customer.customer_notes"
+                Style="width: 100%;" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="12" SizeLG="6">
+            <RadzenLabel Text="Contact Prefrences" Component="Prefrence"
+                Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+            <RadzenCheckBoxList Name="Prefrence" Change="SetInSession" Style="width: 100%;" Data="contact_prefrence"
+                @bind-Value="@selected_contact_prefrence" TValue="string" class="mt-3" />
+            @* PP-87: make contact preference required
+                Bug: Contact prefrence is not required
+                Fix: Add radzen required validator *@
+            <RadzenRequiredValidator Component="Prefrence" Text="Contact prefrence is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit">Add Customer</RadzenButton>
+</RadzenTemplateForm>

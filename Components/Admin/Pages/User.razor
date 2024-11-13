@@ -1,0 +1,114 @@
+﻿@page "/admin/users"
+
+<PageTitle>Users</PageTitle>
+
+@*
+PP-118: Create user management module.
+Feature: Add a user management module for admin.
+Fix: Create a table to show all users and perform actions like create, read, update, delete.
+*@
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenText TextStyle="TextStyle.H4">Users</RadzenText>
+    <RadzenLink Path="/admin/adduser">
+        <RadzenButton>Add</RadzenButton>
+    </RadzenLink>
+</RadzenStack>
+
+<RadzenDataGrid TItem="ApplicationUser" Data="@users" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id" Property="UserName">
+            <Template Context="item">
+                @(item.CompanyNames)@(item.Role != "Admin" ? "-" : null)@(item.Role)-@(item.user_id)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="UserName" Title="User Name" />
+        <RadzenDataGridColumn Title="Role" Type="typeof(string)" Property="Role">
+            <Template Context="item">
+                @GetUserClaim(item.Id)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Lockout" Type="typeof(string)" Property="Lockout">
+            <Template Context="item">
+                @if (item.LockoutEnd == null)
+                {
+                    <p>No</p>
+                }
+                else
+                {
+                    <p>Yes</p>
+                }
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Company" Type="typeof(string)" Property="CompanyNames">
+            <Template Context="item">
+                @if (item.CompanyManagers.Count() > 0)
+                {
+                    @foreach (var comp in item.CompanyManagers)
+                    {
+                        <span>@comp.company.Name</span>
+                    }
+                }
+                else if (item.CompanyEmployees.Count() > 0)
+                {
+                    @foreach (var comp in item.CompanyEmployees)
+                    {
+                        <span>@comp.company.Name</span>
+                    }
+                }
+                else if (item.CompanyDrivers.Count() > 0)
+                {
+                    @foreach (var comp in item.CompanyDrivers)
+                    {
+                        <span>@comp.company.Name</span>
+                    }
+                }
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Delete Status" Type="typeof(string)" Property="deleted">
+            <Template Context="item">
+                @if (!item.deleted)
+                {
+                    <p>Not Deleted</p>
+                }
+                else
+                {
+                    <p>Deleted</p>
+                }
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Action">
+            <Template Context="item">
+                @if (GetUserClaim(item.Id) != "Admin" && !item.deleted)
+                {
+                    <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateUserModal(item.Id)">
+                        <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                    </RadzenButton>
+                    <RadzenButton Variant="Variant.Text" Click="() => DeleteUser(item)">
+                        <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                    </RadzenButton>
+                    @if (item.LockoutEnd != null)
+                    {
+                        <RadzenButton Variant="Variant.Text" Click="() => UnlockUser(item)">
+                            <RadzenIcon Icon="lock_open" Style="font-size: 20px" />
+                        </RadzenButton>
+                    }
+                    @*
+                        PP-47: Login As functionality.
+                        Feature: Admin should login as other users without knowing thier passwords.
+                        Fix: Post a reaquest on account/ login as route in IdentityComponentsEndpointRouteBuilderExtensions.cs file
+                    *@
+                    <form action="Account/LoginAs" method="post" style="display: inline;">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="UserId" value="@item.Id" />
+                        <input type="hidden" name="ReturnUrl" value="" />
+                        <RadzenButton Variant="Variant.Text" ButtonType="ButtonType.Submit">
+                            <RadzenIcon Icon="login" Style="font-size: 20px" />
+                        </RadzenButton>
+                    </form>
+                }
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

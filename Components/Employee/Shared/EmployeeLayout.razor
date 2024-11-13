@@ -1,0 +1,75 @@
+@inherits LayoutComponentBase
+
+@using System.Security.Claims
+
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject SessionService SessionService
+@inject CompanyService CompanyService
+
+<RadzenDialog />
+<RadzenLayout>
+    <EmployeeNavMenu />
+    <RadzenBody>
+        <RadzenBreadCrumb>
+            @foreach (var item in currentUrl.Split('/'))
+            {
+                if (currentUrl.Split('/')[0] == item)
+                {
+                    <RadzenBreadCrumbItem Text="@item" />
+                }
+                else
+                {
+                    <RadzenBreadCrumbItem Path="@item" Text="@item" />
+                }
+            }
+        </RadzenBreadCrumb>
+        <div class="rz-p-4">
+            @Body
+        </div>
+    </RadzenBody>
+    <RadzenFooter>
+        Footer
+    </RadzenFooter>
+</RadzenLayout>
+
+@code {
+    bool sidebar1Expanded = true;
+
+    private string currentUrl = "";
+    public List<CompanyModel> companies = new List<CompanyModel>();
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+    public async void GetCompaniesByEmployeeId()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                companies = CompanyService.GetCompaniesByEmployeeId(userId);
+                await SessionService.Set("company", companies[0].Id.ToString());
+            }
+        }
+    }
+}

@@ -1,0 +1,83 @@
+﻿@page "/dialog/expense"
+
+@inject Radzen.DialogService dialogService
+
+<style>
+    .multi-upload .rz-fileupload-content {
+        display: none !important;
+    }
+</style>
+
+<RadzenStack Gap="1rem" Orientation="Orientation.Vertical" JustifyContent="JustifyContent.SpaceBetween"
+             Style="height: 100%;">
+    <RadzenTemplateForm TItem="ExpenseModel" Data=@expense Submit="@CraeteExpense">
+        <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+            <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+                <RadzenLabel Text="Expense Type" Component="ExpenseType" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+                <RadzenDropDown Change="SetInSession" @bind-Value="@expense.type"
+                                Data="@expense_types" Style="width: 100%; max-width: 400px;" Name="ExpenseType" />
+                <RadzenRequiredValidator Component="ExpenseType" Text="Expense Type is required" />
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+                <RadzenLabel Text="Seller" Component="DropDownBindValue"
+                             Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+                <RadzenDropDown Change="SetInSession" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" FilterAsYouType="true"
+                                @bind-Value="@expense.cus_id" Data="@customers" TextProperty="search" ValueProperty="Id" Style="width: 100%;"
+                                Name="Seller">
+                    <Template Context="item">
+                        @item.cfname @item.clname (@item.cphone_number)
+                    </Template>
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="Seller" Text="Customer is required" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+            <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+                <RadzenLabel Text="Ammount" Component="PurchaseAmount" /> <span style="color: red;">*</span>
+                <RadzenNumeric @bind-Value="expense.amount" Name="PurchaseAmount" Style="width: 100%;" />
+                <RadzenRequiredValidator Component="PurchaseAmount" Text="Amount is required" />
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+                <RadzenLabel Text="Payment Type" Component="PaymentType" Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+                <RadzenDropDown Change="SetInSession" @bind-Value="@expense.payment_type"
+                                Data="@payment_types" Style="width: 100%; max-width: 400px;" Name="PaymentType" />
+                <RadzenRequiredValidator Component="PaymentType" Text="Payment Type is required" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+            <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+                <RadzenLabel Text="Check No." Component="Check" />
+                <RadzenNumeric @bind-Value="expense.check_no" Name="Check" Style="width: 100%;" />
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+                <RadzenLabel>File</RadzenLabel>
+                <RadzenFileInput Change="changeFile" @bind-FileName=@file_name
+                                 TValue="string" class="w-100"
+                                 InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
+            </RadzenColumn>
+        </RadzenRow>
+@*         <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+            <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+                <RadzenLabel Text="Company" Component="DropDownBindValue"
+                             Style="margin-right: 8px; vertical-align: middle;" /> <span style="color: red;">*</span>
+                <RadzenDropDown FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" Change="SetInSession" @bind-Value="@expense.company_id" Data="@companies"
+                                Name="NumberType" Style="width: 100%" TextProperty="Name" ValueProperty="Id" />
+                <RadzenRequiredValidator Component="NumberType" Text="Company is required" />
+            </RadzenColumn>
+        </RadzenRow> *@
+        <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+            <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+                <RadzenFormField Text="Notes" Variant="Variant.Flat" Style="width: 100%; max-width: 770px">
+                    <RadzenTextArea Change="SetInSession" @bind-Value="expense.notes" Style="width: 100%" />
+                </RadzenFormField>
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow AlignItems="AlignItems.End" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+            <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+                <RadzenButton ButtonType="ButtonType.Submit">Add Expense</RadzenButton>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenTemplateForm>
+</RadzenStack>

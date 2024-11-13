@@ -1,0 +1,45 @@
+﻿@page "/admin/invoices"
+
+<PageTitle>Invoices</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenText TextStyle="TextStyle.H4">Invoices</RadzenText>
+    <RadzenLink Path="/admin/addinvoice">
+        <RadzenButton>Add</RadzenButton>
+    </RadzenLink>
+</RadzenStack>
+
+<RadzenDataGrid Data="@invoices"
+                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                M-INV-@item.Id
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Quantity" Property="quantity" />
+        <RadzenDataGridColumn Title="Price" Property="price" />
+        <RadzenDataGridColumn Title="Company">
+            <Template Context="item">
+                @item.company?.Name
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Products">
+            <Template Context="item">
+                @if (item.productInvoice?.Count() > 0)
+                {
+                    @foreach (var prod in item.productInvoice)
+                    {
+                        <span>@prod.product?.product_name</span>
+                    }
+                }
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Created By">
+            <Template Context="item">
+                @item.created_by.UserName
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

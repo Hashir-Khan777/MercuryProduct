@@ -1,0 +1,78 @@
+﻿@page "/admin/pdf/{PaymentId}"
+
+@inject Radzen.DialogService dialogService
+
+<div @ref="@ItemToExport">
+    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+        <div>
+            <RadzenText Style="color: blue; font-size: 20px; font-weight: bold;">@payment.company.Name</RadzenText>
+            <RadzenText>@payment.company.caddress</RadzenText>
+        </div>
+        <div>
+            <RadzenImage Path="@(localization.companyLogo)" Style="object-fit: cover; width: 100px; height: 100px; border-radius: 50%;" />
+        </div>
+    </RadzenStack>
+    <div style="background-color: blue; height: 2px; width: 100%; margin: 20px 0;" />
+    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+        <div>
+            <RadzenText Style="color: blue; font-size: 16px">Bill To</RadzenText>
+            <RadzenText>@payment.customer?.cfname @payment.customer?.clname</RadzenText>
+            <RadzenText>@payment.customer?.caddress</RadzenText>
+        </div>
+        <div>
+            <RadzenText><span style="color: blue; font-size: 16px">Receipt Id: </span>M-RECEIPT-@payment.Id</RadzenText>
+            <RadzenText><span style="color: blue; font-size: 16px">Receipt Date: </span>@payment.created_at</RadzenText>
+            <RadzenText><span style="color: blue; font-size: 16px">Payment Type: </span>@payment.paymentType</RadzenText>
+        </div>
+    </RadzenStack>
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+            <RadzenDataGrid Data="@products">
+                <Columns>
+                    <RadzenDataGridColumn Title="Quantity">
+                        <Template Context="item">
+                            <RadzenText>@item.incartquantity</RadzenText>
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Property="product_name" Title="Name" />
+                    <RadzenDataGridColumn Title="Unit Price">
+                        <Template Context="item">
+                            @if (item.special)
+                            {
+                                <RadzenText TextStyle="TextStyle.Body2">$@(item.special_price.ToString("0.00"))</RadzenText>
+                            }
+                            else
+                            {
+                                <RadzenText TextStyle="TextStyle.Body2">$@(GetPrice(item).ToString("0.00"))</RadzenText>
+                            }
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Amount">
+                        <Template Context="item">
+                            <RadzenText>$@(GetAmount(item).ToString("0.00"))</RadzenText>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.End" JustifyContent="JustifyContent.End">
+        <div>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Sub Total:</RadzenText>
+                <RadzenText>$@payment.itemsAmount.ToString("0.00")</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Tax (@(payment.taxAmount)%):</RadzenText>
+                <RadzenText>$@(((payment.itemsAmount * payment.taxAmount) / 100).ToString("0.00"))</RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenText Style="font-weight: bold;">Total:</RadzenText>
+                <RadzenText>$@payment.totalAmount.ToString("0.00")</RadzenText>
+            </RadzenStack>
+        </div>
+    </RadzenStack>
+</div>
+<RadzenStack Style="margin-top: 10px;" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End">
+    <RadzenButton Click="save">Save PDF</RadzenButton>
+</RadzenStack>

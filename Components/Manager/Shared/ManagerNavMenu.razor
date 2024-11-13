@@ -1,0 +1,172 @@
+﻿@using System.Security.Claims
+
+@inject NavigationManager NavigationManager
+@inject CompanyService CompanyService
+@inject SessionService SessionService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<style>
+    .rz-header {
+        background-color: @(routes.Find(x => x.Path == currentUrl)?.Color) !important;
+    }
+</style>
+
+<RadzenHeader>
+    <RadzenStack JustifyContent="JustifyContent.SpaceBetween" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="@(() => sidebar1Expanded = !sidebar1Expanded)" />
+            <RadzenLabel Text="Header" />
+        </RadzenStack>
+        <AuthorizeView>
+            <Authorized>
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="help">
+                            <RadzenIcon Icon="help" />
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Account/Manage">
+                            <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <form action="Account/Logout" method="post">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                            <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Secondary">
+                                <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+                            </RadzenButton>
+                        </form>
+                    </div>
+                </RadzenStack>
+            </Authorized>
+            <NotAuthorized>
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+                    <RadzenLink Path="/account/login">Login</RadzenLink>
+                    <RadzenLink Path="/account/register">Register</RadzenLink>
+                </RadzenStack>
+            </NotAuthorized>
+        </AuthorizeView>
+    </RadzenStack>
+</RadzenHeader>
+<RadzenSidebar @bind-Expanded="@sidebar1Expanded">
+    <RadzenPanelMenu Multiple>
+        <RadzenPanelMenuItem Text="Dashboard" Path="/manager/dashboard" class="rz-color-black" />
+        <RadzenPanelMenuItem Text="LMS (Lead Management System)" class="rz-color-black">
+            <RadzenPanelMenuItem Text="Users" Path="/manager/users" class="rz-color-black" />
+            <RadzenPanelMenuItem Text="Customers" Path="/manager/customers" class="rz-color-black" />
+            <RadzenPanelMenuItem Text="Vehicles" Path="/manager/vehicles" class="rz-color-black" />
+            <RadzenPanelMenuItem Text="Drivers" Path="/manager/drivers" class="rz-color-black" />
+            <RadzenPanelMenuItem Text="Calendar" Path="/manager/calendar" class="rz-color-black" />
+            <RadzenPanelMenuItem Text="Inventory" Path="/manager/inventory" class="rz-color-black" />
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Text="Administration" class="rz-color-black">
+            <RadzenPanelMenuItem Text="Companies" Path="/manager/companies" class="rz-color-black" />
+            <RadzenPanelMenuItem Text="Localization" Path="/manager/localization" class="rz-color-black" />
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Text="POS (Point Of Sale)" class="rz-color-black">
+            <RadzenPanelMenuItem Text="POS" Path="/manager/pos" class="rz-color-black" />
+            <RadzenPanelMenuItem Text="Customers" Path="/manager/poscustomers" class="rz-color-black" />
+            <RadzenPanelMenuItem Text="Products" Path="/manager/products" class="rz-color-black" />
+            <RadzenPanelMenuItem Text="Sales" Path="/manager/sales" class="rz-color-black" />
+            <RadzenPanelMenuItem Text="Cash Flow" Path="/manager/cashflow" class="rz-color-black" />
+        </RadzenPanelMenuItem>
+        @* May be use later *@
+        @* <RadzenLink Path="/manager/invoices" Match="NavLinkMatch.All">
+        <RadzenPanelMenuItem Text="Invoices" class="rz-color-black" />
+        </RadzenLink> *@
+    </RadzenPanelMenu>
+</RadzenSidebar>
+
+@code {
+    bool sidebar1Expanded = true;
+    public List<CompanyModel> companies = new List<CompanyModel>();
+    public int default_company;
+    public string current_user = string.Empty;
+
+    private string currentUrl = "";
+
+    private List<Route> routes = new List<Route>()
+    {
+        new Route { Color = "#3F79D1", Path = "manager/dashboard" },    // Soft Blue
+        new Route { Color = "#4CAF50", Path = "manager/users" },        // Green
+        new Route { Color = "#FF7043", Path = "manager/customers" },    // Soft Orange
+        new Route { Color = "#8E44AD", Path = "manager/vehicles" },     // Purple
+        new Route { Color = "#F57C00", Path = "manager/drivers" },      // Dark Orange
+        new Route { Color = "#FF5722", Path = "manager/calendar" },     // Deep Red-Orange
+        new Route { Color = "#795548", Path = "manager/inventory" },    // Brown
+        new Route { Color = "#009688", Path = "manager/companies" },    // Teal
+        new Route { Color = "#391FBB", Path = "manager/localization" }, // Indigo
+        new Route { Color = "#D32F2F", Path = "manager/products" },     // Deep Red
+        new Route { Color = "#388E3C", Path = "manager/categories" },   // Dark Green
+        new Route { Color = "#8E44AD", Path = "manager/pos" },          // Soft Purple
+        new Route { Color = "#6C5B7B", Path = "manager/sales" },        // Muted Violet
+        new Route { Color = "#0288D1", Path = "manager/logs" },         // Teal Blue
+        new Route { Color = "#00796B", Path = "manager/cashflow" },     // Deep Teal
+    };
+
+    protected override async void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+        SetUserId();
+        companies = CompanyService.GetCompaniesByManagerId(current_user);
+
+        var company_in_session = await SessionService.Get<int?>("company");
+
+        if (company_in_session is not null)
+        {
+            default_company = (int)company_in_session;
+        }
+        else
+        {
+            if (companies is not null)
+            {
+                await SessionService.Set("company", companies[0].Id.ToString());
+                default_company = companies[0].Id;
+            }
+        }
+    }
+
+    public async void ChangeCompany(CompanyModel item)
+    {
+        await SessionService.Set("company", item.Id.ToString());
+        default_company = item.Id;
+        NavigationManager.Refresh(true);
+        StateHasChanged();
+    }
+
+    public async void SetUserId()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                current_user = userId;
+            }
+        }
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+    private sealed class Route
+    {
+        public string Color { get; set; } = string.Empty;
+        public string Path { get; set; } = string.Empty;
+    }
+}

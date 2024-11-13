@@ -1,0 +1,200 @@
+﻿@page "/manager/adddriver"
+
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using MecuryProduct.Data
+@using System.Security.Claims
+
+@inject UserManager<ApplicationUser> UserManager
+@inject IUserStore<ApplicationUser> UserStore
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IEmailSender<ApplicationUser> EmailSender
+@inject NavigationManager NavigationManager
+@inject UserService UserService
+@inject NotificationService NotificationService
+@inject DialogService DialogService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HelperService HelperService
+@inject UserService UserService
+@inject CompanyService CompanyService
+
+<PageTitle>Add Driver</PageTitle>
+
+<a onclick="history.back();">
+    <RadzenButton Variant="Variant.Flat" Style="margin-bottom: 20px;">
+        <RadzenIcon Icon="arrow_back" />
+    </RadzenButton>
+</a>
+
+<h1>Add Driver</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
+            <DataAnnotationsValidator />
+            <h2>Create a new account.</h2>
+            <hr />
+            <ValidationSummary class="text-danger" role="alert" />
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                <label for="email">Email <span style="color: red;">*</span></label>
+                <ValidationMessage For="() => Input.Email" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText type="password" @bind-Value="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label for="password">Password <span style="color: red;">*</span></label>
+                <ValidationMessage For="() => Input.Password" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label for="confirm-password">Confirm Password <span style="color: red;">*</span></label>
+                <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <RadzenDropDown Multiple class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@selected_companies"
+                                Data="@companies" TextProperty="Name" ValueProperty="Id" Style="width: 100%;" Name="Model" />
+                <label for="role">Company<span style="color: red;">*</span></label>
+                <ValidationMessage For="() => Input.CompanyId" class="text-danger" />
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Add Driver</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<IdentityError>? identityErrors;
+
+    public List<CompanyModel> companies = new List<CompanyModel>();
+    public List<int> selected_companies = new List<int>();
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        GetCompanyByUserId();
+    }
+
+    public async void GetCompanyByUserId()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                companies = CompanyService.GetCompaniesByManagerId(userId);
+            }
+        }
+    }
+
+    public async Task RegisterUser(EditContext editContext)
+    {
+        var user = CreateUser();
+
+        // PP-91 & 104: validation in add driver
+        // Bug: driver is replicating
+        // Fix: Add condition on email when driver with same emails exixts it will open update driver modal
+        var exists = await UserStore.FindByNameAsync(Input.Email.ToUpper(), CancellationToken.None);
+
+        if (exists != null)
+        {
+            var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = "Driver with this email already exists", Duration = 4000 };
+            NotificationService.Notify(notificationMessage);
+            HelperService.WriteLog(exception: "Driver with this email already exists");
+            await DialogService.OpenAsync<UpdateDriverModal>("Update Driver",
+                new Dictionary<string, object>() { { "DriverId", exists.Id } },
+                new DialogOptions() { Width = "600px", Height = "60%", Resizable = true, Draggable = true }
+            );
+            StateHasChanged();
+            return;
+        }
+
+        await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+        var emailStore = GetEmailStore();
+        await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+        var result = await UserManager.CreateAsync(user, Input.Password);
+
+        if (!result.Succeeded)
+        {
+            identityErrors = result.Errors;
+            return;
+        }
+
+        var userId = await UserManager.GetUserIdAsync(user);
+        UserService.SetUserPassword(userId, Input.Password);
+        var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+        await UserManager.ConfirmEmailAsync(user, code);
+        await UserManager.AddClaimAsync(user, new Claim("Role", "Driver"));
+        UserService.SetDriverId(userId);
+        UserService.SetOldThreePasswords(userId, Input.Password);
+
+        foreach (var company in selected_companies)
+        {
+            UserService.SetCompanyDriver(new CompanyDrivers { company_id = company, driver_id = userId });
+        }
+        
+        UserService.UpdateUser(user);
+
+        NavigationManager.NavigateTo("/manager/drivers");
+    }
+
+    private ApplicationUser CreateUser()
+    {
+        try
+        {
+            return Activator.CreateInstance<ApplicationUser>();
+        }
+        catch
+        {
+            throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor.");
+        }
+    }
+
+    private IUserEmailStore<ApplicationUser> GetEmailStore()
+    {
+        if (!UserManager.SupportsUserEmail)
+        {
+            throw new NotSupportedException("The default UI requires a user store with email support.");
+        }
+        return (IUserEmailStore<ApplicationUser>)UserStore;
+    }
+
+    private sealed class InputModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; } = "";
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; } = "";
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; } = "";
+
+        [Required]
+        [Display(Name = "CompanyId")]
+        public int CompanyId { get; set; }
+    }
+}

@@ -1,0 +1,59 @@
+﻿@page "/manager/calendar"
+
+<style>
+    .rz-event {
+        height: auto !important;
+    }
+
+    .rz-event-list-btn {
+        top: 7rem !important;
+    }
+</style>
+
+<PageTitle>Calendar</PageTitle>
+
+<RadzenStack Style="margin-bottom: 20px;" Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" JustifyContent="JustifyContent.End">
+    @if (mapView)
+    {
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenStack>
+                <RadzenLabel Text="Start Date" Component="DatePickerDateOnlyType" Style="margin-right: 8px; vertical-align: middle;" />
+                <RadzenDatePicker @bind-Value="@start_date" DateFormat="MM/dd/yyyy" Name="DatePickerDateOnlyType" />
+            </RadzenStack>
+            <RadzenStack>
+                <RadzenLabel Text="End Date" Component="DatePickerDateOnlyType" Style="margin-right: 8px; vertical-align: middle;" />
+                <RadzenDatePicker @bind-Value="@end_date" DateFormat="MM/dd/yyyy" Name="DatePickerDateOnlyType" />
+            </RadzenStack>
+        </RadzenStack>
+    }
+    @if (mapView)
+    {
+        <RadzenButton Click="@(() => changeView(false))">Calendar view</RadzenButton>
+    }
+    else
+    {
+        <RadzenButton Click="@(() => changeView(true))">Map view</RadzenButton>
+    }
+</RadzenStack>
+
+@if(mapView)
+{
+    <Map start_date="start_date" end_date="end_date" />
+}
+else
+{
+    <RadzenScheduler SelectedIndex="0" AppointmentSelect=@OnAppointmentSelect style="height: 768px;" TItem="CarModel" Data=@cars StartProperty="scheduled_date" EndProperty="scheduled_date" TextProperty="car_model">
+        <Template Context="data">
+            Vehicle: M-VEH-@data.Id
+            <br />
+            Driver: @data.driver?.UserName
+            <br />
+            City: @data?.customer?.ccity
+        </Template>
+        <ChildContent>
+            <RadzenDayView MinutesPerSlot="20" />
+            <RadzenWeekView MinutesPerSlot="20" />
+            <RadzenMonthView MaxAppointmentsInSlot="1" />
+        </ChildContent>
+    </RadzenScheduler>
+}

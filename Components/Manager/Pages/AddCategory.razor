@@ -1,0 +1,22 @@
+﻿@page "/manager/adddepartment"
+
+<PageTitle>Add Department</PageTitle>
+
+<a onclick="history.back();">
+    <RadzenButton Variant="Variant.Flat" Style="margin-bottom: 20px;">
+        <RadzenIcon Icon="arrow_back" />
+    </RadzenButton>
+</a>
+
+<h3>Add Department</h3>
+
+<RadzenTemplateForm TItem="CategoryModel" Data=@category Submit="@CreateCategory">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="3">
+            <RadzenLabel Text="Category Name" Component="CompanyName" />
+            <RadzenTextBox @bind-Value="category.Name" Name="CompanyName" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="CompanyName" Text="Category name is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit">Add Category</RadzenButton>
+</RadzenTemplateForm>

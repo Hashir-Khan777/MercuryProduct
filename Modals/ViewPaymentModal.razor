@@ -1,0 +1,99 @@
+﻿@page "/admin/viewPayment/{PaymentId}"
+
+@inject Radzen.DialogService dialogService
+
+<RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+    <RadzenColumn Size="12" SizeMD="12" SizeLG="12">
+        <RadzenDataGrid Data="@products">
+            <Columns>
+                <RadzenDataGridColumn Title="Id">
+                    <Template Context="item">
+                        M-PROD-@item.Id
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Property="product_name" Title="Name" />
+                <RadzenDataGridColumn Title="Unit Price">
+                    <Template Context="item">
+                        @if (item.special)
+                        {
+                            <RadzenText TextStyle="TextStyle.Body2">$@(item.special_price.ToString("0.00"))</RadzenText>
+                        }
+                        else
+                        {
+                            <RadzenText TextStyle="TextStyle.Body2">$@(GetPrice(item).ToString("0.00"))</RadzenText>
+                        }
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="Quantity">
+                    <Template Context="item">
+                        <RadzenText>@item.incartquantity</RadzenText>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="Tax">
+                    <Template Context="item">
+                        <RadzenText>$@(GetTax(item).ToString("0.00"))</RadzenText>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="Discount (%)">
+                    <Template Context="item">
+                        <RadzenText>@(item.discount)%</RadzenText>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="Total">
+                    <Template Context="item">
+                        <RadzenText>$@(GetAmount(item).ToString("0.00"))</RadzenText>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Title="Action(s)">
+                    <Template Context="item">
+                        @if (item.returned == false)
+                        {
+                            <RadzenButton Click="@(() => RetunProduct(item))">Return</RadzenButton>
+                        }
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenColumn>
+</RadzenRow>
+<RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.End" JustifyContent="JustifyContent.End">
+    <div>
+        <RadzenText Style="font-size: 18px; font-weight: bold;">Summary</RadzenText>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenText Style="font-weight: bold;">Company:</RadzenText>
+            <RadzenText>@(payment.company?.Name)</RadzenText>
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenText Style="font-weight: bold;">Customer:</RadzenText>
+            <RadzenText>@(payment.customer.cfname + " " + payment.customer.clname)</RadzenText>
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenText Style="font-weight: bold;">Items Amount:</RadzenText>
+            <RadzenText>$@payment.itemsAmount.ToString("0.00")</RadzenText>
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenText Style="font-weight: bold;">Tax (@(payment.taxAmount)%):</RadzenText>
+            <RadzenText>$@(((payment.itemsAmount * payment.taxAmount) / 100).ToString("0.00"))</RadzenText>
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenText Style="font-weight: bold;">Items Level Discount (%):</RadzenText>
+            <RadzenText>@(payment.discount)%</RadzenText>
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenText Style="font-weight: bold;">Cart Level Discount (%):</RadzenText>
+            <RadzenText>@(payment.cartDiscount)%</RadzenText>
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenText Style="font-weight: bold;">Total Amount:</RadzenText>
+            <RadzenText>$@payment.totalAmount.ToString("0.00")</RadzenText>
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenText Style="font-weight: bold;">Paid Amount:</RadzenText>
+            <RadzenText>$@payment.paidAmount.ToString("0.00")</RadzenText>
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenText Style="font-weight: bold;">Change Amount:</RadzenText>
+            <RadzenText>$@payment.changeAmount.ToString("0.00")</RadzenText>
+        </RadzenStack>
+    </div>
+</RadzenStack>

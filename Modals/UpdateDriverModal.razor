@@ -1,0 +1,179 @@
+﻿@page "/admin/updatedriver/{DriverId}"
+
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using MecuryProduct.Data
+@using System.Security.Claims
+
+@inject UserManager<ApplicationUser> UserManager
+@inject IUserStore<ApplicationUser> UserStore
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IEmailSender<ApplicationUser> EmailSender
+@inject IdentityUserAccessor UserAccessor
+@inject NavigationManager NavigationManager
+@inject Radzen.DialogService dialogService
+@inject UserService UserService
+@inject CompanyService CompanyService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<div class="row">
+    <div class="col-12">
+        <form @onsubmit="OnSendEmailVerificationAsync" @formname="send-verification" id="send-verification-form" method="post">
+            <AntiforgeryToken />
+        </form>
+        <EditForm Model="Input" FormName="change-email" OnValidSubmit="OnValidSubmitAsync" method="post">
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="Please enter new email." />
+                <label for="new-email" class="form-label">Email <span style="color: red;">*</span></label>
+                <ValidationMessage For="() => Input.NewEmail" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText type="password" @bind-Value="Input.NewPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Please enter your new password." />
+                <label for="new-password" class="form-label">New password <span style="color: red;">*</span></label>
+                <ValidationMessage For="() => Input.NewPassword" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <RadzenDropDown Multiple class="form-control" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                FilterOperator="StringFilterOperator.Contains" AllowFiltering="true" @bind-Value="@selected_companies"
+                                Data="@companies" TextProperty="Name" ValueProperty="Id" Style="width: 100%;" Name="Model" />
+                <label for="role">Company<span style="color: red;">*</span></label>
+                <ValidationMessage For="() => Input.CompanyId" class="text-danger" />
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Update</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private string? message;
+    private ApplicationUser user = default!;
+    private string? email;
+    private bool isEmailConfirmed;
+    public List<CompanyModel> companies = new List<CompanyModel>();
+    public List<int?> selected_companies = new List<int?>();
+
+    [Parameter]
+    public string DriverId { get; set; }
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    [SupplyParameterFromForm(FormName = "change-email")]
+    private InputModel Input { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        GetCompanyByUserId();
+
+        var driver = await UserManager.FindByIdAsync(DriverId);
+        if (driver != null)
+        {
+            user = driver;
+        }
+        email = await UserManager.GetEmailAsync(user);
+        isEmailConfirmed = await UserManager.IsEmailConfirmedAsync(user);
+
+        Input.NewEmail ??= email;
+        Input.OldPassword = user.password;
+        Input.NewPassword = user.password;
+        foreach (var company in user.CompanyDrivers)
+        {
+            selected_companies.Add(company.company_id);
+        }
+    }
+
+    private async Task OnValidSubmitAsync()
+    {
+        var userId = await UserManager.GetUserIdAsync(user);
+        UserService.SetUserPassword(userId, Input.NewPassword);
+        UserService.SetUserEmail(userId, Input.NewEmail);
+        var code = await UserManager.GeneratePasswordResetTokenAsync(user);
+        var result = await UserManager.ResetPasswordAsync(user, code, Input.NewPassword);
+        foreach (var company in selected_companies)
+        {
+            UserService.SetCompanyDriver(new CompanyDrivers { company_id = company, driver_id = userId });
+        }
+        var tobedeleted = companies.Where(m => !selected_companies.Contains(m.Id));
+        foreach (var item in tobedeleted)
+        {
+            UserService.DeleteCompanyDriver(new CompanyDrivers { company_id = item.Id, driver_id = userId });
+        }
+        UserService.UpdateUser(user);
+
+        dialogService.Close();
+    }
+
+    public async void GetCompanyByUserId()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+            var userId = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is not null)
+            {
+                var role = UserService.GetUserClaimByUserId(userId);
+
+                if (role == "Manager")
+                {
+                    companies = CompanyService.GetCompaniesByManagerId(userId);
+                }
+                else if (role == "Employee")
+                {
+                    companies = CompanyService.GetCompaniesByEmployeeId(userId);
+                }
+                else
+                {
+                    companies = CompanyService.GetCompanies();
+                }
+            }
+        }
+    }
+
+    private async Task OnSendEmailVerificationAsync()
+    {
+        if (email is null)
+        {
+            return;
+        }
+
+        var userId = await UserManager.GetUserIdAsync(user);
+        var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+        var callbackUrl = NavigationManager.GetUriWithQueryParameters(
+            NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
+            new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code });
+
+        await EmailSender.SendConfirmationLinkAsync(user, email, HtmlEncoder.Default.Encode(callbackUrl));
+
+        message = "Verification email sent. Please check your email.";
+    }
+
+    private sealed class InputModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "New email")]
+        public string? NewEmail { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Current password")]
+        public string OldPassword { get; set; } = "";
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string NewPassword { get; set; } = "";
+
+        [Required]
+        [Display(Name = "CompanyId")]
+        public int CompanyId { get; set; }
+    }
+}

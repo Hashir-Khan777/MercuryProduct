@@ -1,0 +1,94 @@
+﻿@page "/manager/users"
+
+<PageTitle>Users</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenText TextStyle="TextStyle.H4">Users</RadzenText>
+    <RadzenLink Path="/manager/adduser">
+        <RadzenButton>Add</RadzenButton>
+    </RadzenLink>
+</RadzenStack>
+
+<RadzenDataGrid TItem="ApplicationUser" Data="@users" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                @(item.CompanyNames)@(item.Role != "Admin" ? "-" : null)@(item.Role)-@(item.user_id)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="UserName" Title="User Name" />
+        <RadzenDataGridColumn Title="Role">
+            <Template Context="item">
+                @GetUserClaim(item.Id)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Lockout">
+            <Template Context="item">
+                @if (item.LockoutEnd == null)
+                {
+                    <p>No</p>
+                }
+                else
+                {
+                    <p>Yes</p>
+                }
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Company">
+            <Template Context="item">
+                @if (item.CompanyManagers.Count() > 0)
+                {
+                    @foreach (var comp in item.CompanyManagers)
+                    {
+                        <span>@comp.company.Name</span>
+                    }
+                }
+                else if (item.CompanyEmployees.Count() > 0)
+                {
+                    @foreach (var comp in item.CompanyEmployees)
+                    {
+                        <span>@comp.company.Name</span>
+                    }
+                }
+                else if (item.CompanyDrivers.Count() > 0)
+                {
+                    @foreach (var comp in item.CompanyDrivers)
+                    {
+                        <span>@comp.company.Name</span>
+                    }
+                }
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Action">
+            <Template Context="item">
+                @if (@GetUserClaim(item.Id) != "Manager")
+                {
+                    @if (user_id != item.Id)
+                    {
+                        <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateUserModal(item.Id)">
+                            <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                        </RadzenButton>
+                        <RadzenButton Variant="Variant.Text" Click="() => DeleteUser(item)">
+                            <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                        </RadzenButton>
+                        @if (item.LockoutEnd != null)
+                        {
+                            <RadzenButton Variant="Variant.Text" Click="() => UnlockUser(item)">
+                                <RadzenIcon Icon="lock_open" Style="font-size: 20px" />
+                            </RadzenButton>
+                        }
+                        <form action="Account/LoginAs" method="post" style="display: inline;">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="UserId" value="@item.Id" />
+                            <input type="hidden" name="ReturnUrl" value="" />
+                            <RadzenButton Variant="Variant.Text" ButtonType="ButtonType.Submit">
+                                <RadzenIcon Icon="login" Style="font-size: 20px" />
+                            </RadzenButton>
+                        </form>
+                    }
+                }
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

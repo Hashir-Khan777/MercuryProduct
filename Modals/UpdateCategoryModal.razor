@@ -1,0 +1,14 @@
+﻿@page "/admin/addcategory/{catId}"
+
+@inject Radzen.DialogService dialogService
+
+<RadzenTemplateForm TItem="CategoryModel" Data=@category Submit="@UpdateCategory">
+    <RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-py-sm-4">
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenLabel Text="Category Name" Component="CompanyName" />
+            <RadzenTextBox @bind-Value="category.Name" Name="CompanyName" Style="width: 100%;" />
+            <RadzenRequiredValidator Component="CompanyName" Text="Category name is required" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenButton ButtonType="ButtonType.Submit">Update Category</RadzenButton>
+</RadzenTemplateForm>

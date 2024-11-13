@@ -1,0 +1,88 @@
+﻿@page "/employee/sales"
+
+<PageTitle>Sales</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenText TextStyle="TextStyle.H4">Sales</RadzenText>
+</RadzenStack>
+
+<RadzenStack Orientation="Orientation.Horizontal" Gap="10px" Style="margin-bottom: 10px;">
+    <RadzenFormField Text="Search Sales" Style="width: 100%;" Variant="Variant.Outlined">
+        <Start>
+            <RadzenIcon Icon="search" />
+        </Start>
+        <ChildContent>
+            <RadzenTextBox Change="SearchPayments" Data="@payments" TextProperty="product_name" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" />
+        </ChildContent>
+    </RadzenFormField>
+</RadzenStack>
+
+<RadzenDataGrid Data="@payments"
+                AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" LogicalFilterOperator="LogicalFilterOperator.Or"
+                AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn Title="Id">
+            <Template Context="item">
+                M-SALE-@item.Id
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Customer">
+            <Template Context="item">
+                @item.customer?.cfname @item.customer?.clname
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Products">
+            <Template Context="item">
+                @GetProucts(item.products).Count()
+            </Template>
+        </RadzenDataGridColumn>
+@*         <RadzenDataGridColumn Title="Items Amount">
+            <Template Context="item">
+                <RadzenText>$@(item.itemsAmount.ToString("0.00"))</RadzenText>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Tax (%)">
+            <Template Context="item">
+                <RadzenText>@(item.taxAmount.ToString("0.00"))%</RadzenText>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Discount (%)">
+            <Template Context="item">
+                <RadzenText>@(item.discount.ToString("0.00"))%</RadzenText>
+            </Template>
+        </RadzenDataGridColumn> *@
+        <RadzenDataGridColumn Title="Total Amount">
+            <Template Context="item">
+                <span @ref=button @onmouseover="@(() => popup.ToggleAsync(button))" @onmouseout="@(() => popup.ToggleAsync(button))" style="cursor: pointer; color: #4340D2;">$@(item.totalAmount.ToString("0.00"))</span>
+                <Radzen.Blazor.Rendering.Popup @ref=popup Lazy=true Style="display:none;position:absolute;height:auto;width:auto;padding:20px;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;border:var(--rz-panel-border);background-color:var(--rz-panel-background-color);">
+                    <RadzenText><span style="font-weight: bold;">Items Amount:</span> $@(item.itemsAmount.ToString("0.00"))</RadzenText>
+                    <RadzenText><span style="font-weight: bold;">Tax(%):</span> @(item.taxAmount.ToString("0.00"))%</RadzenText>
+                    <RadzenText><span style="font-weight: bold;">Discount(%):</span> @(item.discount.ToString("0.00"))%</RadzenText>
+                </Radzen.Blazor.Rendering.Popup>
+            </Template>
+        </RadzenDataGridColumn>
+@*         <RadzenDataGridColumn Title="Paid Amount">
+            <Template Context="item">
+                <RadzenText>$@(item.paidAmount.ToString("0.00"))</RadzenText>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Change Amount">
+            <Template Context="item">
+                <RadzenText>$@(item.changeAmount.ToString("0.00"))</RadzenText>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Paymnet Type" Property="paymentType" /> *@
+        <RadzenDataGridColumn Title="Created At">
+            <Template Context="item">
+                <RadzenText>@item.created_at.ToLocalTime()</RadzenText>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Action(s)">
+            <Template Context="item">
+                <RadzenButton Click="@(() => RePrintPDF(item.Id))">Print PDF</RadzenButton>
+                <RadzenButton Click="@(() => ViewPayment(item.Id))">View</RadzenButton>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
