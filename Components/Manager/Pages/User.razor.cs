@@ -54,6 +54,7 @@ namespace MecuryProduct.Components.Manager.Pages
                 new Dictionary<string, object>() { { "UserId", UserId } },
                 new DialogOptions() { Width = "600px", Height = "60%", Resizable = true, Draggable = true }
             );
+            SetUserId();
             StateHasChanged();
         }
 

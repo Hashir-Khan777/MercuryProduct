@@ -358,6 +358,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xDYXJ0Q29tcG9uZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Category.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xDYXRlZ29yeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Zini Tecnologies Projects/MecuryProduct/Components/Employee/Pages/Companies.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFbXBsb3llZVxQYWdlc1xDb21wYW5pZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -464,6 +468,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/CartComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXENhcnRDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Category.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNYW5hZ2VyXFBhZ2VzXENhdGVnb3J5LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Zini Tecnologies Projects/MecuryProduct/Components/Manager/Pages/Companies.razor]

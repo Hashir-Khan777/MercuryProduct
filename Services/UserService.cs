@@ -45,10 +45,16 @@ namespace MecuryProduct.Services
         {
             try
             {
-                var alreadyExists = db.CompanyDrivers.Where(x => x.company_id == CompanyDriver.company_id && x.driver_id == CompanyDriver.driver_id);
+                var alreadyExists = db.CompanyDrivers.FirstOrDefault(x => x.company_id == CompanyDriver.company_id && x.driver_id == CompanyDriver.driver_id);
                 if (alreadyExists is not null)
                 {
-                    db.CompanyDrivers.Remove(CompanyDriver);
+                    db.Entry(alreadyExists).State = EntityState.Detached;
+                }
+
+                var exists = db.CompanyDrivers.Where(x => x.company_id == CompanyDriver.company_id && x.driver_id == CompanyDriver.driver_id).FirstOrDefault();
+                if (exists is not null)
+                {
+                    db.CompanyDrivers.Remove(exists);
                     db.SaveChanges();
                 }
             }
@@ -121,10 +127,16 @@ namespace MecuryProduct.Services
         {
             try
             {
-                var alreadyExists = db.CompanyEmployees.Where(x => x.company_id == CompanyEmployees.company_id && x.employee_id == CompanyEmployees.employee_id);
+                var alreadyExists = db.CompanyEmployees.FirstOrDefault(x => x.company_id == CompanyEmployees.company_id && x.employee_id == CompanyEmployees.employee_id);
                 if (alreadyExists is not null)
                 {
-                    db.CompanyEmployees.Remove(CompanyEmployees);
+                    db.Entry(alreadyExists).State = EntityState.Detached;
+                }
+
+                var exists = db.CompanyEmployees.Where(x => x.company_id == CompanyEmployees.company_id && x.employee_id == CompanyEmployees.employee_id).FirstOrDefault();
+                if (exists is not null)
+                {
+                    db.CompanyEmployees.Remove(exists);
                     db.SaveChanges();
                 }
             }

@@ -49,7 +49,8 @@ namespace MecuryProduct.Services
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
-                WriteIndented = true
+                WriteIndented = true,
+                PropertyNameCaseInsensitive = true
             };
             var jsonData = await _cache.GetStringAsync(key);
             if (jsonData == null)

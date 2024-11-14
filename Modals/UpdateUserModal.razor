@@ -18,6 +18,8 @@
 @inject UserService UserService
 @inject CompanyService CompanyService
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NotificationService notificationService
+@inject HelperService helperService
 
 <div class="row">
     <div class="col-12">
@@ -178,60 +180,69 @@
 
     private async Task OnValidSubmitAsync()
     {
-        var userId = await UserManager.GetUserIdAsync(user);
-        UserService.SetUserPassword(userId, Input.NewPassword);
-        UserService.SetUserEmail(userId, Input.NewEmail);
-        var code = await UserManager.GeneratePasswordResetTokenAsync(user);
-        var result = await UserManager.ResetPasswordAsync(user, code, Input.NewPassword);
-        await UserManager.ReplaceClaimAsync(user, new Claim("Role", previous_role), new Claim("Role", Input.Role));
-        if (Input.Role != "Manager")
+        try
         {
-            foreach (var company in selected_companies)
+            var userId = await UserManager.GetUserIdAsync(user);
+            UserService.SetUserPassword(userId, Input.NewPassword);
+            UserService.SetUserEmail(userId, Input.NewEmail);
+            var code = await UserManager.GeneratePasswordResetTokenAsync(user);
+            var result = await UserManager.ResetPasswordAsync(user, code, Input.NewPassword);
+            await UserManager.ReplaceClaimAsync(user, new Claim("Role", previous_role), new Claim("Role", Input.Role));
+            if (Input.Role != "Manager")
             {
-                if (Input.Role == "Driver")
+                foreach (var company in selected_companies)
                 {
-                    UserService.SetCompanyDriver(new CompanyDrivers { company_id = company, driver_id = userId });
+                    if (Input.Role == "Driver")
+                    {
+                        UserService.SetCompanyDriver(new CompanyDrivers { company_id = company, driver_id = userId });
+                    }
+                    else if (Input.Role == "Employee")
+                    {
+                        UserService.SetCompanyEmployees(new CompanyEmployees { company_id = company, employee_id = userId });
+                    }
                 }
-                else if (Input.Role == "Employee")
+                foreach (var permission in selected_permissions)
                 {
-                    UserService.SetCompanyEmployees(new CompanyEmployees { company_id = company, employee_id = userId });
+                    if (Input.Role == "Employee")
+                    {
+                        if (!user.permissions.Contains(permission))
+                        {
+                            user.permissions.Add(permission);
+                        }
+                    }
                 }
-            }
-            foreach (var permission in selected_permissions)
-            {
                 if (Input.Role == "Employee")
                 {
-                    if (!user.permissions.Contains(permission))
+                    var tobedeleted = companies.Where(m => !selected_companies.Contains(m.Id));
+                    foreach (var item in tobedeleted)
                     {
-                        user.permissions.Add(permission);
+                        UserService.DeleteCompanyEmployees(new CompanyEmployees { company_id = item.Id, employee_id = userId });
+                    }
+
+                    var tobedeletedpermissions = permissions.Where(m => !selected_permissions.Contains(m));
+                    foreach (var item in tobedeletedpermissions)
+                    {
+                        user.permissions.Remove(item);
+                    }
+                }
+                else if (Input.Role == "Driver")
+                {
+                    var tobedeleted = companies.Where(m => !selected_companies.Contains(m.Id));
+                    foreach (var item in tobedeleted)
+                    {
+                        UserService.DeleteCompanyDriver(new CompanyDrivers { company_id = item.Id, driver_id = userId });
                     }
                 }
             }
-            if (Input.Role == "Employee")
-            {
-                var tobedeleted = companies.Where(m => !selected_companies.Contains(m.Id));
-                foreach (var item in tobedeleted)
-                {
-                    UserService.DeleteCompanyEmployees(new CompanyEmployees { company_id = item.Id, employee_id = userId });
-                }
-
-                var tobedeletedpermissions = permissions.Where(m => !selected_permissions.Contains(m));
-                foreach (var item in tobedeletedpermissions)
-                {
-                    user.permissions.Remove(item);
-                }
-            }
-            else if (Input.Role == "Driver")
-            {
-                var tobedeleted = companies.Where(m => !selected_companies.Contains(m.Id));
-                foreach (var item in tobedeleted)
-                {
-                    UserService.DeleteCompanyDriver(new CompanyDrivers { company_id = item.Id, driver_id = userId });
-                }
-            }
+            UserService.UpdateUser(user);
+            dialogService.Close();
         }
-        UserService.UpdateUser(user);
-        dialogService.Close();
+        catch (Exception ex)
+        {
+            helperService.WriteLog(exception: $"{ex}");
+            var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+            notificationService.Notify(notificationMessage);
+        }
     }
 
     private async Task OnSendEmailVerificationAsync()

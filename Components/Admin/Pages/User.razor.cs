@@ -62,6 +62,12 @@ namespace MecuryProduct.Components.Admin.Pages
                 new Dictionary<string, object>() { { "UserId", UserId } },
                 new DialogOptions() { Width = "600px", Height = "60%", Resizable = true, Draggable = true }
             );
+            var all_users = UserService.GetAllUsers();
+            foreach (var user in all_users)
+            {
+                user.Role = GetUserClaim(user.Id);
+            }
+            users = all_users;
             StateHasChanged();
         }
 
