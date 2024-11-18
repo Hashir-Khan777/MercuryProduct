@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "2JIoTgiice3lXGjDYjy6CMJN97MZaVyfi6A0oD1NWnU=",
+  "Hash": "/sIJXJQvyIZ/181tyomzfQQPgN5+gSzsCsUisXaOva4=",
   "Source": "MecuryProduct",
   "BasePath": "_content/MecuryProduct",
   "Mode": "Default",
@@ -2371,6 +2371,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\env-1-env-20240910063525124-Introducing bargaining feature.jpg"
+    },
+    {
+      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\env-1-env-20241118185415535-3.+How+to+Amaze+Your+Customer.pdf",
+      "SourceId": "MecuryProduct",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\",
+      "BasePath": "_content/MecuryProduct",
+      "RelativePath": "uploads/env-1-env-20241118185415535-3.+How+to+Amaze+Your+Customer.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\env-1-env-20241118185415535-3.+How+to+Amaze+Your+Customer.pdf"
     },
     {
       "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\env-2-env-20240620041925022-Beginning Django .pdf",

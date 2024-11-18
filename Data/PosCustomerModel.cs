@@ -6,6 +6,8 @@ namespace MecuryProduct.Data
     {
         public int Id { get; set; }
 
+        public bool deleted { get; set; } = false;
+
         [Required]
         public string cfname { get; set; } = string.Empty;
 

@@ -60,7 +60,7 @@ namespace MecuryProduct.Components.Admin.Pages
         public async void GeStateForms()
         {
             var company = await SessionService.Get<int>("company");
-            stateForms = StateFormService.GetByCompanyId(company).ToList();
+            stateForms = StateFormService.GetAllByCompanyId(company).ToList();
         }
 
         /// <summary>

@@ -8,6 +8,8 @@ namespace MecuryProduct.Data
     {
         public int Id { get; set; }
 
+        public bool deleted { get; set; } = false;
+
         public DocModel? doc { get; set; }
 
         [Required]

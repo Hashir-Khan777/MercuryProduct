@@ -20,7 +20,7 @@ namespace MecuryProduct.Components.Admin.Pages
         protected override async void OnInitialized()
         {
             var company = await SessionService.Get<int>("company");
-            pos_customers = PosCustomerService.GetCustomersByCompanyId(company);
+            pos_customers = PosCustomerService.GetAllCustomersByCompanyId(company);
 
             base.OnInitialized();
         }
@@ -62,7 +62,7 @@ namespace MecuryProduct.Components.Admin.Pages
             {
                 PosCustomerService.DeleteCustomer(customer);
                 var company = await SessionService.Get<int>("company");
-                pos_customers = PosCustomerService.GetCustomersByCompanyId(company);
+                pos_customers = PosCustomerService.GetAllCustomersByCompanyId(company);
                 StateHasChanged();
             }
         }

@@ -36,7 +36,7 @@ namespace MecuryProduct.Components.Admin.Pages
         public async void GetDrivers()
         {
             var company = await SessionService.Get<int>("company");
-            drivers = DriverService.GetUsersByClaimByCompanyId("Role", "Driver", company);
+            drivers = DriverService.GetAllUsersByClaimByCompanyId("Role", "Driver", company);
         }
 
         /// <summary>

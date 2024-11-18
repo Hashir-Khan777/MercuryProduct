@@ -79,7 +79,7 @@ namespace MecuryProduct.Services
             }
         }
 
-        public List<PosCustomerModel>? GetCustomersByCompanyId(int company_id)
+        public List<PosCustomerModel>? GetAllCustomersByCompanyId(int company_id)
         {
             try
             {
@@ -94,11 +94,27 @@ namespace MecuryProduct.Services
             }
         }
 
+        public List<PosCustomerModel>? GetCustomersByCompanyId(int company_id)
+        {
+            try
+            {
+                return db.PosCustomers.Include(c => c.created_by).Include(c => c.Company).ThenInclude(c => c.CompanyManagers).Where(c => c.CompanyId == company_id && !c.deleted).OrderByDescending(c => c.created_at).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
         public void DeleteCustomer(PosCustomerModel customer)
         {
             try
             {
-                db.PosCustomers.Remove(customer);
+                customer.deleted = true;
+                db.PosCustomers.Update(customer);
                 db.SaveChanges();
             }
             catch (Exception ex)

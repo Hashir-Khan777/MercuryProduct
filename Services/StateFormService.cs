@@ -71,11 +71,26 @@ namespace MecuryProduct.Services
             }
         }
 
-        public List<StateFormModel>? GetByCompanyId(int company_id)
+        public List<StateFormModel>? GetAllByCompanyId(int company_id)
         {
             try
             {
                 return db.StateForm.Include(s => s.doc).Include(s => s.Company).ThenInclude(c => c.CompanyManagers).Where(s => s.CompanyId == company_id).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<StateFormModel>? GetByCompanyId(int company_id)
+        {
+            try
+            {
+                return db.StateForm.Include(s => s.doc).Include(s => s.Company).ThenInclude(c => c.CompanyManagers).Where(s => s.CompanyId == company_id && !s.deleted).ToList();
             }
             catch (Exception ex)
             {
@@ -149,7 +164,8 @@ namespace MecuryProduct.Services
         {
             try
             {
-                db.StateForm.Remove(state_form);
+                state_form.deleted = true;
+                db.StateForm.Update(state_form);
                 db.SaveChanges();
             }
             catch (Exception ex)

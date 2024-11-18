@@ -229,6 +229,37 @@ namespace MecuryProduct.Services
             }
         }
 
+        public List<ApplicationUser>? GetAllUsersByClaimByCompanyId(string claimType, string claimValue, int company_id)
+        {
+            try
+            {
+                var allClaims = db.UserClaims.Where(c => c.ClaimType == claimType && c.ClaimValue == claimValue).ToList();
+
+                List<ApplicationUser> allUsers = new List<ApplicationUser>();
+
+                foreach (var claim in allClaims)
+                {
+                    ApplicationUser? user = db.Users.Include(u => u.driver_cars).Include(c => c.CompanyManagers).ThenInclude(cm => cm.company).ThenInclude(cm => cm.CompanyManagers).Include(c => c.CompanyEmployees).ThenInclude(cm => cm.company).ThenInclude(cm => cm.CompanyManagers).Include(c => c.CompanyDrivers).ThenInclude(cm => cm.company).ThenInclude(cm => cm.CompanyManagers).FirstOrDefault(u => u.Id == claim.UserId && u.EmailConfirmed);
+
+                    if (user is not null)
+                    {
+                        if (user.CompanyDrivers.Count() > 0 ? user.CompanyDrivers.Any(cd => cd.company_id == company_id) : user.CompanyEmployees.Count() > 0 ? user.CompanyEmployees.Any(cd => cd.company_id == company_id) : user.CompanyManagers.Count() > 0 ? user.CompanyManagers.Any(cd => cd.company_id == company_id) : false)
+                        {
+                            allUsers.Add(user);
+                        }
+                    }
+                }
+                return allUsers;
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
         public List<ApplicationUser>? GetUsersByClaimByCompanyId(string claimType, string claimValue, int company_id)
         {
             try

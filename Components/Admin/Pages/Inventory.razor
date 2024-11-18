@@ -100,17 +100,32 @@
                         </Template>
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn Title="Created At" Property="created_at" />
+                    <RadzenDataGridColumn Title="Delete Status" Type="typeof(string)" Property="deleted">
+                        <Template Context="item">
+                            @if (!item.deleted)
+                            {
+                                <p>Not Deleted</p>
+                            }
+                            else
+                            {
+                                <p>Deleted</p>
+                            }
+                        </Template>
+                    </RadzenDataGridColumn>
                     <RadzenDataGridColumn Title="Actions">
                         <Template Context="item">
-                            <RadzenButton Variant="Variant.Text" Click="() => DeleteStateForm(item)">
-                                <RadzenIcon Icon="delete" Style="font-size: 20px" />
-                            </RadzenButton>
-                            <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateStateFormModal(item.Id)">
-                                <RadzenIcon Icon="edit" Style="font-size: 20px" />
-                            </RadzenButton>
-                            <RadzenButton Variant="Variant.Text" Click="() => OpenStateFormCommentModal(item.Id)">
-                                <RadzenIcon Icon="question_answer" Style="font-size: 20px" />
-                            </RadzenButton>
+                            @if (!item.deleted)
+                            {
+                                <RadzenButton Variant="Variant.Text" Click="() => DeleteStateForm(item)">
+                                    <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                                </RadzenButton>
+                                <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateStateFormModal(item.Id)">
+                                    <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                                </RadzenButton>
+                                <RadzenButton Variant="Variant.Text" Click="() => OpenStateFormCommentModal(item.Id)">
+                                    <RadzenIcon Icon="question_answer" Style="font-size: 20px" />
+                                </RadzenButton>
+                            }
                         </Template>
                     </RadzenDataGridColumn>
                 </Columns>
