@@ -188,7 +188,19 @@
         }
 
         user.permissions = selected_permissions;
-        UserService.UpdateUser(user);
+
+        var max = UserService.GetMaxUserId();
+
+        if (max is not null)
+        {
+            user.user_id = max.Value + 1;
+            UserService.UpdateUser(user);
+        }
+        else
+        {
+            user.user_id = 1;
+            UserService.UpdateUser(user);
+        }
 
         NavigationManager.NavigateTo("/employee/users");
     }

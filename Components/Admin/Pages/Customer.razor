@@ -39,15 +39,30 @@
                 <span style="cursor: pointer; color: #4340D2;" @onclick="() => OpenShowVehiclesModal(item.Id)">@item?.cars?.Count()</span>
             </Template>
         </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Delete Status" Type="typeof(string)" Property="deleted">
+            <Template Context="item">
+                @if (!item.deleted)
+                {
+                    <p>Not Deleted</p>
+                }
+                else
+                {
+                    <p>Deleted</p>
+                }
+            </Template>
+        </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Actions" Width="300px">
             <Template Context="item">
-                <RadzenButton Click="() => OpenAddVehicleModal(item.Id)">Add Vehicle</RadzenButton>
-                <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateCustomerModal(item.Id)">
-                    <RadzenIcon Icon="edit" Style="font-size: 20px" />
-                </RadzenButton>
-                <RadzenButton Variant="Variant.Text" Click="() => DeleteCustomer(item)">
-                    <RadzenIcon Icon="delete" Style="font-size: 20px" />
-                </RadzenButton>
+                @if (!item.deleted)
+                {
+                    <RadzenButton Click="() => OpenAddVehicleModal(item.Id)">Add Vehicle</RadzenButton>
+                    <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateCustomerModal(item.Id)">
+                        <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                    </RadzenButton>
+                    <RadzenButton Variant="Variant.Text" Click="() => DeleteCustomer(item)">
+                        <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                    </RadzenButton>
+                }
             </Template>
         </RadzenDataGridColumn>
     </Columns>

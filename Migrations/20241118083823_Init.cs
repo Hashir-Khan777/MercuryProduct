@@ -33,7 +33,10 @@ namespace MecuryProduct.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     driverId = table.Column<int>(type: "int", nullable: true),
+                    user_id = table.Column<int>(type: "int", nullable: true),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    deleted = table.Column<bool>(type: "bit", nullable: false),
                     oldThreePasswords = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     permissions = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -77,6 +80,7 @@ namespace MecuryProduct.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    deleted = table.Column<bool>(type: "bit", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     caddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     clat = table.Column<double>(type: "float", nullable: false),
@@ -335,6 +339,7 @@ namespace MecuryProduct.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    deleted = table.Column<bool>(type: "bit", nullable: false),
                     cfname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     clname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     caddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -379,7 +384,20 @@ namespace MecuryProduct.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     salesTax = table.Column<double>(type: "float", nullable: false),
+                    bentonCountyTax = table.Column<double>(type: "float", nullable: false),
+                    cityOfRogersTax = table.Column<double>(type: "float", nullable: false),
+                    epaFeesTax = table.Column<double>(type: "float", nullable: false),
+                    stateOfArkansaTax = table.Column<double>(type: "float", nullable: false),
+                    tax_1_label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tax_1_value = table.Column<double>(type: "float", nullable: false),
+                    tax_2_label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tax_2_value = table.Column<double>(type: "float", nullable: false),
+                    tax_3_label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tax_3_value = table.Column<double>(type: "float", nullable: false),
+                    tax_4_label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tax_4_value = table.Column<double>(type: "float", nullable: false),
                     defaultProductImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    companyLogo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     showPrice = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     company_id = table.Column<int>(type: "int", nullable: true)
                 },
@@ -389,6 +407,45 @@ namespace MecuryProduct.Migrations
                     table.ForeignKey(
                         name: "FK_Localization_Companies_company_id",
                         column: x => x.company_id,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PosCustomers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    cfname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    clname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    loyalty_member = table.Column<bool>(type: "bit", nullable: false),
+                    caddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    clat = table.Column<double>(type: "float", nullable: false),
+                    clon = table.Column<double>(type: "float", nullable: false),
+                    czip_code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ccity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ccountry = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cstate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cphone_number = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    created_by_id = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    search = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PosCustomers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PosCustomers_AspNetUsers_created_by_id",
+                        column: x => x.created_by_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PosCustomers_Companies_CompanyId",
+                        column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id");
                 });
@@ -417,6 +474,23 @@ namespace MecuryProduct.Migrations
                     vat = table.Column<double>(type: "float", nullable: false),
                     product_grade = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: true),
+                    bentonCountyTax = table.Column<double>(type: "float", nullable: true),
+                    cityOfRogersTax = table.Column<double>(type: "float", nullable: true),
+                    epaFeesTax = table.Column<double>(type: "float", nullable: true),
+                    stateOfArkansaTax = table.Column<double>(type: "float", nullable: true),
+                    tax_1_label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tax_1_value = table.Column<double>(type: "float", nullable: false),
+                    tax_2_label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tax_2_value = table.Column<double>(type: "float", nullable: false),
+                    tax_3_label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tax_3_value = table.Column<double>(type: "float", nullable: false),
+                    tax_4_label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tax_4_value = table.Column<double>(type: "float", nullable: false),
+                    totalTax = table.Column<double>(type: "float", nullable: true),
+                    show_price = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    taxAmount = table.Column<double>(type: "float", nullable: true),
+                    returned = table.Column<bool>(type: "bit", nullable: true),
+                    returned_at = table.Column<DateTime>(type: "datetime2", nullable: true),
                     created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -467,6 +541,7 @@ namespace MecuryProduct.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     cid = table.Column<int>(type: "int", nullable: true),
+                    deleted = table.Column<bool>(type: "bit", nullable: false),
                     car_year = table.Column<int>(type: "int", nullable: false),
                     car_make = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     car_model = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -529,6 +604,44 @@ namespace MecuryProduct.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Expenses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cus_id = table.Column<int>(type: "int", nullable: false),
+                    company_id = table.Column<int>(type: "int", nullable: false),
+                    created_by_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    reciept_image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    payment_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    amount = table.Column<double>(type: "float", nullable: false),
+                    check_no = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Expenses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Expenses_AspNetUsers_created_by_id",
+                        column: x => x.created_by_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Expenses_Companies_company_id",
+                        column: x => x.company_id,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Expenses_Customers_cus_id",
+                        column: x => x.cus_id,
+                        principalTable: "Customers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Invoices",
                 columns: table => new
                 {
@@ -578,7 +691,10 @@ namespace MecuryProduct.Migrations
                     changeAmount = table.Column<int>(type: "int", nullable: false),
                     customerId = table.Column<int>(type: "int", nullable: true),
                     company_id = table.Column<int>(type: "int", nullable: true),
-                    products = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    products = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerModelId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -589,9 +705,14 @@ namespace MecuryProduct.Migrations
                         principalTable: "Companies",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Payments_Customers_customerId",
-                        column: x => x.customerId,
+                        name: "FK_Payments_Customers_CustomerModelId",
+                        column: x => x.CustomerModelId,
                         principalTable: "Customers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Payments_PosCustomers_customerId",
+                        column: x => x.customerId,
+                        principalTable: "PosCustomers",
                         principalColumn: "Id");
                 });
 
@@ -1847,6 +1968,21 @@ namespace MecuryProduct.Migrations
                 column: "veh_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Expenses_company_id",
+                table: "Expenses",
+                column: "company_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Expenses_created_by_id",
+                table: "Expenses",
+                column: "created_by_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Expenses_cus_id",
+                table: "Expenses",
+                column: "cus_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Invoices_company_id",
                 table: "Invoices",
                 column: "company_id");
@@ -1916,6 +2052,21 @@ namespace MecuryProduct.Migrations
                 column: "customerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Payments_CustomerModelId",
+                table: "Payments",
+                column: "CustomerModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PosCustomers_CompanyId",
+                table: "PosCustomers",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PosCustomers_created_by_id",
+                table: "PosCustomers",
+                column: "created_by_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductInvoices_product_id",
                 table: "ProductInvoices",
                 column: "product_id");
@@ -1969,6 +2120,9 @@ namespace MecuryProduct.Migrations
                 name: "CompanyManagers");
 
             migrationBuilder.DropTable(
+                name: "Expenses");
+
+            migrationBuilder.DropTable(
                 name: "Localization");
 
             migrationBuilder.DropTable(
@@ -1997,6 +2151,9 @@ namespace MecuryProduct.Migrations
 
             migrationBuilder.DropTable(
                 name: "Docs");
+
+            migrationBuilder.DropTable(
+                name: "PosCustomers");
 
             migrationBuilder.DropTable(
                 name: "Invoices");

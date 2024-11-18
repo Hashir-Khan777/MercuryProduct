@@ -10,6 +10,8 @@ namespace MecuryProduct.Data
 
         public int? cid { get; set; }
 
+        public bool deleted {  get; set; } = false;
+
         [Required]
         public int? car_year { get; set; }
 

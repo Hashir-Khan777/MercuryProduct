@@ -37,7 +37,7 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Companies.Include(c => c.CompanyManagers).ThenInclude(c => c.manager).Where(c => c.CompanyManagers.Any(x => x.manager_id == ManagerId)).ToList();
+                return db.Companies.Where(x => x.deleted == false).Include(c => c.CompanyManagers).ThenInclude(c => c.manager).Where(c => c.CompanyManagers.Any(x => x.manager_id == ManagerId)).ToList();
             }
             catch (Exception ex)
             {
@@ -52,7 +52,7 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Companies.Include(c => c.CompanyManagers).ThenInclude(c => c.manager).Where(c => c.CompanyEmployees.Any(x => x.employee_id == EmployeeId)).ToList();
+                return db.Companies.Where(x => x.deleted == false).Include(c => c.CompanyManagers).ThenInclude(c => c.manager).Where(c => c.CompanyEmployees.Any(x => x.employee_id == EmployeeId)).ToList();
             }
             catch (Exception ex)
             {
@@ -135,7 +135,8 @@ namespace MecuryProduct.Services
         {
             try
             {
-                db.Companies.Remove(company);
+                company.deleted = true;
+                db.Companies.Update(company);
                 db.SaveChanges();
             }
             catch (Exception ex)

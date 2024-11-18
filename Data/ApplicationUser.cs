@@ -9,8 +9,7 @@ namespace MecuryProduct.Data
     {
         public int? driverId { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int user_id { get; set; }
+        public int? user_id { get; set; }
 
         public string password { get; set; } = string.Empty;
 

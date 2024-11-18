@@ -125,7 +125,7 @@
         }
         else
         {
-            if (companies is not null)
+            if (companies?.Count() > 0)
             {
                 await SessionService.Set("company", companies[0].Id.ToString());
                 default_company = companies[0].Id;

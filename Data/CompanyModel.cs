@@ -7,6 +7,8 @@ namespace MecuryProduct.Data
     {
         public int Id { get; set; }
 
+        public bool deleted { get; set; } = false;
+
         [Required]
         public string Name { get; set; } = string.Empty;
 
@@ -61,7 +63,12 @@ namespace MecuryProduct.Data
             {
                 var managerNames = new List<string>();
 
-                managerNames.AddRange(CompanyManagers.Select(cm => cm.manager.UserName));
+                var managers = CompanyManagers?.Select(cm => cm.manager?.UserName).ToList();
+
+                if (managers != null)
+                {
+                    managerNames.AddRange(managers);
+                }
 
                 return string.Join(", ", managerNames);
             }

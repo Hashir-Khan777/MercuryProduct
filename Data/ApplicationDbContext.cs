@@ -92,10 +92,6 @@ namespace MecuryProduct.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ApplicationUser>()
-                .Property(u => u.user_id)
-                .ValueGeneratedOnAddOrUpdate();
-
             /* The above code is configuring relationships between different entities in a database using Entity
             Framework Core in C#. It defines various one-to-many and one-to-one relationships between entities
             such as CustomerModel, CarModel, NoteModel, DocModel, and StateFormModel. */

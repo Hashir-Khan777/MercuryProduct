@@ -33,7 +33,7 @@ namespace MecuryProduct.Components.Admin.Pages
         public async void GetCars()
         {
             var company = await SessionService.Get<int>("company");
-            cars = CarService.GetCarsByCompanyId(company).ToList();
+            cars = CarService.GetAllCarsByCompanyId(company).ToList();
         }
 
         /// <summary>

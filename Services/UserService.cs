@@ -22,6 +22,21 @@ namespace MecuryProduct.Services
             this.helperService = helperService;
         }
 
+        public int? GetMaxUserId()
+        {
+            try
+            {
+                return db.Users.Max(x => x.user_id);
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
         public void SetCompanyDriver(CompanyDrivers CompanyDriver)
         {
             try

@@ -95,11 +95,8 @@ namespace MecuryProduct.Migrations
                     b.Property<string>("permissions")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("user_id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int?>("user_id")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("user_id"));
 
                     b.HasKey("Id");
 
@@ -143,7 +140,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("user_id");
 
-                    b.ToTable("Logs", (string)null);
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.CarModel", b =>
@@ -196,6 +193,9 @@ namespace MecuryProduct.Migrations
 
                     b.Property<string>("created_by_id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("dnd_notes")
                         .IsRequired()
@@ -294,7 +294,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("driver_id");
 
-                    b.ToTable("Cars", (string)null);
+                    b.ToTable("Cars");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.CategoryModel", b =>
@@ -317,7 +317,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -442,7 +442,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("company_id");
 
-                    b.ToTable("CompanyDrivers", (string)null);
+                    b.ToTable("CompanyDrivers");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.CompanyEmployees", b =>
@@ -460,7 +460,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("company_id");
 
-                    b.ToTable("CompanyEmployees", (string)null);
+                    b.ToTable("CompanyEmployees");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.CompanyManager", b =>
@@ -478,7 +478,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("company_id");
 
-                    b.ToTable("CompanyManagers", (string)null);
+                    b.ToTable("CompanyManagers");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.CompanyModel", b =>
@@ -519,9 +519,12 @@ namespace MecuryProduct.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Companies", (string)null);
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.CustomerModel", b =>
@@ -595,6 +598,9 @@ namespace MecuryProduct.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -619,7 +625,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("created_by_id");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.DocModel", b =>
@@ -675,7 +681,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("veh_id");
 
-                    b.ToTable("Docs", (string)null);
+                    b.ToTable("Docs");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.ExpenseModel", b =>
@@ -730,7 +736,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("cus_id");
 
-                    b.ToTable("Expenses", (string)null);
+                    b.ToTable("Expenses");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.InvoiceModel", b =>
@@ -770,7 +776,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("customer_id");
 
-                    b.ToTable("Invoices", (string)null);
+                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.LocalizationModel", b =>
@@ -845,7 +851,7 @@ namespace MecuryProduct.Migrations
                         .IsUnique()
                         .HasFilter("[company_id] IS NOT NULL");
 
-                    b.ToTable("Localization", (string)null);
+                    b.ToTable("Localization");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.MasterProductionTable", b =>
@@ -866,7 +872,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MasterProductionTable", (string)null);
+                    b.ToTable("MasterProductionTable");
 
                     b.HasData(
                         new
@@ -1423,7 +1429,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MasterVehicleTable", (string)null);
+                    b.ToTable("MasterVehicleTable");
 
                     b.HasData(
                         new
@@ -6289,7 +6295,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MasterYearTable", (string)null);
+                    b.ToTable("MasterYearTable");
 
                     b.HasData(
                         new
@@ -6805,7 +6811,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("veh_id");
 
-                    b.ToTable("Notes", (string)null);
+                    b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.PaymentModel", b =>
@@ -6868,7 +6874,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("customerId");
 
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.PosCustomerModel", b =>
@@ -6946,7 +6952,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("created_by_id");
 
-                    b.ToTable("PosCustomers", (string)null);
+                    b.ToTable("PosCustomers");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.ProductInvoice", b =>
@@ -6964,7 +6970,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("product_id");
 
-                    b.ToTable("ProductInvoices", (string)null);
+                    b.ToTable("ProductInvoices");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.ProductModel", b =>
@@ -7102,7 +7108,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("created_by_id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.StateFormModel", b =>
@@ -7126,7 +7132,7 @@ namespace MecuryProduct.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("StateForm", (string)null);
+                    b.ToTable("StateForm");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

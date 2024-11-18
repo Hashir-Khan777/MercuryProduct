@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MecuryProduct.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240903214800_AddNewFields")]
-    partial class AddNewFields
+    [Migration("20241118083823_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,6 +67,10 @@ namespace MecuryProduct.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -76,6 +80,9 @@ namespace MecuryProduct.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
 
                     b.Property<int?>("driverId")
                         .HasColumnType("int");
@@ -90,6 +97,9 @@ namespace MecuryProduct.Migrations
 
                     b.Property<string>("permissions")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("user_id")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -186,6 +196,9 @@ namespace MecuryProduct.Migrations
 
                     b.Property<string>("created_by_id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("dnd_notes")
                         .IsRequired()
@@ -509,6 +522,9 @@ namespace MecuryProduct.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
@@ -584,6 +600,9 @@ namespace MecuryProduct.Migrations
                     b.Property<string>("czip_code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("email")
                         .IsRequired()
@@ -668,6 +687,61 @@ namespace MecuryProduct.Migrations
                     b.ToTable("Docs");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.ExpenseModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("amount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("check_no")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("company_id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("created_by_id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("cus_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("payment_type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("reciept_image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("company_id");
+
+                    b.HasIndex("created_by_id");
+
+                    b.HasIndex("cus_id");
+
+                    b.ToTable("Expenses");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.InvoiceModel", b =>
                 {
                     b.Property<int>("Id")
@@ -716,6 +790,16 @@ namespace MecuryProduct.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double>("bentonCountyTax")
+                        .HasColumnType("float");
+
+                    b.Property<double>("cityOfRogersTax")
+                        .HasColumnType("float");
+
+                    b.Property<string>("companyLogo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("company_id")
                         .HasColumnType("int");
 
@@ -723,12 +807,46 @@ namespace MecuryProduct.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("epaFeesTax")
+                        .HasColumnType("float");
+
                     b.Property<double>("salesTax")
                         .HasColumnType("float");
 
                     b.Property<string>("showPrice")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("stateOfArkansaTax")
+                        .HasColumnType("float");
+
+                    b.Property<string>("tax_1_label")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("tax_1_value")
+                        .HasColumnType("float");
+
+                    b.Property<string>("tax_2_label")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("tax_2_value")
+                        .HasColumnType("float");
+
+                    b.Property<string>("tax_3_label")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("tax_3_value")
+                        .HasColumnType("float");
+
+                    b.Property<string>("tax_4_label")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("tax_4_value")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -6707,6 +6825,9 @@ namespace MecuryProduct.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CustomerModelId")
+                        .HasColumnType("int");
+
                     b.Property<int>("cartDiscount")
                         .HasColumnType("int");
 
@@ -6715,6 +6836,9 @@ namespace MecuryProduct.Migrations
 
                     b.Property<int?>("company_id")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("created_at")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("customerId")
                         .HasColumnType("int");
@@ -6742,13 +6866,96 @@ namespace MecuryProduct.Migrations
                     b.Property<double>("totalAmount")
                         .HasColumnType("float");
 
+                    b.Property<DateTime>("updated_at")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerModelId");
 
                     b.HasIndex("company_id");
 
                     b.HasIndex("customerId");
 
                     b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.PosCustomerModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("caddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ccity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ccountry")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("cfname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("clat")
+                        .HasColumnType("float");
+
+                    b.Property<string>("clname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("clon")
+                        .HasColumnType("float");
+
+                    b.Property<string>("cphone_number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("created_by_id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("cstate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("czip_code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("loyalty_member")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("search")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("created_by_id");
+
+                    b.ToTable("PosCustomers");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.ProductInvoice", b =>
@@ -6780,6 +6987,12 @@ namespace MecuryProduct.Migrations
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<double?>("bentonCountyTax")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("cityOfRogersTax")
+                        .HasColumnType("float");
+
                     b.Property<int?>("company_id")
                         .HasColumnType("int");
 
@@ -6803,6 +7016,9 @@ namespace MecuryProduct.Migrations
 
                     b.Property<int?>("discount")
                         .HasColumnType("int");
+
+                    b.Property<double?>("epaFeesTax")
+                        .HasColumnType("float");
 
                     b.Property<int>("incartquantity")
                         .HasColumnType("int");
@@ -6835,13 +7051,50 @@ namespace MecuryProduct.Migrations
                     b.Property<DateTime?>("returned_at")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("show_price")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("special")
                         .HasColumnType("bit");
 
                     b.Property<double>("special_price")
                         .HasColumnType("float");
 
+                    b.Property<double?>("stateOfArkansaTax")
+                        .HasColumnType("float");
+
                     b.Property<double?>("taxAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("tax_1_label")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("tax_1_value")
+                        .HasColumnType("float");
+
+                    b.Property<string>("tax_2_label")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("tax_2_value")
+                        .HasColumnType("float");
+
+                    b.Property<string>("tax_3_label")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("tax_3_value")
+                        .HasColumnType("float");
+
+                    b.Property<string>("tax_4_label")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("tax_4_value")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("totalTax")
                         .HasColumnType("float");
 
                     b.Property<DateTime>("updated_at")
@@ -7157,6 +7410,33 @@ namespace MecuryProduct.Migrations
                     b.Navigation("state_form");
                 });
 
+            modelBuilder.Entity("MecuryProduct.Data.ExpenseModel", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.CompanyModel", "company")
+                        .WithMany("expenses")
+                        .HasForeignKey("company_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
+                    b.HasOne("MecuryProduct.Data.ApplicationUser", "created_by")
+                        .WithMany("expenses")
+                        .HasForeignKey("created_by_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
+                    b.HasOne("MecuryProduct.Data.CustomerModel", "customer")
+                        .WithMany("expenses")
+                        .HasForeignKey("cus_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction)
+                        .IsRequired();
+
+                    b.Navigation("company");
+
+                    b.Navigation("created_by");
+
+                    b.Navigation("customer");
+                });
+
             modelBuilder.Entity("MecuryProduct.Data.InvoiceModel", b =>
                 {
                     b.HasOne("MecuryProduct.Data.CompanyModel", "company")
@@ -7234,12 +7514,16 @@ namespace MecuryProduct.Migrations
 
             modelBuilder.Entity("MecuryProduct.Data.PaymentModel", b =>
                 {
+                    b.HasOne("MecuryProduct.Data.CustomerModel", null)
+                        .WithMany("payments")
+                        .HasForeignKey("CustomerModelId");
+
                     b.HasOne("MecuryProduct.Data.CompanyModel", "company")
                         .WithMany("Payments")
                         .HasForeignKey("company_id")
                         .OnDelete(DeleteBehavior.ClientNoAction);
 
-                    b.HasOne("MecuryProduct.Data.CustomerModel", "customer")
+                    b.HasOne("MecuryProduct.Data.PosCustomerModel", "customer")
                         .WithMany("payments")
                         .HasForeignKey("customerId")
                         .OnDelete(DeleteBehavior.ClientNoAction);
@@ -7247,6 +7531,23 @@ namespace MecuryProduct.Migrations
                     b.Navigation("company");
 
                     b.Navigation("customer");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.PosCustomerModel", b =>
+                {
+                    b.HasOne("MecuryProduct.Data.CompanyModel", "Company")
+                        .WithMany("pos_customers")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.HasOne("MecuryProduct.Data.ApplicationUser", "created_by")
+                        .WithMany("pos_customers")
+                        .HasForeignKey("created_by_id")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.Navigation("Company");
+
+                    b.Navigation("created_by");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.ProductInvoice", b =>
@@ -7367,11 +7668,15 @@ namespace MecuryProduct.Migrations
 
                     b.Navigation("driver_cars");
 
+                    b.Navigation("expenses");
+
                     b.Navigation("invoices");
 
                     b.Navigation("logs");
 
                     b.Navigation("notes");
+
+                    b.Navigation("pos_customers");
 
                     b.Navigation("products");
                 });
@@ -7409,11 +7714,17 @@ namespace MecuryProduct.Migrations
                     b.Navigation("Products");
 
                     b.Navigation("StateForms");
+
+                    b.Navigation("expenses");
+
+                    b.Navigation("pos_customers");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.CustomerModel", b =>
                 {
                     b.Navigation("cars");
+
+                    b.Navigation("expenses");
 
                     b.Navigation("invoices");
 
@@ -7430,6 +7741,11 @@ namespace MecuryProduct.Migrations
             modelBuilder.Entity("MecuryProduct.Data.InvoiceModel", b =>
                 {
                     b.Navigation("productInvoice");
+                });
+
+            modelBuilder.Entity("MecuryProduct.Data.PosCustomerModel", b =>
+                {
+                    b.Navigation("payments");
                 });
 
             modelBuilder.Entity("MecuryProduct.Data.ProductModel", b =>

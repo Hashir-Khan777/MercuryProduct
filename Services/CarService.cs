@@ -139,11 +139,26 @@ namespace MecuryProduct.Services
             }
         }
 
-        public List<CarModel>? GetCarsByCompanyId(int company_id)
+        public List<CarModel>? GetAllCarsByCompanyId(int company_id)
         {
             try
             {
                 return db.Cars.Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.docs).Where(x => x.CompanyId == company_id).OrderByDescending(c => c.created_at).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<CarModel>? GetCarsByCompanyId(int company_id)
+        {
+            try
+            {
+                return db.Cars.Where(x => x.deleted == false).Include(c => c.driver).Include(c => c.customer).Include(c => c.created_by).Include(c => c.docs).Where(x => x.CompanyId == company_id).OrderByDescending(c => c.created_at).ToList();
             }
             catch (Exception ex)
             {
@@ -287,7 +302,8 @@ namespace MecuryProduct.Services
         {
             try
             {
-                db.Cars.Remove(car);
+                car.deleted = true;
+                db.Cars.Update(car);
                 db.SaveChanges();
             }
             catch (Exception ex)

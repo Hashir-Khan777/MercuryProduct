@@ -33,7 +33,7 @@ namespace MecuryProduct.Components.Admin.Pages
         public async void GetCustomers()
         {
             var company = await SessionService.Get<int>("company");
-            customers = CustomerService.GetCustomersByCompanyId(company);
+            customers = CustomerService.GetAllCustomersByCompanyId(company);
         }
 
         /// <summary>Opens a modal dialog to add a vehicle for a specific customer.</summary>
