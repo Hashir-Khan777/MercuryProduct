@@ -17,11 +17,26 @@ namespace MecuryProduct.Services
             this.helperService = helperService;
         }
 
-        public List<CategoryModel>? GetCategories()
+        public List<CategoryModel>? GetAllCategories()
         {
             try
             {
                 return db.Categories.Include(x => x.Proucts).ToList();
+            }
+            catch (Exception ex)
+            {
+                helperService.WriteLog(exception: $"{ex}");
+                var notificationMessage = new NotificationMessage { Severity = NotificationSeverity.Error, Detail = ex.Message, Duration = 4000 };
+                notificationService.Notify(notificationMessage);
+                return null;
+            }
+        }
+
+        public List<CategoryModel>? GetCategories()
+        {
+            try
+            {
+                return db.Categories.Where(x => !x.deleted).Include(x => x.Proucts).ToList();
             }
             catch (Exception ex)
             {
@@ -81,7 +96,8 @@ namespace MecuryProduct.Services
         {
             try
             {
-                db.Categories.Remove(category);
+                category.deleted = true;
+                db.Categories.Update(category);
                 db.SaveChanges();
             }
             catch (Exception ex)

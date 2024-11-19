@@ -61,14 +61,29 @@
                 @item.created_by?.UserName
             </Template>
         </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Delete Status" Type="typeof(string)" Property="deleted">
+            <Template Context="item">
+                @if (!item.deleted)
+                {
+                    <p>Not Deleted</p>
+                }
+                else
+                {
+                    <p>Deleted</p>
+                }
+            </Template>
+        </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Actions" Width="300px">
             <Template Context="item">
-                <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateProductModal(item.Id)">
-                    <RadzenIcon Icon="edit" Style="font-size: 20px" />
-                </RadzenButton>
-                <RadzenButton Variant="Variant.Text" Click="() => DeleteProduct(item)">
-                    <RadzenIcon Icon="delete" Style="font-size: 20px" />
-                </RadzenButton>
+                @if (!item.deleted)
+                {
+                    <RadzenButton Variant="Variant.Text" Click="() => OpenUpdateProductModal(item.Id)">
+                        <RadzenIcon Icon="edit" Style="font-size: 20px" />
+                    </RadzenButton>
+                    <RadzenButton Variant="Variant.Text" Click="() => DeleteProduct(item)">
+                        <RadzenIcon Icon="delete" Style="font-size: 20px" />
+                    </RadzenButton>
+                }
             </Template>
         </RadzenDataGridColumn>
     </Columns>

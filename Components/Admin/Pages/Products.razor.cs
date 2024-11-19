@@ -25,7 +25,7 @@ namespace MecuryProduct.Components.Admin.Pages
             base.OnInitialized();
 
             var company = await SessionService.Get<int>("company");
-            products = ProductService.GetProductsByCompanyId(company);
+            products = ProductService.GetAllProductsByCompanyId(company);
         }
 
         public async void SearchProducts(dynamic args)
@@ -57,7 +57,7 @@ namespace MecuryProduct.Components.Admin.Pages
             {
                 ProductService.DeleteProduct(product);
                 var company = await SessionService.Get<int>("company");
-                products = ProductService.GetProductsByCompanyId(company);
+                products = ProductService.GetAllProductsByCompanyId(company);
                 StateHasChanged();
             }
         }

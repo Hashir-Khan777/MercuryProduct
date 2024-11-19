@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/sIJXJQvyIZ/181tyomzfQQPgN5+gSzsCsUisXaOva4=",
+  "Hash": "SPgAo9aXU3UjfXuTKUFvkTB9DNMvUcOjMHTI/x3ofDo=",
   "Source": "MecuryProduct",
   "BasePath": "_content/MecuryProduct",
   "Mode": "Default",
@@ -3530,6 +3530,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\stk-0-product-20240901103545510-Introducing bargaining feature.jpg"
+    },
+    {
+      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-0-product-20241119071750698-globalshoppingspotuserappicon.png",
+      "SourceId": "MecuryProduct",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\",
+      "BasePath": "_content/MecuryProduct",
+      "RelativePath": "uploads/stk-0-product-20241119071750698-globalshoppingspotuserappicon.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\stk-0-product-20241119071750698-globalshoppingspotuserappicon.png"
     },
     {
       "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\stk-1-product-20240625112740114-Introducing bargaining feature.jpg",

@@ -19,7 +19,7 @@ namespace MecuryProduct.Components.Admin.Pages
         {
             base.OnInitialized();
 
-            categories = CategoryService.GetCategories();
+            categories = CategoryService.GetAllCategories();
         }
 
         public async void OpenUpdateCategoryModal(int catId)

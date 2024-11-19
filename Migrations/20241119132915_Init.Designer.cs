@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MecuryProduct.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241118185813_AddSoftDeletionInPOSCustomers")]
-    partial class AddSoftDeletionInPOSCustomers
+    [Migration("20241119132915_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -315,6 +315,9 @@ namespace MecuryProduct.Migrations
                     b.Property<DateTime>("created_at")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("updated_at")
                         .HasColumnType("datetime2");
 
@@ -328,6 +331,7 @@ namespace MecuryProduct.Migrations
                             Id = 1,
                             Name = "Battery",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -335,6 +339,7 @@ namespace MecuryProduct.Migrations
                             Id = 2,
                             Name = "Body",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -342,6 +347,7 @@ namespace MecuryProduct.Migrations
                             Id = 3,
                             Name = "Brakes",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -349,6 +355,7 @@ namespace MecuryProduct.Migrations
                             Id = 4,
                             Name = "Electrical",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -356,6 +363,7 @@ namespace MecuryProduct.Migrations
                             Id = 5,
                             Name = "Engine",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -363,6 +371,7 @@ namespace MecuryProduct.Migrations
                             Id = 6,
                             Name = "Engine Parts",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -370,6 +379,7 @@ namespace MecuryProduct.Migrations
                             Id = 7,
                             Name = "Glass",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -377,6 +387,7 @@ namespace MecuryProduct.Migrations
                             Id = 8,
                             Name = "Handling Fees",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -384,6 +395,7 @@ namespace MecuryProduct.Migrations
                             Id = 9,
                             Name = "Interior",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -391,6 +403,7 @@ namespace MecuryProduct.Migrations
                             Id = 10,
                             Name = "Mechanical",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -398,6 +411,7 @@ namespace MecuryProduct.Migrations
                             Id = 11,
                             Name = "Merchandise",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -405,6 +419,7 @@ namespace MecuryProduct.Migrations
                             Id = 12,
                             Name = "Specials",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -412,6 +427,7 @@ namespace MecuryProduct.Migrations
                             Id = 13,
                             Name = "Tires",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -419,6 +435,7 @@ namespace MecuryProduct.Migrations
                             Id = 14,
                             Name = "Transmission",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -426,6 +443,7 @@ namespace MecuryProduct.Migrations
                             Id = 15,
                             Name = "Transmission Parts",
                             created_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            deleted = false,
                             updated_at = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -7017,6 +7035,9 @@ namespace MecuryProduct.Migrations
                     b.Property<double>("custom_price_4")
                         .HasColumnType("float");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("discount")
                         .HasColumnType("int");
 
@@ -7070,31 +7091,27 @@ namespace MecuryProduct.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("tax_1_label")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("tax_1_value")
+                    b.Property<double?>("tax_1_value")
                         .HasColumnType("float");
 
                     b.Property<string>("tax_2_label")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("tax_2_value")
+                    b.Property<double?>("tax_2_value")
                         .HasColumnType("float");
 
                     b.Property<string>("tax_3_label")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("tax_3_value")
+                    b.Property<double?>("tax_3_value")
                         .HasColumnType("float");
 
                     b.Property<string>("tax_4_label")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("tax_4_value")
+                    b.Property<double?>("tax_4_value")
                         .HasColumnType("float");
 
                     b.Property<double?>("totalTax")

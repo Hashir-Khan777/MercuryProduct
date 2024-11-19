@@ -135,6 +135,27 @@ namespace MecuryProduct.Services
         {
             try
             {
+                var company_managers = db.CompanyManagers.Where(x => x.company_id == company.Id).ToList();
+                
+                foreach (var manager in company_managers)
+                {
+                    db.CompanyManagers.Remove(manager);
+                }
+
+                var company_employees = db.CompanyEmployees.Where(x => x.company_id == company.Id).ToList();
+
+                foreach (var employee in company_employees)
+                {
+                    db.CompanyEmployees.Remove(employee);
+                }
+
+                var company_drivers = db.CompanyDrivers.Where(x => x.company_id == company.Id).ToList();
+
+                foreach (var driver in company_drivers)
+                {
+                    db.CompanyDrivers.Remove(driver);
+                }
+
                 company.deleted = true;
                 db.Companies.Update(company);
                 db.SaveChanges();

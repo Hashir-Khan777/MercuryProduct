@@ -7,6 +7,8 @@ namespace MecuryProduct.Data
     {
         public int Id { get; set; }
 
+        public bool deleted { get; set; } = false;
+
         public string? created_by_id { get; set; } = string.Empty;
 
         public int? company_id { get; set; }
@@ -51,21 +53,21 @@ namespace MecuryProduct.Data
 
         public double? stateOfArkansaTax { get; set; } = 0;
 
-        public string tax_1_label { get; set; } = string.Empty;
+        public string? tax_1_label { get; set; } = string.Empty;
 
-        public double tax_1_value { get; set; } = 0;
+        public double? tax_1_value { get; set; } = 0;
 
-        public string tax_2_label { get; set; } = string.Empty;
+        public string? tax_2_label { get; set; } = string.Empty;
 
-        public double tax_2_value { get; set; } = 0;
+        public double? tax_2_value { get; set; } = 0;
 
-        public string tax_3_label { get; set; } = string.Empty;
+        public string? tax_3_label { get; set; } = string.Empty;
 
-        public double tax_3_value { get; set; } = 0;
+        public double? tax_3_value { get; set; } = 0;
 
-        public string tax_4_label { get; set; } = string.Empty;
+        public string? tax_4_label { get; set; } = string.Empty;
 
-        public double tax_4_value { get; set; } = 0;
+        public double? tax_4_value { get; set; } = 0;
 
         public double? totalTax { get; set; } = 0;
 
