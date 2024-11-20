@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "SPgAo9aXU3UjfXuTKUFvkTB9DNMvUcOjMHTI/x3ofDo=",
+  "Hash": "TnZ9UdAhocCD4Yn+gTFWCTch9FhbMDyYwt2s+IzM5Xc=",
   "Source": "MecuryProduct",
   "BasePath": "_content/MecuryProduct",
   "Mode": "Default",
@@ -1176,6 +1176,25 @@
       "OriginalItemSpec": "wwwroot\\uploads\\companylogo-20240917060948817-globalshoppingspotjpeglogo.jpg"
     },
     {
+      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\companylogo-20241120041051721-globalshoppingspotuserappicon.png",
+      "SourceId": "MecuryProduct",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\",
+      "BasePath": "_content/MecuryProduct",
+      "RelativePath": "uploads/companylogo-20241120041051721-globalshoppingspotuserappicon.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\companylogo-20241120041051721-globalshoppingspotuserappicon.png"
+    },
+    {
       "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20240815221308419-global-vender-post.jpg",
       "SourceId": "MecuryProduct",
       "SourceType": "Discovered",
@@ -2333,6 +2352,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\default-20240910121859767-16-percent-off-global.jpg"
+    },
+    {
+      "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\default-20241120041124083-global-vender-post.jpg",
+      "SourceId": "MecuryProduct",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\",
+      "BasePath": "_content/MecuryProduct",
+      "RelativePath": "uploads/default-20241120041124083-global-vender-post.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\default-20241120041124083-global-vender-post.jpg"
     },
     {
       "Identity": "E:\\Zini Tecnologies Projects\\MecuryProduct\\wwwroot\\uploads\\env-1-env-20240620041906545-Advancing into Analytics From Excel to Python.pdf",

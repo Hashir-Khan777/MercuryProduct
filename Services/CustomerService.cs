@@ -104,7 +104,7 @@ namespace MecuryProduct.Services
         {
             try
             {
-                return db.Customers.Where(x => x.deleted == false).Include(c => c.created_by).Include(c => c.cars).Include(c => c.Company).ThenInclude(c => c.CompanyManagers).Where(c => c.CompanyId == company_id).OrderByDescending(c => c.created_at).ToList();
+                return db.Customers.Include(c => c.created_by).Include(c => c.cars).Include(c => c.Company).ThenInclude(c => c.CompanyManagers).Where(c => c.CompanyId == company_id && !c.deleted).OrderByDescending(c => c.created_at).ToList();
             }
             catch (Exception ex)
             {

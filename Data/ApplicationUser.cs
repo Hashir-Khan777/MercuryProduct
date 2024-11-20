@@ -67,14 +67,20 @@ namespace MecuryProduct.Data
             {
                 var companyNames = new List<string>();
 
-                if (CompanyManagers.Count > 0)
+                if (CompanyManagers?.Count() > 0)
+                {
                     companyNames.AddRange(CompanyManagers.Select(cm => cm.company.Name));
+                }
 
-                if (CompanyEmployees.Count > 0)
+                if (CompanyEmployees?.Count() > 0)
+                {
                     companyNames.AddRange(CompanyEmployees.Select(ce => ce.company.Name));
+                }
 
-                if (CompanyDrivers.Count > 0)
+                if (CompanyDrivers?.Count() > 0)
+                {
                     companyNames.AddRange(CompanyDrivers.Select(cd => cd.company.Name));
+                }
 
                 return string.Join(", ", companyNames);
             }
