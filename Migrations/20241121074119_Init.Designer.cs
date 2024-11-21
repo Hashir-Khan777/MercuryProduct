@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MecuryProduct.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241119132915_Init")]
+    [Migration("20241121074119_Init")]
     partial class Init
     {
         /// <inheritdoc />

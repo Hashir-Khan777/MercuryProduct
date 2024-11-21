@@ -259,7 +259,6 @@ namespace MecuryProduct.Components.Admin.Pages
 
         public int GetItemsSoldByCategory(int categoryId)
         {
-            Console.WriteLine($"Category ID: {categoryId}");
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
